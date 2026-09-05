@@ -10,8 +10,11 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-    const { error } = await signUp(formData)
-    if (error) setError(error.message)
+    try {
+      await signUp(formData.email, formData.password, formData.username, formData.full_name)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   const update = (field) => (e) => setFormData(prev => ({ ...prev, [field]: e.target.value }))

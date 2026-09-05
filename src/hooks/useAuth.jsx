@@ -30,12 +30,12 @@ export function AuthProvider({ children }) {
     setLoading(false)
   }
 
-  async function signUp(email, password, username) {
+  async function signUp(email, password, username, fullName) {
     const { data, error } = await supabase.auth.signUp({ email, password })
     if (error) throw error
     if (data.user) {
       const { error: profileError } = await supabase.from('profiles').upsert(
-        { id: data.user.id, username, full_name: username, email },
+        { id: data.user.id, username, full_name: fullName || username, email },
         { onConflict: 'id' }
       )
       if (profileError) console.error('Profile upsert error:', profileError)

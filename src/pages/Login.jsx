@@ -11,8 +11,11 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
-    const { error } = await signIn(email, password)
-    if (error) setError(error.message)
+    try {
+      await signIn(email, password)
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
