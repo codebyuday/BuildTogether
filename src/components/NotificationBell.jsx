@@ -48,34 +48,37 @@ export default function NotificationBell() {
   return (
     <div className="relative">
       <button onClick={() => setOpen(!open)}
-        className="relative h-8 w-8 rounded flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition">
+        className="relative h-8 w-8 rounded-lg flex items-center justify-center text-on-surface-variant/60 hover:bg-surface-container-high hover:text-on-surface transition-all">
         <span className="material-symbols-outlined text-[18px]">notifications</span>
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-error rounded-full"></span>
+          <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full ring-2 ring-surface"></span>
         )}
       </button>
 
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-outline-variant/40 bg-surface-container-low shadow-2xl">
-            <div className="flex items-center justify-between border-b border-outline-variant/30 px-4 py-3">
-              <span className="text-[14px] font-semibold text-on-surface">Notifications</span>
+          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-outline-variant/25 bg-surface-container-low shadow-2xl shadow-black/30">
+            <div className="flex items-center justify-between border-b border-outline-variant/20 px-4 py-3">
+              <span className="text-[13px] font-semibold text-on-surface">Notifications</span>
               {unreadCount > 0 && (
                 <button onClick={() => markRead.mutate()}
-                  className="flex items-center gap-1 text-[10px] font-mono text-primary hover:underline">
+                  className="text-[11px] font-medium text-primary/70 hover:text-primary transition-colors">
                   Mark all read
                 </button>
               )}
             </div>
             <div className="max-h-80 overflow-y-auto">
               {notifications.length === 0 ? (
-                <div className="p-6 text-center text-[12px] text-on-surface-variant">No notifications yet.</div>
+                <div className="p-8 text-center">
+                  <span className="material-symbols-outlined text-[28px] text-outline/30 mb-2 block">notifications_none</span>
+                  <p className="text-[12px] text-on-surface-variant/50">No notifications yet.</p>
+                </div>
               ) : (
                 notifications.map(n => (
-                  <div key={n.id} className={`border-b border-outline-variant/20 px-4 py-3 ${!n.read ? 'bg-surface-container' : ''}`}>
-                    <p className="text-[12px] text-on-surface">{n.message}</p>
-                    <span className="mt-1 block text-[10px] font-mono text-on-surface-variant">
+                  <div key={n.id} className={`border-b border-outline-variant/10 px-4 py-3 transition-colors ${!n.read ? 'bg-primary/[0.03]' : 'hover:bg-surface-container-high/30'}`}>
+                    <p className="text-[12px] text-on-surface/80 leading-relaxed">{n.message}</p>
+                    <span className="mt-1 block text-[10px] font-mono text-on-surface-variant/40">
                       {new Date(n.created_at).toLocaleString()}
                     </span>
                   </div>

@@ -62,66 +62,67 @@ export default function Dashboard() {
   })
 
   const stats = [
-    { label: 'My Projects', value: projects.length, icon: 'folder', accent: 'text-primary' },
-    { label: 'Member Of', value: memberProjects.length, icon: 'group', accent: 'text-secondary' },
-    { label: 'Open Tasks', value: tasks.length, icon: 'task_alt', accent: 'text-tertiary' },
-    { label: 'Applications', value: applications.filter(a => a.status === 'pending').length, icon: 'schedule', accent: 'text-primary-container' },
+    { label: 'My Projects', value: projects.length, icon: 'folder', color: 'text-primary', bg: 'bg-primary/10' },
+    { label: 'Member Of', value: memberProjects.length, icon: 'group', color: 'text-secondary', bg: 'bg-secondary/10' },
+    { label: 'Open Tasks', value: tasks.length, icon: 'task_alt', color: 'text-tertiary', bg: 'bg-tertiary/10' },
+    { label: 'Applications', value: applications.filter(a => a.status === 'pending').length, icon: 'schedule', color: 'text-primary-container', bg: 'bg-primary/10' },
   ]
-
-  const allProjects = [...new Map([...projects, ...memberProjects, ...starredProjects].map(p => [p.id, p])).values()]
 
   const isLoading = loadingProjects || !projects
 
   return (
-    <div className="mx-auto max-w-[1200px] space-y-space-lg">
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+    <div className="mx-auto max-w-[1200px] space-y-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {isLoading ? Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />) :
-        stats.map(({ label, value, icon, accent }) => (
-          <div key={label} className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 flex flex-col justify-between hover:border-outline-variant/70 transition">
-            <div className="flex items-center justify-between text-on-surface-variant">
-              <span className="text-[12px] font-semibold uppercase tracking-wider">{label}</span>
-              <span className={`material-symbols-outlined text-[18px] ${accent}`}>{icon}</span>
-            </div>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-[24px] font-bold text-on-surface">{value}</span>
+        stats.map(({ label, value, icon, color, bg }) => (
+          <div key={label} className="bg-surface-container-low border border-outline-variant/20 rounded-xl p-4 card-hover">
+            <div className="flex items-center gap-3">
+              <div className={`w-9 h-9 rounded-lg ${bg} flex items-center justify-center`}>
+                <span className={`material-symbols-outlined text-[18px] ${color}`}>{icon}</span>
+              </div>
+              <div>
+                <span className="text-[11px] font-medium text-on-surface-variant/60 uppercase tracking-wider block">{label}</span>
+                <span className="text-[22px] font-bold text-on-surface leading-none">{value}</span>
+              </div>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="grid gap-space-lg lg:grid-cols-3">
+      <div className="grid gap-5 lg:grid-cols-3">
         <section className="lg:col-span-1">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-[16px] font-semibold text-on-surface">My Tasks</h2>
-            <span className="text-[11px] font-mono text-on-surface-variant">{tasks.length} open</span>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-[14px] font-semibold text-on-surface">My Tasks</h2>
+            <span className="text-[11px] font-mono text-on-surface-variant/50">{tasks.length} open</span>
           </div>
           {loadingTasks ? (
             <div className="space-y-2">{Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)}</div>
           ) : tasks.length === 0 ? (
-            <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
-              <p className="text-[14px] text-on-surface-variant">No open tasks assigned to you.</p>
+            <div className="rounded-xl border border-dashed border-outline-variant/30 bg-surface-container-low/30 p-8 text-center">
+              <span className="material-symbols-outlined text-[28px] text-outline/40 mb-2 block">task_alt</span>
+              <p className="text-[13px] text-on-surface-variant/60">No open tasks assigned to you.</p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               {tasks.slice(0, 8).map(t => (
                 <Link key={t.id} to={`/projects/${t.project_id}`}
-                  className="flex items-center justify-between rounded-lg border border-outline-variant/40 bg-surface-container p-3 hover:border-outline transition group">
-                  <div className="flex items-center gap-3 min-w-0">
-                    <span className={`h-2 w-2 rounded-full shrink-0 ${
-                      t.status === 'done' ? 'bg-secondary' :
+                  className="flex items-center justify-between rounded-lg bg-surface-container-low/50 border border-outline-variant/15 px-3 py-2.5 hover:bg-surface-container-high/50 hover:border-outline-variant/30 transition-all group">
+                  <div className="flex items-center gap-2.5 min-w-0">
+                    <span className={`h-1.5 w-1.5 rounded-full shrink-0 ${
+                      t.status === 'done' ? 'bg-success' :
                       t.status === 'in_progress' ? 'bg-primary' :
                       t.status === 'in_review' ? 'bg-tertiary' :
-                      'bg-outline'
+                      'bg-outline/40'
                     }`} />
                     <div className="min-w-0">
                       <span className="text-[13px] text-on-surface group-hover:text-primary transition block truncate">{t.title}</span>
-                      {t.projects && <span className="text-[11px] text-on-surface-variant font-mono">in {t.projects.title}</span>}
+                      {t.projects && <span className="text-[11px] text-on-surface-variant/50 font-mono">{t.projects.title}</span>}
                     </div>
                   </div>
-                  <span className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded shrink-0 ${
-                    t.priority === 'urgent' || t.priority === 'high' ? 'bg-error-container/30 text-error border border-error/20' :
-                    t.priority === 'medium' ? 'bg-surface-container-high text-on-surface-variant border border-outline-variant/40' :
-                    'bg-surface-container-high text-outline border border-outline-variant/30'
+                  <span className={`text-[10px] font-mono font-medium px-1.5 py-0.5 rounded shrink-0 ${
+                    t.priority === 'urgent' || t.priority === 'high' ? 'bg-error/10 text-error' :
+                    t.priority === 'medium' ? 'bg-surface-container-high text-on-surface-variant/60' :
+                    'bg-surface-container-high text-outline/60'
                   }`}>{t.priority}</span>
                 </Link>
               ))}
@@ -129,29 +130,29 @@ export default function Dashboard() {
           )}
         </section>
 
-        <section className="lg:col-span-2 space-y-space-lg">
+        <section className="lg:col-span-2 space-y-5">
           {starredProjects.length > 0 && (
             <div>
-              <h2 className="mb-4 text-[16px] font-semibold text-on-surface flex items-center gap-2">
-                <span className="material-symbols-outlined text-[18px] text-tertiary">star</span> Starred
+              <h2 className="mb-3 text-[14px] font-semibold text-on-surface flex items-center gap-2">
+                <span className="material-symbols-outlined text-[16px] text-tertiary">star</span> Starred
               </h2>
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {starredProjects.slice(0, 3).map(p => (
                   <Link key={p.id} to={`/projects/${p.id}`}
-                    className="flex items-center justify-between rounded-lg border border-outline-variant/40 bg-surface-container p-3 hover:border-outline transition group">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-8 h-8 rounded bg-tertiary/10 border border-tertiary/30 flex items-center justify-center text-tertiary shrink-0">
+                    className="flex items-center justify-between rounded-lg bg-surface-container-low/50 border border-outline-variant/15 px-3 py-2.5 hover:bg-surface-container-high/50 hover:border-outline-variant/30 transition-all group">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-7 h-7 rounded-md bg-tertiary/10 flex items-center justify-center text-tertiary shrink-0">
                         <span className="material-symbols-outlined text-[14px]">star</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[14px] font-semibold text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
-                        <p className="mt-0.5 text-[12px] text-on-surface-variant line-clamp-1">{p.description}</p>
+                        <h3 className="text-[13px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
+                        <p className="text-[11px] text-on-surface-variant/50 line-clamp-1">{p.description}</p>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded shrink-0 ${
-                      p.status === 'recruiting' ? 'bg-secondary/10 text-secondary border border-secondary/30' :
-                      p.status === 'full' ? 'bg-tertiary/10 text-tertiary border border-tertiary/30' :
-                      'bg-surface-container-high text-on-surface-variant border border-outline-variant/40'
+                    <span className={`text-[10px] font-mono font-medium px-1.5 py-0.5 rounded shrink-0 ${
+                      p.status === 'recruiting' ? 'bg-success/10 text-success' :
+                      p.status === 'full' ? 'bg-tertiary/10 text-tertiary' :
+                      'bg-surface-container-high text-on-surface-variant/50'
                     }`}>{p.status}</span>
                   </Link>
                 ))}
@@ -160,34 +161,36 @@ export default function Dashboard() {
           )}
 
           <div>
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-[16px] font-semibold text-on-surface">My Projects</h2>
-              <Link to="/explore" className="text-[11px] font-mono text-primary hover:underline flex items-center gap-1">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="text-[14px] font-semibold text-on-surface">My Projects</h2>
+              <Link to="/explore" className="text-[11px] font-mono text-primary/70 hover:text-primary flex items-center gap-1 transition-colors">
                 Explore <span className="material-symbols-outlined text-[12px]">arrow_forward</span>
               </Link>
             </div>
             {projects.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
-                <p className="text-[14px] text-on-surface-variant">No projects yet. Create one to get started!</p>
+              <div className="rounded-xl border border-dashed border-outline-variant/30 bg-surface-container-low/30 p-8 text-center">
+                <span className="material-symbols-outlined text-[28px] text-outline/40 mb-2 block">folder_open</span>
+                <p className="text-[13px] text-on-surface-variant/60 mb-3">No projects yet.</p>
+                <Link to="/projects/new" className="text-[12px] text-primary font-medium hover:text-primary-container transition-colors">Create your first project</Link>
               </div>
             ) : (
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 {projects.slice(0, 5).map(p => (
                   <Link key={p.id} to={`/projects/${p.id}`}
-                    className="flex items-center justify-between rounded-lg border border-outline-variant/40 bg-surface-container p-3 hover:border-outline transition group">
-                    <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-8 h-8 rounded bg-surface-container-high border border-outline-variant/40 flex items-center justify-center text-primary shrink-0">
+                    className="flex items-center justify-between rounded-lg bg-surface-container-low/50 border border-outline-variant/15 px-3 py-2.5 hover:bg-surface-container-high/50 hover:border-outline-variant/30 transition-all group">
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <div className="w-7 h-7 rounded-md bg-primary/10 flex items-center justify-center text-primary shrink-0">
                         <span className="material-symbols-outlined text-[14px]">folder</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[14px] font-semibold text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
-                        <p className="mt-0.5 text-[12px] text-on-surface-variant line-clamp-1">{p.description}</p>
+                        <h3 className="text-[13px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
+                        <p className="text-[11px] text-on-surface-variant/50 line-clamp-1">{p.description}</p>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded shrink-0 ${
-                      p.status === 'recruiting' ? 'bg-secondary/10 text-secondary border border-secondary/30' :
-                      p.status === 'full' ? 'bg-tertiary/10 text-tertiary border border-tertiary/30' :
-                      'bg-surface-container-high text-on-surface-variant border border-outline-variant/40'
+                    <span className={`text-[10px] font-mono font-medium px-1.5 py-0.5 rounded shrink-0 ${
+                      p.status === 'recruiting' ? 'bg-success/10 text-success' :
+                      p.status === 'full' ? 'bg-tertiary/10 text-tertiary' :
+                      'bg-surface-container-high text-on-surface-variant/50'
                     }`}>{p.status}</span>
                   </Link>
                 ))}
