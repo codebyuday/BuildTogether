@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
+import { useTheme } from '../hooks/useTheme'
 import NotificationBell from './NotificationBell'
 import UserSearch from './UserSearch'
 import ShortcutsModal from './ShortcutsModal'
@@ -13,6 +14,7 @@ const navItems = [
 
 export default function Layout() {
   const { profile, signOut } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const location = useLocation()
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -109,6 +111,11 @@ export default function Layout() {
 
           <div className="flex items-center gap-2">
             <UserSearch />
+            <button onClick={toggleTheme}
+              className="h-8 w-8 rounded-lg flex items-center justify-center text-on-surface-variant/60 hover:bg-surface-container-high hover:text-on-surface transition-all"
+              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}>
+              <span className="material-symbols-outlined text-[18px]">{theme === 'dark' ? 'light_mode' : 'dark_mode'}</span>
+            </button>
             <NotificationBell />
           </div>
         </header>

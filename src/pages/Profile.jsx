@@ -47,7 +47,7 @@ export default function Profile() {
     <div className="mx-auto max-w-[1200px] space-y-5">
       <section className="bg-surface-container-low border border-outline-variant/20 rounded-xl overflow-hidden">
         <div className="h-28 bg-gradient-to-r from-surface-container-lowest via-surface-container to-surface-container-high relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#b8baff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+          <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(var(--color-primary)_1px,transparent_1px)] [background-size:16px_16px]"></div>
         </div>
 
         <div className="px-6 pb-6 -mt-12 relative">
