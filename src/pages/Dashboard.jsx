@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import ActivityFeed from '../components/ActivityFeed'
+import { StatSkeleton, CardSkeleton } from '../components/Skeleton'
 
 export default function Dashboard() {
   const { user } = useAuth()
 
-  const { data: projects = [] } = useQuery({
+  const { data: projects = [], isLoading: loadingProjects } = useQuery({
     queryKey: ['my-projects'],
     queryFn: async () => {
       const { data } = await supabase
@@ -35,7 +36,7 @@ export default function Dashboard() {
     },
   })
 
-  const { data: tasks = [] } = useQuery({
+  const { data: tasks = [], isLoading: loadingTasks } = useQuery({
     queryKey: ['my-tasks'],
     queryFn: async () => {
       const { data } = await supabase
@@ -69,10 +70,13 @@ export default function Dashboard() {
 
   const allProjects = [...new Map([...projects, ...memberProjects, ...starredProjects].map(p => [p.id, p])).values()]
 
+  const isLoading = loadingProjects || !projects
+
   return (
     <div className="mx-auto max-w-[1200px] space-y-space-lg">
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-        {stats.map(({ label, value, icon, accent }) => (
+        {isLoading ? Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />) :
+        stats.map(({ label, value, icon, accent }) => (
           <div key={label} className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 flex flex-col justify-between hover:border-outline-variant/70 transition">
             <div className="flex items-center justify-between text-on-surface-variant">
               <span className="text-[12px] font-semibold uppercase tracking-wider">{label}</span>
@@ -91,7 +95,9 @@ export default function Dashboard() {
             <h2 className="text-[16px] font-semibold text-on-surface">My Tasks</h2>
             <span className="text-[11px] font-mono text-on-surface-variant">{tasks.length} open</span>
           </div>
-          {tasks.length === 0 ? (
+          {loadingTasks ? (
+            <div className="space-y-2">{Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)}</div>
+          ) : tasks.length === 0 ? (
             <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
               <p className="text-[14px] text-on-surface-variant">No open tasks assigned to you.</p>
             </div>

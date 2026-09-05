@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import StarButton from '../components/StarButton'
+import { CardSkeleton } from '../components/Skeleton'
 
 const STATUS_OPTIONS = ['all', 'recruiting', 'full', 'archived']
 const STATUS_LABELS = { all: 'All', recruiting: 'Recruiting', full: 'Full', archived: 'Archived' }
@@ -75,8 +76,8 @@ export default function Explore() {
       </div>
 
       {isLoading ? (
-        <div className="flex justify-center py-12">
-          <div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-space-lg">
+          {Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)}
         </div>
       ) : projects.length === 0 ? (
         <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-12 text-center">

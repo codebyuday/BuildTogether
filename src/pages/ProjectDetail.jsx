@@ -12,6 +12,7 @@ import RepoConnectModal from '../components/RepoConnectModal'
 import ExportDropdown from '../components/ExportDropdown'
 import StarButton from '../components/StarButton'
 import MarkdownRenderer from '../components/MarkdownRenderer'
+import { CardSkeleton, TaskCardSkeleton } from '../components/Skeleton'
 import { logActivity } from '../lib/activity'
 
 const STATUS_COLS = ['todo', 'in_progress', 'in_review', 'done']
@@ -52,7 +53,7 @@ export default function ProjectDetail() {
     queryKey: ['members', id],
     queryFn: async () => { const { data } = await supabase.from('team_members').select('*, profiles:user_id(id, username, full_name)').eq('project_id', id); return data || [] },
   })
-  const { data: tasks = [] } = useQuery({
+  const { data: tasks = [], isLoading: loadingTasks } = useQuery({
     queryKey: ['tasks', id],
     queryFn: async () => { const { data } = await supabase.from('tasks').select('*, profiles:assignee_id(username, full_name), labels:task_labels(label_id, labels(id, name, color))').eq('project_id', id).order('position'); return data || [] },
   })
@@ -177,7 +178,20 @@ export default function ProjectDetail() {
     setDraggedTask(null)
   }, [draggedTask, updateTaskStatus])
 
-  if (!project) return <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>
+  if (!project) return (
+    <div className="mx-auto max-w-[1200px] space-y-space-lg">
+      <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg animate-pulse">
+        <div className="h-6 w-48 bg-surface-container-high rounded mb-3" />
+        <div className="h-4 w-64 bg-surface-container-high rounded mb-2" />
+        <div className="h-3 w-96 bg-surface-container-high rounded" />
+      </div>
+      <div className="flex gap-4">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="h-10 w-24 bg-surface-container-high rounded animate-pulse" />)}</div>
+      <div className="grid gap-space-lg lg:grid-cols-3">
+        <div className="lg:col-span-2 space-y-space-lg">{Array.from({ length: 2 }).map((_, i) => <CardSkeleton key={i} />)}</div>
+        <div className="space-y-space-lg">{Array.from({ length: 2 }).map((_, i) => <CardSkeleton key={i} />)}</div>
+      </div>
+    </div>
+  )
 
   const tabs = [
     { key: 'overview', label: 'Overview' },
@@ -360,7 +374,17 @@ export default function ProjectDetail() {
               </button>
             </div>
           )}
-          <div className="flex gap-space-md overflow-x-auto pb-4 items-start">
+          {loadingTasks ? (
+            <div className="flex gap-space-md overflow-x-auto pb-4 items-start">
+              {STATUS_COLS.map(col => (
+                <div key={col} className="w-[320px] flex-shrink-0 bg-surface-container-low/60 border border-outline-variant/30 rounded-lg p-3">
+                  <div className="h-5 w-20 bg-surface-container-high rounded mb-3 animate-pulse" />
+                  <div className="space-y-2">{Array.from({ length: 3 }).map((_, i) => <TaskCardSkeleton key={i} />)}</div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex gap-space-md overflow-x-auto pb-4 items-start">
             {STATUS_COLS.map(col => {
               const colTasks = tasks.filter(t => t.status === col)
               return (
@@ -430,6 +454,7 @@ export default function ProjectDetail() {
               )
             })}
           </div>
+          )}
 
           {showAddTask && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
