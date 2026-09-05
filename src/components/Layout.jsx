@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import NotificationBell from './NotificationBell'
 import UserSearch from './UserSearch'
+import ShortcutsModal from './ShortcutsModal'
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
@@ -11,10 +13,17 @@ const navItems = [
 export default function Layout() {
   const { profile, signOut } = useAuth()
   const location = useLocation()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  useEffect(() => { setSidebarOpen(false) }, [location.pathname])
 
   return (
     <div className="flex h-screen overflow-hidden">
-      <aside className="fixed top-0 left-0 h-screen w-[240px] z-40 flex flex-col justify-between bg-surface-container-low border-r border-outline-variant/30 p-space-sm">
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm lg:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
+
+      <aside className={`fixed top-0 left-0 h-screen w-[240px] z-50 flex flex-col justify-between bg-surface-container-low border-r border-outline-variant/30 p-space-sm transition-transform duration-200 lg:z-40 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div>
           <div className="flex items-center gap-space-sm px-space-md py-space-sm mb-space-md">
             <div className="w-8 h-8 rounded-lg bg-primary/20 border border-primary/40 flex items-center justify-center text-primary">
@@ -74,9 +83,12 @@ export default function Layout() {
         </div>
       </aside>
 
-      <div className="flex flex-col flex-1 pl-[240px] h-screen overflow-hidden">
+      <div className="flex flex-col flex-1 lg:pl-[240px] h-screen overflow-hidden">
         <header className="sticky top-0 z-30 h-[56px] w-full bg-surface border-b border-outline-variant/30 flex items-center justify-between px-space-lg">
           <div className="flex items-center gap-space-md">
+            <button onClick={() => setSidebarOpen(true)} className="lg:hidden p-1 rounded hover:bg-surface-container-high transition-colors">
+              <span className="material-symbols-outlined text-[20px] text-on-surface-variant">menu</span>
+            </button>
             <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container border border-outline-variant/40">
               <span className="w-2 h-2 rounded-full bg-primary-container"></span>
               <span className="text-on-surface font-semibold text-[14px]">BuildTogether</span>
@@ -100,6 +112,7 @@ export default function Layout() {
           <Outlet />
         </main>
       </div>
+      <ShortcutsModal />
     </div>
   )
 }

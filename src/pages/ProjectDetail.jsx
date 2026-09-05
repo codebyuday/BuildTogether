@@ -32,6 +32,9 @@ export default function ProjectDetail() {
   const [draggedTask, setDraggedTask] = useState(null)
   const [editing, setEditing] = useState(false)
   const [editForm, setEditForm] = useState({})
+  const [filterAssignee, setFilterAssignee] = useState('all')
+  const [filterPriority, setFilterPriority] = useState('all')
+  const [filterLabel, setFilterLabel] = useState('all')
 
   useEffect(() => {
     const channel = supabase.channel(`project-${id}-realtime`)
@@ -203,6 +206,16 @@ export default function ProjectDetail() {
   ]
   if (isOwner) tabs.push({ key: 'applications', label: `Applications (${applications.filter(a => a.status === 'pending').length})` })
 
+  const filteredTasks = tasks.filter(t => {
+    if (filterAssignee !== 'all' && (t.assignee_id || '__none__') !== filterAssignee) return false
+    if (filterPriority !== 'all' && t.priority !== filterPriority) return false
+    if (filterLabel !== 'all') {
+      const taskLabelIds = t.labels?.map(tl => tl.label_id) || []
+      if (!taskLabelIds.includes(filterLabel)) return false
+    }
+    return true
+  })
+
   return (
     <div className="mx-auto max-w-[1200px] space-y-space-lg print:space-y-4">
       <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg print:bg-white print:border-gray-200">
@@ -367,7 +380,36 @@ export default function ProjectDetail() {
       {tab === 'board' && (
         <div className="space-y-space-md">
           {isMember && (
-            <div className="flex justify-end">
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <select value={filterAssignee} onChange={e => setFilterAssignee(e.target.value)}
+                  className="h-8 bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-2 text-[12px] font-mono text-on-surface-variant focus:border-primary focus:outline-none">
+                  <option value="all">All Assignees</option>
+                  {members.map(m => <option key={m.user_id} value={m.user_id}>{m.profiles?.full_name || m.profiles?.username}</option>)}
+                  <option value="__none__">Unassigned</option>
+                </select>
+                <select value={filterPriority} onChange={e => setFilterPriority(e.target.value)}
+                  className="h-8 bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-2 text-[12px] font-mono text-on-surface-variant focus:border-primary focus:outline-none">
+                  <option value="all">All Priorities</option>
+                  <option value="urgent">Urgent</option>
+                  <option value="high">High</option>
+                  <option value="medium">Medium</option>
+                  <option value="low">Low</option>
+                </select>
+                {labels.length > 0 && (
+                  <select value={filterLabel} onChange={e => setFilterLabel(e.target.value)}
+                    className="h-8 bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-2 text-[12px] font-mono text-on-surface-variant focus:border-primary focus:outline-none">
+                    <option value="all">All Labels</option>
+                    {labels.map(l => <option key={l.id} value={l.id}>{l.name}</option>)}
+                  </select>
+                )}
+                {(filterAssignee !== 'all' || filterPriority !== 'all' || filterLabel !== 'all') && (
+                  <button onClick={() => { setFilterAssignee('all'); setFilterPriority('all'); setFilterLabel('all') }}
+                    className="h-8 flex items-center gap-1 px-2 text-[11px] font-mono text-on-surface-variant hover:text-error transition-colors">
+                    <span className="material-symbols-outlined text-[12px]">filter_alt_off</span> Clear
+                  </button>
+                )}
+              </div>
               <button onClick={() => setShowAddTask(true)}
                 className="flex items-center gap-1.5 rounded-lg bg-primary text-on-primary px-3 py-1.5 text-[13px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
                 <span className="material-symbols-outlined text-[14px]">add</span> Add Task
@@ -386,7 +428,7 @@ export default function ProjectDetail() {
           ) : (
             <div className="flex gap-space-md overflow-x-auto pb-4 items-start">
             {STATUS_COLS.map(col => {
-              const colTasks = tasks.filter(t => t.status === col)
+              const colTasks = filteredTasks.filter(t => t.status === col)
               return (
                 <div key={col} className="w-[320px] flex-shrink-0 flex flex-col bg-surface-container-low/60 border border-outline-variant/30 rounded-lg max-h-full"
                   onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, col)}>
