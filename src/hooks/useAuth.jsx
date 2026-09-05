@@ -34,13 +34,26 @@ export function AuthProvider({ children }) {
     const { data, error } = await supabase.auth.signUp({ email, password })
     if (error) throw error
     if (data.user) {
-      await supabase.from('profiles').insert({ id: data.user.id, username, full_name: username })
+      const { error: profileError } = await supabase.from('profiles').upsert(
+        { id: data.user.id, username, full_name: username, email },
+        { onConflict: 'id' }
+      )
+      if (profileError) console.error('Profile upsert error:', profileError)
     }
     return data
   }
 
   async function signIn(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+    if (error) throw error
+    return data
+  }
+
+  async function signInWithGoogle() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: { redirectTo: `${window.location.origin}/dashboard` }
+    })
     if (error) throw error
     return data
   }
@@ -59,7 +72,7 @@ export function AuthProvider({ children }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, signUp, signIn, signOut, resetPassword, fetchProfile }}>
+    <AuthContext.Provider value={{ user, profile, loading, signUp, signIn, signInWithGoogle, signOut, resetPassword, fetchProfile }}>
       {children}
     </AuthContext.Provider>
   )
