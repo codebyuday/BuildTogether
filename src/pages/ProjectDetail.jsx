@@ -259,7 +259,7 @@ export default function ProjectDetail() {
             )}
             {!isOwner && !isMember && project.status === 'recruiting' && (
               <button onClick={() => setShowApply(true)}
-                className="flex items-center gap-1.5 rounded-lg bg-primary text-on-primary px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
+                className="flex items-center gap-1.5 rounded-[99px] bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
                 <span className="material-symbols-outlined text-[14px]">send</span> Apply
               </button>
             )}
@@ -286,7 +286,7 @@ export default function ProjectDetail() {
             <div className="flex justify-end gap-2">
               <button onClick={() => setShowApply(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-on-surface-variant hover:text-on-surface">Cancel</button>
               <button onClick={() => applyMutation.mutate()} disabled={!applyMsg.trim() || applyMutation.isPending}
-                className="rounded-lg bg-primary text-on-primary px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
+                className="rounded-[99px] bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
                 {applyMutation.isPending ? 'Sending...' : 'Submit'}
               </button>
             </div>
@@ -412,7 +412,7 @@ export default function ProjectDetail() {
                 )}
               </div>
               <button onClick={() => setShowAddTask(true)}
-                className="flex items-center gap-1.5 rounded-lg bg-primary text-on-primary px-3 py-1.5 text-[13px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
+                className="flex items-center gap-1.5 rounded-[99px] bg-primary text-white px-3 py-1.5 text-[13px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
                 <span className="material-symbols-outlined text-[14px]">add</span> Add Task
               </button>
             </div>
@@ -521,7 +521,7 @@ export default function ProjectDetail() {
                 <div className="flex justify-end gap-2">
                   <button onClick={() => setShowAddTask(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-on-surface-variant hover:text-on-surface">Cancel</button>
                   <button onClick={() => newTask.title.trim() && addTaskMutation.mutate()} disabled={!newTask.title.trim() || addTaskMutation.isPending}
-                    className="rounded-lg bg-primary text-on-primary px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
+                    className="rounded-[99px] bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
                     {addTaskMutation.isPending ? 'Creating...' : 'Create'}
                   </button>
                 </div>
@@ -732,3 +732,4 @@ export default function ProjectDetail() {
     </div>
   )
 }
+

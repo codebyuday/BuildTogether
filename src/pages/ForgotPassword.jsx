@@ -1,69 +1,62 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import toast from 'react-hot-toast'
 
 export default function ForgotPassword() {
+  const { resetPassword, loading } = useAuth()
   const [email, setEmail] = useState('')
-  const [loading, setLoading] = useState(false)
   const [sent, setSent] = useState(false)
-  const { resetPassword } = useAuth()
+  const [error, setError] = useState('')
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    setLoading(true)
-    try {
-      await resetPassword(email)
-      setSent(true)
-      toast.success('Reset link sent!')
-    } catch (err) {
-      toast.error(err.message)
-    } finally {
-      setLoading(false)
-    }
+    setError('')
+    const { error } = await resetPassword(email)
+    if (error) setError(error.message)
+    else setSent(true)
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-surface px-4 relative">
+    <div className="flex min-h-screen items-center justify-center bg-surface px-4">
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.03] blur-[120px]" />
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] rounded-full bg-primary/[0.04] blur-[120px]" />
       </div>
-      <div className="w-full max-w-[380px] relative z-10">
-        <div className="mb-8 text-center">
-          <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary/15 border border-primary/25 text-primary text-sm font-bold">
+      <div className="relative w-full max-w-[400px]">
+        <div className="text-center mb-8">
+          <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white text-[14px] font-bold shadow-lg glow-primary">
               <span className="font-mono">B</span>
             </div>
-            <span className="text-[16px] font-semibold text-on-surface tracking-tight">BuildTogether</span>
+            <span className="text-[18px] font-bold text-on-surface tracking-tight">BuildTogether</span>
           </Link>
-          <h1 className="text-[22px] font-bold text-on-surface tracking-tight">Reset your password</h1>
-          <p className="text-[13px] text-on-surface-variant/70 mt-1.5">We&apos;ll send you a reset link</p>
+          <h1 className="text-[24px] font-bold text-on-surface tracking-tight">Reset your password</h1>
+          <p className="text-[14px] text-on-surface-variant mt-1">We&apos;ll send you a reset link</p>
         </div>
 
-        <div className="rounded-xl border border-outline-variant/25 bg-surface-container-low p-6">
+        <div className="bg-white border border-line rounded-2xl p-6" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
           {sent ? (
             <div className="text-center py-4">
-              <span className="material-symbols-outlined text-[36px] text-success/70 mb-3 block">mark_email_read</span>
-              <p className="text-[14px] text-on-surface mb-1">Check your email</p>
-              <p className="text-[12px] text-on-surface-variant/60">We sent a password reset link to <strong className="text-on-surface/80">{email}</strong></p>
+              <div className="w-14 h-14 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-4">
+                <span className="material-symbols-outlined text-[28px] text-success">mark_email_read</span>
+              </div>
+              <h3 className="text-[16px] font-bold text-on-surface mb-2">Check your email</h3>
+              <p className="text-[13.5px] text-on-surface-variant">We sent a password reset link to <span className="font-semibold text-on-surface">{email}</span></p>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
+              {error && (
+                <div className="rounded-xl bg-danger/10 border border-danger/20 px-4 py-2.5 text-[13px] text-danger font-medium">{error}</div>
+              )}
               <div>
-                <label className="mb-1.5 block text-[12px] font-medium text-on-surface-variant">Email</label>
-                <input
-                  type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                  className="w-full bg-surface-container-lowest border border-outline-variant/50 rounded-lg px-3.5 py-2.5 text-on-surface text-[14px] placeholder:text-outline/60 focus:border-primary focus:ring-1 focus:ring-primary/30 outline-none transition-all"
-                  placeholder="you@example.com"
-                />
+                <label className="block text-[12px] font-semibold text-on-surface-variant mb-1.5">Email</label>
+                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required placeholder="you@example.com"
+                  className="w-full bg-surface-container-low border border-line rounded-[12px] px-4 py-2.5 text-[14px] text-on-surface placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/15 focus:border-primary transition-all" />
               </div>
-              <button
-                type="submit" disabled={loading}
-                className="w-full rounded-lg bg-primary text-on-primary py-2.5 text-[14px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+              <button type="submit" disabled={loading}
+                className="w-full bg-primary text-white rounded-[99px] py-2.5 text-[14px] font-semibold hover:brightness-110 transition-all active:scale-[0.98] disabled:opacity-50 glow-primary btn-shimmer">
                 {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-on-primary border-t-transparent" />
+                  <span className="inline-flex items-center gap-2">
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
                     Sending...
                   </span>
                 ) : 'Send Reset Link'}
@@ -72,8 +65,8 @@ export default function ForgotPassword() {
           )}
         </div>
 
-        <p className="mt-5 text-center text-[13px] text-on-surface-variant/70">
-          <Link to="/login" className="text-primary/80 hover:text-primary font-medium transition-colors">Back to sign in</Link>
+        <p className="text-center mt-6 text-[14px] text-on-surface-variant">
+          <Link to="/login" className="text-primary font-semibold hover:underline">Back to sign in</Link>
         </p>
       </div>
     </div>

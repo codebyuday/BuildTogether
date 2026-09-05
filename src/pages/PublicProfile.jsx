@@ -33,26 +33,26 @@ export default function PublicProfile() {
   })
 
   if (isLoading) return <div className="flex justify-center py-12"><div className="h-8 w-8 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>
-  if (!profile) return <div className="text-center py-12 text-[14px] text-on-surface-variant">User not found.</div>
+  if (!profile) return <div className="text-center py-12 text-[14px] text-muted">User not found.</div>
 
   return (
-    <div className="mx-auto max-w-[900px] space-y-space-lg">
-      <section className="bg-surface-container-low border border-outline-variant/30 rounded-xl overflow-hidden">
-        <div className="h-28 bg-gradient-to-r from-surface-container-lowest via-surface-container to-surface-container-high" />
-        <div className="px-space-xl pb-space-lg -mt-12 relative">
-          <div className="flex items-end gap-space-md mb-space-md">
-            <div className="w-24 h-24 rounded-xl bg-surface-container-high border-2 border-surface-container-low flex items-center justify-center text-primary text-[36px] font-bold shadow-xl">
+    <div className="mx-auto max-w-[900px] space-y-6">
+      <section className="bg-white border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+        <div className="h-32 bg-gradient-to-r from-primary/5 via-surface-container to-tertiary/5" />
+        <div className="px-6 pb-6 -mt-12 relative">
+          <div className="flex items-end gap-4 mb-5">
+            <div className="w-24 h-24 rounded-2xl bg-white border-2 border-line flex items-center justify-center text-primary text-[36px] font-bold shadow-lg">
               {profile.username?.[0]?.toUpperCase()}
             </div>
             <div className="pb-1">
-              <h1 className="text-[20px] font-bold text-on-surface">{profile.full_name || profile.username}</h1>
-              <span className="text-[13px] font-mono text-primary">@{profile.username}</span>
+              <h1 className="text-[22px] font-bold text-on-surface tracking-tight">{profile.full_name || profile.username}</h1>
+              <span className="text-[13px] font-mono text-primary font-medium">@{profile.username}</span>
             </div>
           </div>
           {profile.bio && <p className="text-[14px] text-on-surface-variant mb-3">{profile.bio}</p>}
           {profile.github_username && (
             <a href={`https://github.com/${profile.github_username}`} target="_blank" rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-[12px] font-mono text-on-surface-variant hover:text-primary transition-colors">
+              className="inline-flex items-center gap-1 text-[12px] font-mono text-muted hover:text-primary transition-colors">
               <span className="material-symbols-outlined text-[14px]">code</span>
               github.com/{profile.github_username}
             </a>
@@ -61,28 +61,28 @@ export default function PublicProfile() {
       </section>
 
       {profile.skills && profile.skills.length > 0 && (
-        <section className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg">
-          <h2 className="text-[14px] font-semibold text-on-surface mb-3">Skills</h2>
+        <section className="bg-white border border-line rounded-2xl p-6" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+          <h2 className="text-[15px] font-bold text-on-surface mb-3">Skills</h2>
           <div className="flex flex-wrap gap-1.5">
             {profile.skills.map(s => (
-              <span key={s} className="px-2.5 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary font-mono text-[11px]">{s}</span>
+              <span key={s} className="px-3 py-1 rounded-[99px] bg-tag-blue-bg text-tag-blue-text border border-tag-blue-border font-mono text-[11px] font-medium">{s}</span>
             ))}
           </div>
         </section>
       )}
 
       {projects.length > 0 && (
-        <section className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg">
-          <h2 className="text-[14px] font-semibold text-on-surface mb-3">Projects ({projects.length})</h2>
+        <section className="bg-white border border-line rounded-2xl p-6" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+          <h2 className="text-[15px] font-bold text-on-surface mb-3">Projects ({projects.length})</h2>
           <div className="space-y-2">
             {projects.map(p => (
               <Link key={p.id} to={`/projects/${p.id}`}
-                className="flex items-center justify-between p-3 rounded-lg bg-surface-container border border-outline-variant/40 hover:border-outline transition">
+                className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low border border-line hover:border-line-2 hover:-translate-y-0.5 transition-all">
                 <div>
-                  <span className="text-[14px] font-medium text-on-surface">{p.title}</span>
-                  <p className="text-[12px] text-on-surface-variant line-clamp-1">{p.description}</p>
+                  <span className="text-[14px] font-semibold text-on-surface">{p.title}</span>
+                  <p className="text-[12px] text-muted line-clamp-1">{p.description}</p>
                 </div>
-                <span className="text-[10px] font-mono text-on-surface-variant">{p.team_members?.length || 0} members</span>
+                <span className="text-[11px] font-mono text-muted">{p.team_members?.length || 0} members</span>
               </Link>
             ))}
           </div>
@@ -90,15 +90,15 @@ export default function PublicProfile() {
       )}
 
       {contributions.length > 0 && (
-        <section className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg">
-          <h2 className="text-[14px] font-semibold text-on-surface mb-3">Contributions ({contributions.length})</h2>
+        <section className="bg-white border border-line rounded-2xl p-6" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+          <h2 className="text-[15px] font-bold text-on-surface mb-3">Contributions ({contributions.length})</h2>
           <div className="space-y-2">
             {contributions.map(c => (
               <Link key={c.id} to={`/projects/${c.projects?.id}`}
-                className="flex items-center justify-between p-3 rounded-lg bg-surface-container border border-outline-variant/40 hover:border-outline transition">
-                <div>
-                  <span className="text-[14px] font-medium text-on-surface">{c.projects?.title}</span>
-                  <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/40">{c.role}</span>
+                className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low border border-line hover:border-line-2 hover:-translate-y-0.5 transition-all">
+                <div className="flex items-center gap-2">
+                  <span className="text-[14px] font-semibold text-on-surface">{c.projects?.title}</span>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-[99px] bg-surface-container-high text-muted border border-line">{c.role}</span>
                 </div>
               </Link>
             ))}

@@ -80,3 +80,4 @@ export default function ActivityFeed({ projectId, limit = 30 }) {
     </div>
   )
 }
+

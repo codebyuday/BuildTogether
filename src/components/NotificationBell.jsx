@@ -48,7 +48,7 @@ export default function NotificationBell() {
   return (
     <div className="relative">
       <button onClick={() => setOpen(!open)}
-        className="relative h-8 w-8 rounded-lg flex items-center justify-center text-on-surface-variant/60 hover:bg-surface-container-high hover:text-on-surface transition-all">
+        className="relative h-8 w-8 rounded-lg flex items-center justify-center text-muted hover:bg-surface-container-high hover:text-on-surface transition-all">
         <span className="material-symbols-outlined text-[18px]">notifications</span>
         {unreadCount > 0 && (
           <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full ring-2 ring-surface"></span>
@@ -72,13 +72,13 @@ export default function NotificationBell() {
               {notifications.length === 0 ? (
                 <div className="p-8 text-center">
                   <span className="material-symbols-outlined text-[28px] text-outline/30 mb-2 block">notifications_none</span>
-                  <p className="text-[12px] text-on-surface-variant/50">No notifications yet.</p>
+                  <p className="text-[12px] text-muted">No notifications yet.</p>
                 </div>
               ) : (
                 notifications.map(n => (
                   <div key={n.id} className={`border-b border-outline-variant/10 px-4 py-3 transition-colors ${!n.read ? 'bg-primary/[0.03]' : 'hover:bg-surface-container-high/30'}`}>
                     <p className="text-[12px] text-on-surface/80 leading-relaxed">{n.message}</p>
-                    <span className="mt-1 block text-[10px] font-mono text-on-surface-variant/40">
+                    <span className="mt-1 block text-[10px] font-mono text-muted">
                       {new Date(n.created_at).toLocaleString()}
                     </span>
                   </div>
@@ -91,3 +91,4 @@ export default function NotificationBell() {
     </div>
   )
 }
+

@@ -55,3 +55,4 @@ export default function StarButton({ projectId, size = 'md' }) {
     </button>
   )
 }
+
