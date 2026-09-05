@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import StarButton from '../components/StarButton'
 
 const STATUS_OPTIONS = ['all', 'recruiting', 'full', 'archived']
 const STATUS_LABELS = { all: 'All', recruiting: 'Recruiting', full: 'Full', archived: 'Archived' }
@@ -135,10 +136,12 @@ export default function Explore() {
                     {p.profiles?.username?.[0]?.toUpperCase() || '?'}
                   </div>
                 </div>
-                <button className="px-space-md py-1 bg-primary-container hover:bg-primary text-on-primary font-medium rounded-lg text-[14px] transition-all active:scale-[0.98] shadow-sm flex items-center gap-1">
-                  View
-                  <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
-                </button>
+                <div className="flex items-center gap-2" onClick={e => e.preventDefault()}>
+                  <StarButton projectId={p.id} />
+                  <span className="text-[14px] text-on-surface-variant group-hover:text-primary transition-colors flex items-center gap-1">
+                    View <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
+                  </span>
+                </div>
               </div>
             </Link>
           ))}

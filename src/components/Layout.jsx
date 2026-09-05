@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import NotificationBell from './NotificationBell'
+import UserSearch from './UserSearch'
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
@@ -90,6 +91,7 @@ export default function Layout() {
           </div>
 
           <div className="flex items-center gap-3">
+            <UserSearch />
             <NotificationBell />
           </div>
         </header>

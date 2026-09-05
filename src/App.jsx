@@ -11,6 +11,8 @@ import Explore from './pages/Explore'
 import ProjectDetail from './pages/ProjectDetail'
 import CreateProject from './pages/CreateProject'
 import Profile from './pages/Profile'
+import PublicProfile from './pages/PublicProfile'
+import NotFound from './pages/NotFound'
 
 export default function App() {
   return (
@@ -20,6 +22,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/404" element={<NotFound />} />
         <Route element={<ProtectedRoute />}>
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
@@ -27,8 +30,10 @@ export default function App() {
             <Route path="/projects/new" element={<CreateProject />} />
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/users/:username" element={<PublicProfile />} />
           </Route>
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </AuthProvider>
   )
