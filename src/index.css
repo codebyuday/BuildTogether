@@ -75,8 +75,8 @@
   --rounded-full: 9999px;
 }
 
-/* Dark theme overrides */
-[data-theme="dark"] {
+/* Dark theme overrides — html[data-theme] beats :root from @theme */
+html[data-theme="dark"] {
   --color-primary: #B5B0FC;
   --color-primary-container: #625AEA;
   --color-on-primary: #1A00A3;
