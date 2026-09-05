@@ -4,6 +4,7 @@ import { useAuth } from '../hooks/useAuth'
 import NotificationBell from './NotificationBell'
 import UserSearch from './UserSearch'
 import ShortcutsModal from './ShortcutsModal'
+import PageTransition from './PageTransition'
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
@@ -113,7 +114,9 @@ export default function Layout() {
         </header>
 
         <main className="flex-1 overflow-y-auto p-5">
-          <Outlet />
+          <PageTransition>
+            <Outlet />
+          </PageTransition>
         </main>
       </div>
       <ShortcutsModal />
