@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { jsPDF } from 'jspdf'
 
 export default function ExportDropdown({ project, tasks = [], milestones = [] }) {
   const [open, setOpen] = useState(false)
@@ -50,7 +51,86 @@ export default function ExportDropdown({ project, tasks = [], milestones = [] })
   }
 
   function exportPDF() {
-    window.print()
+    const doc = new jsPDF()
+    const pageWidth = doc.internal.pageSize.getWidth()
+    let y = 20
+
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(18)
+    doc.text(project.title, 20, y)
+    y += 10
+
+    doc.setFont('helvetica', 'normal')
+    doc.setFontSize(10)
+    doc.setTextColor(100)
+    doc.text(`Status: ${project.status} | Visibility: ${project.visibility}`, 20, y)
+    y += 8
+
+    if (project.description) {
+      doc.setFontSize(11)
+      doc.setTextColor(0)
+      const descLines = doc.splitTextToSize(project.description, pageWidth - 40)
+      doc.text(descLines, 20, y)
+      y += descLines.length * 5 + 5
+    }
+
+    if (project.tech_stack?.length) {
+      doc.setFontSize(10)
+      doc.setTextColor(80)
+      doc.text(`Tech Stack: ${project.tech_stack.join(', ')}`, 20, y)
+      y += 8
+    }
+
+    y += 5
+    doc.setFont('helvetica', 'bold')
+    doc.setFontSize(14)
+    doc.setTextColor(0)
+    doc.text('Tasks', 20, y)
+    y += 8
+
+    const statuses = ['todo', 'in_progress', 'in_review', 'done']
+    const statusLabels = { todo: 'To Do', in_progress: 'In Progress', in_review: 'In Review', done: 'Done' }
+
+    statuses.forEach(s => {
+      const colTasks = tasks.filter(t => t.status === s)
+      if (colTasks.length === 0) return
+      if (y > 270) { doc.addPage(); y = 20 }
+
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(11)
+      doc.text(`${statusLabels[s]} (${colTasks.length})`, 20, y)
+      y += 6
+
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(9)
+      colTasks.forEach(t => {
+        if (y > 270) { doc.addPage(); y = 20 }
+        const line = `• ${t.title} [${t.priority}]${t.due_date ? ` due ${t.due_date}` : ''}`
+        doc.text(line, 25, y)
+        y += 5
+      })
+      y += 3
+    })
+
+    if (milestones.length > 0) {
+      if (y > 260) { doc.addPage(); y = 20 }
+      y += 5
+      doc.setFont('helvetica', 'bold')
+      doc.setFontSize(14)
+      doc.setTextColor(0)
+      doc.text('Roadmap', 20, y)
+      y += 8
+
+      doc.setFont('helvetica', 'normal')
+      doc.setFontSize(9)
+      milestones.forEach(m => {
+        if (y > 270) { doc.addPage(); y = 20 }
+        doc.text(`• ${m.title} (${m.status})${m.start_date ? ` — ${m.start_date}` : ''}${m.end_date ? ` → ${m.end_date}` : ''}`, 25, y)
+        y += 5
+      })
+    }
+
+    doc.save(`${project.title}.pdf`)
     setOpen(false)
   }
 
@@ -76,7 +156,7 @@ export default function ExportDropdown({ project, tasks = [], milestones = [] })
               <span className="material-symbols-outlined text-[14px]">data_object</span> JSON
             </button>
             <button onClick={exportPDF} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-on-surface hover:bg-surface-container-high transition-colors">
-              <span className="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF (Print)
+              <span className="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF
             </button>
           </div>
         </>

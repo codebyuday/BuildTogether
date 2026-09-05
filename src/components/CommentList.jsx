@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
@@ -9,6 +9,16 @@ export default function CommentList({ taskId, projectId }) {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const [body, setBody] = useState('')
+
+  useEffect(() => {
+    if (!taskId) return
+    const channel = supabase.channel(`comments-${taskId}`)
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'comments', filter: `task_id=eq.${taskId}` }, () => {
+        queryClient.invalidateQueries({ queryKey: ['comments', taskId] })
+      })
+      .subscribe()
+    return () => { supabase.removeChannel(channel) }
+  }, [taskId, queryClient])
 
   const { data: comments = [] } = useQuery({
     queryKey: ['comments', taskId],
