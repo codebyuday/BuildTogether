@@ -8,7 +8,7 @@ export function ThemeProvider({ children }) {
       const stored = localStorage.getItem('bt-theme')
       if (stored === 'dark' || stored === 'light') return stored
     }
-    return 'dark'
+    return 'light'
   })
 
   useEffect(() => {
