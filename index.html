@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
     <script>
       (function() {
+        var v = localStorage.getItem('bt-theme-v');
+        if (v !== '2') { localStorage.setItem('bt-theme-v', '2'); localStorage.removeItem('bt-theme'); }
         var t = localStorage.getItem('bt-theme');
         if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
       })();

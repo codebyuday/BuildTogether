@@ -2,10 +2,20 @@ import { createContext, useContext, useEffect, useState, useCallback } from 'rea
 
 const ThemeContext = createContext(null)
 
+const THEME_KEY = 'bt-theme'
+const THEME_VERSION_KEY = 'bt-theme-v'
+const CURRENT_VERSION = '2'
+
 export function ThemeProvider({ children }) {
   const [theme, setThemeState] = useState(() => {
     if (typeof window !== 'undefined') {
-      const stored = localStorage.getItem('bt-theme')
+      const version = localStorage.getItem(THEME_VERSION_KEY)
+      if (version !== CURRENT_VERSION) {
+        localStorage.setItem(THEME_VERSION_KEY, CURRENT_VERSION)
+        localStorage.removeItem(THEME_KEY)
+        return 'light'
+      }
+      const stored = localStorage.getItem(THEME_KEY)
       if (stored === 'dark' || stored === 'light') return stored
     }
     return 'light'
@@ -13,7 +23,7 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
-    localStorage.setItem('bt-theme', theme)
+    localStorage.setItem(THEME_KEY, theme)
   }, [theme])
 
   const toggleTheme = useCallback(() => {
