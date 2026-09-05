@@ -200,6 +200,7 @@ export default function ProjectDetail() {
     { key: 'overview', label: 'Overview' },
     { key: 'roadmap', label: `Roadmap (${milestones.length})` },
     { key: 'board', label: `Board (${tasks.length})` },
+    { key: 'stats', label: 'Stats' },
     { key: 'team', label: `Team (${members.length})` },
     { key: 'github', label: 'GitHub' },
     { key: 'activity', label: 'Activity' },
@@ -529,6 +530,132 @@ export default function ProjectDetail() {
           )}
         </div>
       )}
+
+      {tab === 'stats' && (() => {
+        const total = tasks.length
+        const done = tasks.filter(t => t.status === 'done').length
+        const inProgress = tasks.filter(t => t.status === 'in_progress').length
+        const inReview = tasks.filter(t => t.status === 'in_review').length
+        const todo = tasks.filter(t => t.status === 'todo').length
+        const pct = total > 0 ? Math.round((done / total) * 100) : 0
+        const priorityCounts = { urgent: 0, high: 0, medium: 0, low: 0 }
+        tasks.forEach(t => { if (priorityCounts[t.priority] !== undefined) priorityCounts[t.priority]++ })
+        const memberTaskCount = {}
+        tasks.forEach(t => {
+          const name = t.profiles?.full_name || t.profiles?.username || 'Unassigned'
+          memberTaskCount[name] = (memberTaskCount[name] || 0) + 1
+        })
+        const overdue = tasks.filter(t => t.due_date && new Date(t.due_date) < new Date() && t.status !== 'done').length
+        const completedMilestones = milestones.filter(m => m.status === 'done' || m.status === 'completed').length
+        return (
+          <div className="space-y-space-lg">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
+                <span className="text-[28px] font-bold text-on-surface">{pct}%</span>
+                <p className="text-[12px] text-on-surface-variant mt-1">Completion</p>
+                <div className="mt-2 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+                  <div className="h-full bg-secondary rounded-full transition-all" style={{ width: `${pct}%` }} />
+                </div>
+              </div>
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
+                <span className="text-[28px] font-bold text-on-surface">{total}</span>
+                <p className="text-[12px] text-on-surface-variant mt-1">Total Tasks</p>
+              </div>
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
+                <span className="text-[28px] font-bold text-tertiary">{inProgress}</span>
+                <p className="text-[12px] text-on-surface-variant mt-1">In Progress</p>
+              </div>
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
+                <span className="text-[28px] font-bold text-error">{overdue}</span>
+                <p className="text-[12px] text-on-surface-variant mt-1">Overdue</p>
+              </div>
+            </div>
+
+            <div className="grid gap-space-lg md:grid-cols-2">
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">By Status</h3>
+                <div className="space-y-2">
+                  {[
+                    { label: 'To Do', count: todo, color: 'bg-outline' },
+                    { label: 'In Progress', count: inProgress, color: 'bg-primary' },
+                    { label: 'In Review', count: inReview, color: 'bg-tertiary' },
+                    { label: 'Done', count: done, color: 'bg-secondary' },
+                  ].map(s => (
+                    <div key={s.label} className="flex items-center gap-3">
+                      <span className="text-[12px] text-on-surface-variant w-20">{s.label}</span>
+                      <div className="flex-1 h-4 bg-surface-container-high rounded-full overflow-hidden">
+                        <div className={`h-full ${s.color} rounded-full`} style={{ width: total > 0 ? `${(s.count / total) * 100}%` : '0%' }} />
+                      </div>
+                      <span className="text-[12px] font-mono text-on-surface-variant w-6 text-right">{s.count}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">By Priority</h3>
+                <div className="space-y-2">
+                  {[
+                    { label: 'Urgent', count: priorityCounts.urgent, color: 'bg-error' },
+                    { label: 'High', count: priorityCounts.high, color: 'bg-error-container' },
+                    { label: 'Medium', count: priorityCounts.medium, color: 'bg-tertiary' },
+                    { label: 'Low', count: priorityCounts.low, color: 'bg-outline' },
+                  ].map(p => (
+                    <div key={p.label} className="flex items-center gap-3">
+                      <span className="text-[12px] text-on-surface-variant w-14">{p.label}</span>
+                      <div className="flex-1 h-4 bg-surface-container-high rounded-full overflow-hidden">
+                        <div className={`h-full ${p.color} rounded-full`} style={{ width: total > 0 ? `${(p.count / total) * 100}%` : '0%' }} />
+                      </div>
+                      <span className="text-[12px] font-mono text-on-surface-variant w-6 text-right">{p.count}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">By Assignee</h3>
+                <div className="space-y-2">
+                  {Object.entries(memberTaskCount).sort((a, b) => b[1] - a[1]).map(([name, count]) => (
+                    <div key={name} className="flex items-center gap-3">
+                      <span className="text-[12px] text-on-surface-variant truncate max-w-[120px]">{name}</span>
+                      <div className="flex-1 h-4 bg-surface-container-high rounded-full overflow-hidden">
+                        <div className="h-full bg-primary rounded-full" style={{ width: total > 0 ? `${(count / total) * 100}%` : '0%' }} />
+                      </div>
+                      <span className="text-[12px] font-mono text-on-surface-variant w-6 text-right">{count}</span>
+                    </div>
+                  ))}
+                  {Object.keys(memberTaskCount).length === 0 && (
+                    <p className="text-[12px] text-on-surface-variant">No tasks assigned yet.</p>
+                  )}
+                </div>
+              </div>
+
+              <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">Milestones</h3>
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between text-[12px]">
+                    <span className="text-on-surface-variant">Completed</span>
+                    <span className="font-mono text-secondary">{completedMilestones} / {milestones.length}</span>
+                  </div>
+                  {milestones.length > 0 && (
+                    <div className="h-4 bg-surface-container-high rounded-full overflow-hidden">
+                      <div className="h-full bg-secondary rounded-full" style={{ width: `${(completedMilestones / milestones.length) * 100}%` }} />
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between text-[12px] pt-2 border-t border-outline-variant/30">
+                    <span className="text-on-surface-variant">Team size</span>
+                    <span className="font-mono text-on-surface">{members.length}</span>
+                  </div>
+                  <div className="flex items-center justify-between text-[12px]">
+                    <span className="text-on-surface-variant">Labels used</span>
+                    <span className="font-mono text-on-surface">{labels.length}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )
+      })()}
 
       {tab === 'team' && (
         <div className="space-y-2">
