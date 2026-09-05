@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
-import { Bell, CheckCheck } from 'lucide-react'
 
 export default function NotificationBell() {
   const { user } = useAuth()
@@ -24,7 +23,6 @@ export default function NotificationBell() {
 
   const unreadCount = notifications.filter(n => !n.read).length
 
-  // Real-time subscription
   useEffect(() => {
     const channel = supabase
       .channel('notifications-realtime')
@@ -37,17 +35,12 @@ export default function NotificationBell() {
         queryClient.invalidateQueries({ queryKey: ['notifications'] })
       })
       .subscribe()
-
     return () => { supabase.removeChannel(channel) }
   }, [user.id, queryClient])
 
   const markRead = useMutation({
     mutationFn: async () => {
-      await supabase
-        .from('notifications')
-        .update({ read: true })
-        .eq('user_id', user.id)
-        .eq('read', false)
+      await supabase.from('notifications').update({ read: true }).eq('user_id', user.id).eq('read', false)
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   })
@@ -55,36 +48,34 @@ export default function NotificationBell() {
   return (
     <div className="relative">
       <button onClick={() => setOpen(!open)}
-        className="relative rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-slate-200">
-        <Bell size={18} />
+        className="relative h-8 w-8 rounded flex items-center justify-center text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition">
+        <span className="material-symbols-outlined text-[18px]">notifications</span>
         {unreadCount > 0 && (
-          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-primary-500 text-[9px] font-bold text-white">
-            {unreadCount > 9 ? '9+' : unreadCount}
-          </span>
+          <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-error rounded-full"></span>
         )}
       </button>
 
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-slate-700 bg-slate-900 shadow-xl">
-            <div className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
-              <span className="text-sm font-semibold text-white">Notifications</span>
+          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-outline-variant/40 bg-surface-container-low shadow-2xl">
+            <div className="flex items-center justify-between border-b border-outline-variant/30 px-4 py-3">
+              <span className="text-[14px] font-semibold text-on-surface">Notifications</span>
               {unreadCount > 0 && (
                 <button onClick={() => markRead.mutate()}
-                  className="flex items-center gap-1 text-[10px] text-primary-400 hover:underline">
-                  <CheckCheck size={12} /> Mark all read
+                  className="flex items-center gap-1 text-[10px] font-mono text-primary hover:underline">
+                  Mark all read
                 </button>
               )}
             </div>
             <div className="max-h-80 overflow-y-auto">
               {notifications.length === 0 ? (
-                <div className="p-6 text-center text-xs text-slate-500">No notifications yet.</div>
+                <div className="p-6 text-center text-[12px] text-on-surface-variant">No notifications yet.</div>
               ) : (
                 notifications.map(n => (
-                  <div key={n.id} className={`border-b border-slate-800 px-4 py-3 ${!n.read ? 'bg-slate-800/50' : ''}`}>
-                    <p className="text-xs text-slate-300">{n.message}</p>
-                    <span className="mt-1 block text-[10px] text-slate-500">
+                  <div key={n.id} className={`border-b border-outline-variant/20 px-4 py-3 ${!n.read ? 'bg-surface-container' : ''}`}>
+                    <p className="text-[12px] text-on-surface">{n.message}</p>
+                    <span className="mt-1 block text-[10px] font-mono text-on-surface-variant">
                       {new Date(n.created_at).toLocaleString()}
                     </span>
                   </div>
