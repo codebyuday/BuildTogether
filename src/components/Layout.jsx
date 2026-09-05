@@ -1,13 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import {
-  LayoutDashboard,
-  Compass,
-  User,
-  LogOut,
-  Bell,
-  Search,
-} from 'lucide-react'
+import NotificationBell from './NotificationBell'
+import { LayoutDashboard, Compass, User, LogOut } from 'lucide-react'
 
 const navItems = [
   { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -23,77 +17,59 @@ export default function Layout() {
       {/* Sidebar */}
       <aside className="hidden w-60 flex-col border-r border-slate-800 bg-slate-900 md:flex">
         <div className="flex h-14 items-center gap-2 border-b border-slate-800 px-4">
-          <div className="flex h-7 w-7 items-center justify-center rounded bg-primary-600 text-xs font-bold text-white">
-            B
-          </div>
+          <div className="flex h-7 w-7 items-center justify-center rounded bg-primary-600 text-xs font-bold text-white">B</div>
           <span className="text-sm font-bold tracking-tight text-white">BuildTogether</span>
         </div>
 
         <nav className="flex-1 space-y-1 p-3">
           {navItems.map(({ to, label, icon: Icon }) => (
-            <Link
-              key={to}
-              to={to}
+            <Link key={to} to={to}
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                 location.pathname === to
                   ? 'bg-primary-600/10 text-primary-400'
                   : 'text-slate-400 hover:bg-slate-800 hover:text-slate-200'
-              }`}
-            >
-              <Icon size={18} />
-              {label}
+              }`}>
+              <Icon size={18} /> {label}
             </Link>
           ))}
+          <Link to="/projects/new"
+            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <span className="flex h-5 w-5 items-center justify-center rounded border border-dashed border-slate-600 text-[10px]">+</span>
+            New Project
+          </Link>
         </nav>
 
         <div className="border-t border-slate-800 p-3">
-          <Link
-            to="/profile"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200"
-          >
-            <User size={18} />
-            Profile
+          <Link to="/profile" className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-slate-800 hover:text-slate-200">
+            <User size={18} /> Profile
           </Link>
-          <button
-            onClick={signOut}
-            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-slate-800 hover:text-red-400"
-          >
-            <LogOut size={18} />
-            Sign Out
+          <button onClick={signOut}
+            className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-slate-800 hover:text-red-400">
+            <LogOut size={18} /> Sign Out
           </button>
         </div>
       </aside>
 
       {/* Main */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top bar */}
         <header className="flex h-14 items-center justify-between border-b border-slate-800 bg-slate-900 px-4">
           <div className="flex items-center gap-3 md:hidden">
-            <div className="flex h-7 w-7 items-center justify-center rounded bg-primary-600 text-xs font-bold text-white">
-              B
-            </div>
+            <div className="flex h-7 w-7 items-center justify-center rounded bg-primary-600 text-xs font-bold text-white">B</div>
             <span className="text-sm font-bold text-white">BuildTogether</span>
           </div>
 
-          <div className="hidden items-center gap-2 rounded-lg border border-slate-700 bg-slate-800 px-3 py-1.5 text-sm text-slate-400 md:flex">
-            <Search size={14} />
-            <span>Search...</span>
-          </div>
+          <div className="flex-1" />
 
-          <div className="flex items-center gap-3">
-            <button className="relative rounded-lg p-2 text-slate-400 hover:bg-slate-800 hover:text-slate-200">
-              <Bell size={18} />
-              <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-primary-500" />
-            </button>
+          <div className="flex items-center gap-2">
+            <NotificationBell />
             <Link to="/profile" className="flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-600/20 text-xs font-bold text-primary-400">
-                {profile?.username?.[0]?.toUpperCase() || profile?.full_name?.[0]?.toUpperCase() || 'U'}
+                {profile?.username?.[0]?.toUpperCase() || 'U'}
               </div>
             </Link>
           </div>
         </header>
 
-        {/* Content */}
         <main className="flex-1 overflow-y-auto p-6">
           <Outlet />
         </main>
