@@ -306,9 +306,7 @@ export default function Landing() {
             </div>
           </div>
           <div className="mt-14 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-line">
-            <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-              <a href="https://github.com/codebyuday/BuildTogether" target="_blank" rel="noopener" className="text-[12px] text-muted hover:text-on-surface transition-colors">GitHub</a>
-            </div>
+            <p className="text-[12px] text-muted">Created &amp; Administered by <a href="https://www.linkedin.com/in/udaypratap-singh-285823288/" target="_blank" rel="noopener" className="hover:text-on-surface transition-colors">Uday Pratap Singh</a></p>
             <p className="text-[12px] text-muted">&copy; {new Date().getFullYear()} BuildTogether. All rights reserved.</p>
           </div>
         </div>
