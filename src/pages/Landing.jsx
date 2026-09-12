@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { supabase } from '../lib/supabase'
 import NumberTicker from '../components/NumberTicker'
 import HeroParticles from '../components/HeroParticles'
@@ -52,6 +52,7 @@ export default function Landing() {
   const [openFaq, setOpenFaq] = useState(null)
   const [faqCategory, setFaqCategory] = useState('All')
   const revealRefs = useRef([])
+  const observerRef = useRef(null)
   const [stats, setStats] = useState({ projects: 0, members: 0 })
 
   useEffect(() => {
@@ -69,16 +70,19 @@ export default function Landing() {
   }, [])
 
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
+    observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view') })
     }, { threshold: 0.15 })
-    revealRefs.current.forEach(el => { if (el) observer.observe(el) })
-    return () => observer.disconnect()
+    return () => observerRef.current?.disconnect()
   }, [])
 
-  const addRevealRef = (el) => {
-    if (el && !revealRefs.current.includes(el)) revealRefs.current.push(el)
-  }
+  const addRevealRef = useCallback((el) => {
+    if (!el) return
+    if (!revealRefs.current.includes(el)) {
+      revealRefs.current.push(el)
+      observerRef.current?.observe(el)
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-surface overflow-hidden">
