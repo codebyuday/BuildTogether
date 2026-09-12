@@ -78,7 +78,7 @@ export default function Landing() {
       {/* Nav */}
       <nav className="fixed top-0 z-50 flex h-[60px] w-full items-center justify-between px-6 lg:px-10 glass-warm">
         <div className="flex items-center gap-3">
-          <img src="/logo.png" alt="BuildTogether" className="h-8" />
+          <img src="/logo.png" alt="BuildTogether" className="h-10 dark:invert" />
         </div>
         <div className="flex items-center gap-3">
           <Link to="/login" className="text-[14px] text-on-surface-variant font-medium hover:text-on-surface transition-colors px-4 py-2 rounded-[99px] hover:bg-surface-container-high/50">Login</Link>
@@ -287,7 +287,7 @@ export default function Landing() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             <div>
               <div className="flex items-center gap-2.5 mb-4">
-                <img src="/logo.png" alt="BuildTogether" className="h-7" />
+                <img src="/logo.png" alt="BuildTogether" className="h-9 dark:invert" />
               </div>
               <p className="text-[13.5px] leading-[1.6] text-on-surface-variant mb-5">A modern workspace for developers to build projects together.</p>
             </div>

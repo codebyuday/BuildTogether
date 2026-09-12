@@ -27,7 +27,7 @@ export default function Register() {
       <div className="relative w-full max-w-[400px]">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
-            <img src="/logo.png" alt="BuildTogether" className="h-8" />
+            <img src="/logo.png" alt="BuildTogether" className="h-10 dark:invert" />
           </Link>
           <h1 className="text-[24px] font-bold text-on-surface tracking-tight">Create your account</h1>
           <p className="text-[14px] text-on-surface-variant mt-1">Start building with your team</p>
