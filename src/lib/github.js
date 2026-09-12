@@ -51,3 +51,41 @@ export function parseRepoUrl(url) {
   if (!match) return null
   return { owner: match[1], repo: match[2].replace(/\.git$/, '') }
 }
+
+export async function pushToGitHub(owner, repo, filename, content, message) {
+  const token = localStorage.getItem('gh_token')
+  if (!token) throw new Error('GitHub token not found. Please connect your GitHub account in Settings.')
+
+  const encodedContent = btoa(unescape(encodeURIComponent(content)))
+
+  let sha = null
+  try {
+    const existing = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filename}`, {
+      headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' },
+    })
+    if (existing.ok) {
+      const data = await existing.json()
+      sha = data.sha
+    }
+  } catch {}
+
+  const body = { message, content: encodedContent }
+  if (sha) body.sha = sha
+
+  const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${filename}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `token ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}))
+    throw new Error(err.message || `Failed to push ${filename}`)
+  }
+
+  return { filename, status: 'pushed' }
+}

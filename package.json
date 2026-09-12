@@ -10,6 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@codemirror/lang-css": "^6.3.1",
+    "@codemirror/lang-html": "^6.4.12",
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/lang-json": "^6.0.2",
+    "@codemirror/lang-python": "^6.2.1",
+    "@supabase-labs/y-supabase": "^0.1.0",
     "@supabase/supabase-js": "^2.115.0",
     "@tanstack/react-query": "^5.102.8",
     "@tiptap/extension-placeholder": "^3.31.3",
@@ -18,7 +24,9 @@
     "@tiptap/pm": "^3.31.3",
     "@tiptap/react": "^3.31.3",
     "@tiptap/starter-kit": "^3.31.3",
+    "@uiw/react-codemirror": "^4.25.11",
     "clsx": "^2.1.1",
+    "codemirror": "^6.0.2",
     "date-fns": "^4.4.0",
     "jspdf": "^4.2.1",
     "react": "^19.2.8",
@@ -28,7 +36,9 @@
     "react-router-dom": "^7.18.3",
     "recharts": "^3.10.1",
     "remark-gfm": "^4.0.1",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.6.0",
+    "y-codemirror.next": "^0.3.6",
+    "yjs": "^13.6.32"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.3",

@@ -202,6 +202,7 @@ export default function ProjectDetail() {
     { key: 'stats', label: 'Stats' },
     { key: 'team', label: `Team (${members.length})` },
     { key: 'github', label: 'GitHub' },
+    { key: 'code', label: 'Code' },
     { key: 'activity', label: 'Activity' },
   ]
   if (isOwner) tabs.push({ key: 'applications', label: `Applications (${applications.filter(a => a.status === 'pending').length})` })
@@ -636,6 +637,28 @@ export default function ProjectDetail() {
                   Connect Repository
                 </button>
               )}
+            </div>
+          )}
+        </div>
+      )}
+
+      {tab === 'code' && (
+        <div>
+          {(isOwner || isMember) ? (
+            <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
+              <span className="material-symbols-outlined text-[32px] text-primary mb-2">code</span>
+              <p className="text-[14px] text-on-surface mb-1 font-medium">Live Code Editor</p>
+              <p className="text-[13px] text-on-surface-variant mb-4">Collaborate on code in real-time with your team. Changes can be pushed to GitHub.</p>
+              <Link to={`/projects/${id}/code`}
+                className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2 rounded-3xl text-[13px] font-semibold hover:brightness-110 transition-all">
+                <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+                Open Code Editor
+              </Link>
+            </div>
+          ) : (
+            <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
+              <span className="material-symbols-outlined text-[32px] text-outline mb-2">lock</span>
+              <p className="text-[14px] text-on-surface-variant">Join this project to access the code editor.</p>
             </div>
           )}
         </div>

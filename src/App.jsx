@@ -12,6 +12,7 @@ const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Explore = lazy(() => import('./pages/Explore'))
 const ProjectDetail = lazy(() => import('./pages/ProjectDetail'))
+const CodeEditor = lazy(() => import('./pages/CodeEditor'))
 const CreateProject = lazy(() => import('./pages/CreateProject'))
 const Profile = lazy(() => import('./pages/Profile'))
 const PublicProfile = lazy(() => import('./pages/PublicProfile'))
@@ -45,6 +46,7 @@ export default function App() {
                 <Route path="/explore" element={<Explore />} />
                 <Route path="/projects/new" element={<CreateProject />} />
                 <Route path="/projects/:id" element={<ProjectDetail />} />
+                <Route path="/projects/:id/code" element={<CodeEditor />} />
                 <Route path="/profile" element={<Profile />} />
                 <Route path="/users/:username" element={<PublicProfile />} />
               </Route>
