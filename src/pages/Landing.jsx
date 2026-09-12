@@ -20,12 +20,17 @@ const steps = [
   { num: '03', title: 'Ship together', desc: 'Assign tasks on a Kanban board, track progress in real-time, and launch with your team.' },
 ]
 
+const faqCategories = ['All', 'Getting Started', 'Features', 'Technical']
+
 const faqItems = [
-  { q: 'Is BuildTogether free to use?', a: 'Yes. BuildTogether is free for all developers. Create unlimited projects, recruit contributors, and collaborate in real-time without any cost.' },
-  { q: 'How does team recruitment work?', a: 'Publish your project with requirements and tech stack. Contributors apply with their profiles and skills. You review applications and accept the best fit for your team.' },
-  { q: 'Can I connect my GitHub repository?', a: 'Yes. Connect any public or private GitHub repository to get live commit activity, contributor stats, and language breakdown directly on your project page.' },
-  { q: 'What export formats are supported?', a: 'You can export project data to Markdown, CSV, JSON, or PDF. Perfect for sharing progress with stakeholders or keeping local backups.' },
-  { q: 'How does real-time collaboration work?', a: 'All changes to tasks, comments, and activity feeds are synchronized in real-time using Supabase WebSocket connections. No page refresh needed.' },
+  { q: 'Is BuildTogether free to use?', a: 'Yes. BuildTogether is free for all developers. Create unlimited projects, recruit contributors, and collaborate in real-time without any cost.', cat: 'Getting Started' },
+  { q: 'How does team recruitment work?', a: 'Publish your project with requirements and tech stack. Contributors apply with their profiles and skills. You review applications and accept the best fit for your team.', cat: 'Getting Started' },
+  { q: 'How do I get started as a contributor?', a: 'Sign up, complete your profile with skills and experience, then browse open projects in the Explore tab. Apply to projects that match your interests and wait for the project owner to review your application.', cat: 'Getting Started' },
+  { q: 'Can I connect my GitHub repository?', a: 'Yes. Connect any public or private GitHub repository to get live commit activity, contributor stats, and language breakdown directly on your project page.', cat: 'Features' },
+  { q: 'What export formats are supported?', a: 'You can export project data to Markdown, CSV, JSON, or PDF. Perfect for sharing progress with stakeholders or keeping local backups.', cat: 'Features' },
+  { q: 'How does real-time collaboration work?', a: 'All changes to tasks, comments, and activity feeds are synchronized in real-time using Supabase WebSocket connections. No page refresh needed.', cat: 'Technical' },
+  { q: 'What tech stack does BuildTogether use?', a: 'BuildTogether is built with React 19, Tailwind CSS v4, and Supabase (PostgreSQL + Auth + Realtime). The frontend is deployed on Vercel with automatic deployments from GitHub.', cat: 'Technical' },
+  { q: 'Is my data secure?', a: 'Yes. All data is stored in Supabase with Row Level Security (RLS) policies ensuring users can only access projects they own or are members of. Authentication is handled by Supabase Auth with support for email/password and Google OAuth.', cat: 'Technical' },
 ]
 
 const marqueeItems = [
@@ -45,6 +50,7 @@ const marqueeItems = [
 
 export default function Landing() {
   const [openFaq, setOpenFaq] = useState(null)
+  const [faqCategory, setFaqCategory] = useState('All')
   const revealRefs = useRef([])
   const [stats, setStats] = useState({ projects: 0, members: 0 })
 
@@ -238,17 +244,32 @@ export default function Landing() {
       {/* FAQ — dark section */}
       <section className="py-28 px-6 sm:px-8 bg-on-surface">
         <div className="mx-auto max-w-[880px]">
-          <div ref={addRevealRef} className="reveal text-center mb-12">
+          <div ref={addRevealRef} className="reveal text-center mb-10">
             <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/60 text-[11px] font-bold uppercase tracking-widest mb-4">FAQ</span>
             <h2 className="text-[34px] sm:text-[40px] font-extrabold text-white tracking-[-0.01em]">Frequently asked questions</h2>
+            <p className="text-[15px] text-white/50 mt-3">Everything you need to know about BuildTogether.</p>
           </div>
+
+          <div ref={addRevealRef} className="reveal flex items-center justify-center gap-2 mb-8 flex-wrap">
+            {faqCategories.map(cat => (
+              <button key={cat} onClick={() => { setFaqCategory(cat); setOpenFaq(null) }}
+                className={`px-4 py-1.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${faqCategory === cat ? 'bg-white text-on-surface' : 'text-white/50 hover:text-white/80 hover:bg-white/[0.06]'}`}>
+                {cat}
+              </button>
+            ))}
+          </div>
+
           <div className="flex flex-col gap-2.5">
-            {faqItems.map(({ q, a }, i) => (
-              <div key={i} ref={addRevealRef} className={`reveal reveal-delay-${(i % 5) + 1} faq-item rounded-2xl px-6 py-5 transition-all duration-300 ${openFaq === i ? 'is-open bg-white/[0.06] border border-white/15' : 'border border-white/[0.08] bg-white/[0.02]'}`}>
-                <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full text-left flex items-center justify-between gap-4">
+            {faqItems
+              .filter(item => faqCategory === 'All' || item.cat === faqCategory)
+              .map(({ q, a }, i) => (
+              <div key={q} ref={addRevealRef} className={`reveal reveal-delay-${(i % 5) + 1} faq-item rounded-2xl px-6 py-5 transition-all duration-300 ${openFaq === q ? 'is-open bg-white/[0.06] border border-white/15' : 'border border-white/[0.08] bg-white/[0.02]'}`}>
+                <button onClick={() => setOpenFaq(openFaq === q ? null : q)} className="w-full text-left flex items-center justify-between gap-4">
                   <span className="text-[16px] font-semibold text-white">{q}</span>
-                  <span className={`shrink-0 w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-[18px] transition-all duration-300 ${openFaq === i ? 'bg-white text-on-surface rotate-180' : 'text-white/50'}`}>
-                    {openFaq === i ? '−' : '+'}
+                  <span className={`shrink-0 w-8 h-8 rounded-full border border-white/15 flex items-center justify-center transition-all duration-300 ${openFaq === q ? 'bg-white rotate-180' : 'text-white/50'}`}>
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className={`transition-colors duration-300 ${openFaq === q ? 'text-on-surface' : 'text-white/50'}`}>
+                      <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
                   </span>
                 </button>
                 <div className="faq-body">
@@ -258,6 +279,12 @@ export default function Landing() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div ref={addRevealRef} className="reveal mt-10 text-center">
+            <p className="text-[14px] text-white/40">Still have questions?{' '}
+              <a href="mailto:udaypratapwins0@gmail.com" className="text-white/70 underline decoration-white/20 hover:text-white transition-colors">Contact us</a>
+            </p>
           </div>
         </div>
       </section>
