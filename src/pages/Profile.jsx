@@ -61,7 +61,7 @@ export default function Profile() {
 
   return (
     <div className="mx-auto max-w-[1200px] space-y-5">
-      <section className="bg-white border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+      <section className="bg-white border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
         <div className="h-32 bg-gradient-to-r from-primary/5 via-surface-container to-tertiary/5 relative overflow-hidden">
           <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(var(--color-primary)_1px,transparent_1px)] [background-size:16px_16px]" />
         </div>
@@ -78,7 +78,7 @@ export default function Profile() {
             </div>
             <div className="space-y-0.5">
               <div className="flex flex-wrap items-center gap-2">
-                <h2 className="text-[22px] text-on-surface font-bold tracking-tight">{fullName || username || 'User'}</h2>
+                <h2 className="text-[22px] text-ink font-bold tracking-tight">{fullName || username || 'User'}</h2>
                 {username && <span className="font-mono text-[12px] text-primary font-medium">@{username}</span>}
               </div>
               <p className="text-muted text-[14px]">{bio || 'Developer at BuildTogether'}</p>
@@ -108,11 +108,11 @@ export default function Profile() {
           <div className="grid grid-cols-2 gap-3 pt-4 border-t border-line">
             <div className="p-3 rounded-xl bg-surface-container-low border border-line">
               <span className="text-[11px] text-muted block uppercase tracking-wider font-bold">Skills</span>
-              <span className="text-[22px] font-bold text-on-surface mt-0.5 block">{skills.length}</span>
+              <span className="text-[22px] font-bold text-ink mt-0.5 block">{skills.length}</span>
             </div>
             <div className="p-3 rounded-xl bg-surface-container-low border border-line">
               <span className="text-[11px] text-muted block uppercase tracking-wider font-bold">Projects</span>
-              <span className="text-[22px] font-bold text-on-surface mt-0.5 block">{projectCount}</span>
+              <span className="text-[22px] font-bold text-ink mt-0.5 block">{projectCount}</span>
             </div>
           </div>
         </div>
@@ -120,9 +120,9 @@ export default function Profile() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         <div className="lg:col-span-4">
-          <div className="bg-white border border-line rounded-2xl p-5 space-y-4" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+          <div className="bg-white border border-line rounded-[20px] p-5 space-y-4" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
             <div className="flex items-center justify-between">
-              <h3 className="text-[14px] font-bold text-on-surface flex items-center gap-2">
+              <h3 className="text-[14px] font-bold text-ink flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-primary">layers</span>
                 Skills
               </h3>
@@ -130,7 +130,7 @@ export default function Profile() {
             </div>
             <div className="flex flex-wrap gap-1.5">
               {skills.map(s => (
-                <span key={s} className="px-2.5 py-1 rounded-[99px] bg-tag-blue-bg text-tag-blue-text border border-tag-blue-border font-mono text-[11px] font-medium flex items-center gap-1.5">
+                <span key={s} className="px-2.5 py-1 rounded-3xl bg-tag-blue-bg text-tag-blue-text border border-tag-blue-border font-mono text-[11px] font-medium flex items-center gap-1.5">
                   {s}
                   <button type="button" onClick={() => removeSkill(s)} className="ml-0.5 hover:opacity-70 transition-opacity">&times;</button>
                 </span>
@@ -142,50 +142,50 @@ export default function Profile() {
             <div className="flex gap-2">
               <input value={skillInput} onChange={e => setSkillInput(e.target.value)}
                 onKeyDown={e => e.key === 'Enter' && addSkill(e)}
-                className="flex-1 bg-surface-container-low border border-line rounded-[12px] px-3 py-2 text-on-surface text-[13px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+                className="flex-1 bg-surface-container-low border border-line rounded-3xl px-3 py-2 text-ink text-[13px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
                 placeholder="Add a skill..." />
               <button type="button" onClick={addSkill}
-                className="bg-surface-container-high px-3 py-2 text-[12px] text-muted hover:text-on-surface rounded-[12px] border border-line font-semibold transition-colors">Add</button>
+                className="bg-surface-container-high px-3 py-2 text-[12px] text-muted hover:text-ink rounded-3xl border border-line font-semibold transition-colors">Add</button>
             </div>
           </div>
         </div>
 
         <div className="lg:col-span-8">
-          <form onSubmit={handleSave} className="bg-white border border-line rounded-2xl p-5 space-y-4" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+          <form onSubmit={handleSave} className="bg-white border border-line rounded-[20px] p-5 space-y-4" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
             <div className="flex items-center gap-2 border-b border-line pb-3">
               <span className="material-symbols-outlined text-[18px] text-primary">edit</span>
-              <h3 className="text-[14px] font-bold text-on-surface">Edit Profile</h3>
+              <h3 className="text-[14px] font-bold text-ink">Edit Profile</h3>
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
               <div>
-                <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Username</label>
+                <label className="mb-1.5 block text-[12px] font-bold text-secondary">Username</label>
                 <input value={username} onChange={e => setUsername(e.target.value)}
-                  className="w-full bg-surface-container-low border border-line rounded-[12px] px-3.5 py-2.5 text-on-surface text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all" />
+                  className="w-full bg-surface-container-low border border-line rounded-3xl px-3.5 py-2.5 text-ink text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all" />
               </div>
               <div>
-                <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Full Name</label>
+                <label className="mb-1.5 block text-[12px] font-bold text-secondary">Full Name</label>
                 <input value={fullName} onChange={e => setFullName(e.target.value)}
-                  className="w-full bg-surface-container-low border border-line rounded-[12px] px-3.5 py-2.5 text-on-surface text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all" />
+                  className="w-full bg-surface-container-low border border-line rounded-3xl px-3.5 py-2.5 text-ink text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all" />
               </div>
             </div>
 
             <div>
-              <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Bio</label>
+              <label className="mb-1.5 block text-[12px] font-bold text-secondary">Bio</label>
               <textarea value={bio} onChange={e => setBio(e.target.value)} rows={3}
-                className="w-full bg-surface-container-low border border-line rounded-[12px] px-3.5 py-2.5 text-on-surface text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+                className="w-full bg-surface-container-low border border-line rounded-3xl px-3.5 py-2.5 text-ink text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
                 placeholder="Tell us about yourself..." />
             </div>
 
             <div>
-              <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">GitHub Username</label>
+              <label className="mb-1.5 block text-[12px] font-bold text-secondary">GitHub Username</label>
               <input value={github} onChange={e => setGithub(e.target.value)}
-                className="w-full bg-surface-container-low border border-line rounded-[12px] px-3.5 py-2.5 text-on-surface text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+                className="w-full bg-surface-container-low border border-line rounded-3xl px-3.5 py-2.5 text-ink text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
                 placeholder="octocat" />
             </div>
 
             <button type="submit" disabled={loading}
-              className="flex items-center gap-2 rounded-[99px] bg-primary text-white px-5 py-2.5 text-[13px] font-semibold hover:brightness-110 transition-all active:scale-[0.98] disabled:opacity-50 glow-primary btn-shimmer">
+              className="flex items-center gap-2 rounded-3xl bg-primary text-white px-5 py-2.5 text-[13px] font-semibold hover:brightness-110 transition-all active:scale-[0.98] disabled:opacity-50 glow-primary btn-shimmer">
               <span className="material-symbols-outlined text-[16px]">save</span>
               {loading ? 'Saving...' : 'Save Profile'}
             </button>

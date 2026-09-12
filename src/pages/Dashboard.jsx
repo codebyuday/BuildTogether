@@ -66,7 +66,7 @@ export default function Dashboard() {
 
   const stats = [
     { label: 'My Projects', value: projects.length, icon: 'folder', color: 'text-primary', bg: 'bg-primary/10' },
-    { label: 'Member Of', value: memberProjects.length, icon: 'group', color: 'text-on-surface-variant', bg: 'bg-surface-container-high' },
+    { label: 'Member Of', value: memberProjects.length, icon: 'group', color: 'text-secondary', bg: 'bg-surface-container-high' },
     { label: 'Open Tasks', value: tasks.length, icon: 'task_alt', color: 'text-tertiary', bg: 'bg-tertiary/10' },
     { label: 'Applications', value: applications.filter(a => a.status === 'pending').length, icon: 'schedule', color: 'text-primary', bg: 'bg-primary/10' },
   ]
@@ -78,14 +78,14 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {isLoading ? Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />) :
         stats.map(({ label, value, icon, color, bg }) => (
-          <div key={label} className="bg-white border border-line rounded-2xl p-5 card-hover" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+          <div key={label} className="bg-white border border-line rounded-[20px] p-5 card-hover" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl ${bg} flex items-center justify-center`}>
+              <div className={`w-10 h-10 rounded-2xl ${bg} flex items-center justify-center`}>
                 <span className={`material-symbols-outlined text-[20px] ${color}`}>{icon}</span>
               </div>
               <div>
                 <span className="text-[11px] font-bold text-muted uppercase tracking-wider block">{label}</span>
-                <span className="text-[24px] font-bold text-on-surface leading-none">{value}</span>
+                <span className="text-[24px] font-bold text-ink leading-none">{value}</span>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function Dashboard() {
       <div className="grid gap-5 lg:grid-cols-3">
         <section className="lg:col-span-1">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-[15px] font-bold text-on-surface">My Tasks</h2>
+            <h2 className="text-[15px] font-bold text-ink">My Tasks</h2>
             <span className="text-[11px] font-mono text-muted">{tasks.length} open</span>
           </div>
           {loadingTasks ? (
@@ -121,11 +121,11 @@ export default function Dashboard() {
                       'bg-muted/40'
                     }`} />
                     <div className="min-w-0">
-                      <span className="text-[13.5px] text-on-surface group-hover:text-primary transition font-medium block truncate">{t.title}</span>
+                      <span className="text-[13.5px] text-ink group-hover:text-primary transition font-medium block truncate">{t.title}</span>
                       {t.projects && <span className="text-[11px] text-muted font-mono">{t.projects.title}</span>}
                     </div>
                   </div>
-                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-[99px] shrink-0 ${
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-3xl shrink-0 ${
                     t.priority === 'urgent' || t.priority === 'high' ? 'bg-tag-orange-bg text-tag-orange-text border border-tag-orange-border' :
                     t.priority === 'medium' ? 'bg-surface-container-high text-muted' :
                     'bg-surface-container-high text-muted'
@@ -139,7 +139,7 @@ export default function Dashboard() {
         <section className="lg:col-span-2 space-y-5">
           {starredProjects.length > 0 && (
             <div>
-              <h2 className="mb-3 text-[15px] font-bold text-on-surface flex items-center gap-2">
+              <h2 className="mb-3 text-[15px] font-bold text-ink flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-tertiary">star</span> Starred
               </h2>
               <div className="space-y-1.5">
@@ -152,11 +152,11 @@ export default function Dashboard() {
                         <span className="material-symbols-outlined text-[16px]">star</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[13.5px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
+                        <h3 className="text-[13.5px] font-medium text-ink group-hover:text-primary transition truncate">{p.title}</h3>
                         <p className="text-[11px] text-muted line-clamp-1">{p.description}</p>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-[99px] shrink-0 ${
+                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-3xl shrink-0 ${
                       p.status === 'recruiting' ? 'bg-success/10 text-success border border-success/20' :
                       p.status === 'full' ? 'bg-tertiary/10 text-tertiary border border-tertiary/20' :
                       'bg-surface-container-high text-muted'
@@ -169,7 +169,7 @@ export default function Dashboard() {
 
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[15px] font-bold text-on-surface">My Projects</h2>
+              <h2 className="text-[15px] font-bold text-ink">My Projects</h2>
               <Link to="/explore" className="text-[12px] font-semibold text-primary hover:underline flex items-center gap-1 transition-colors">
                 Explore <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </Link>
@@ -178,7 +178,7 @@ export default function Dashboard() {
               <div className="rounded-2xl border border-dashed border-line bg-surface-container-low/30 p-10 text-center">
                 <span className="material-symbols-outlined text-[36px] text-muted/30 mb-3 block">folder_open</span>
                 <p className="text-[14px] text-muted mb-4">No projects yet.</p>
-                <Link to="/projects/new" className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2 rounded-[99px] text-[13px] font-semibold hover:brightness-110 transition-all btn-shimmer">
+                <Link to="/projects/new" className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2 rounded-3xl text-[13px] font-semibold hover:brightness-110 transition-all btn-shimmer">
                   <span className="material-symbols-outlined text-[16px]">add</span>
                   Create your first project
                 </Link>
@@ -194,11 +194,11 @@ export default function Dashboard() {
                         <span className="material-symbols-outlined text-[16px]">folder</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[13.5px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
+                        <h3 className="text-[13.5px] font-medium text-ink group-hover:text-primary transition truncate">{p.title}</h3>
                         <p className="text-[11px] text-muted line-clamp-1">{p.description}</p>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-[99px] shrink-0 ${
+                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-3xl shrink-0 ${
                       p.status === 'recruiting' ? 'bg-success/10 text-success border border-success/20' :
                       p.status === 'full' ? 'bg-tertiary/10 text-tertiary border border-tertiary/20' :
                       'bg-surface-container-high text-muted'

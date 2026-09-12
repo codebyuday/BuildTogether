@@ -76,7 +76,7 @@ export default function RoadmapTab({ projectId, isMember }) {
   return (
     <div className="space-y-space-lg">
       <div className="flex items-center justify-between">
-        <h3 className="text-[16px] font-semibold text-on-surface">Roadmap</h3>
+        <h3 className="text-[16px] font-semibold text-ink">Roadmap</h3>
         {isMember && (
           <button onClick={() => setShowCreate(!showCreate)}
             className="flex items-center gap-1 bg-primary text-on-primary px-3 py-1.5 rounded-lg text-[12px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
@@ -89,21 +89,21 @@ export default function RoadmapTab({ projectId, isMember }) {
       {showCreate && (
         <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-md space-y-3">
           <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}
-            className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
             placeholder="Milestone title" />
           <input value={form.phase} onChange={e => setForm({ ...form, phase: e.target.value })}
-            className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+            className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
             placeholder="Phase (e.g. Phase 1, Sprint 3)" />
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[11px] font-mono text-on-surface-variant">Start Date</label>
+              <label className="text-[11px] font-mono text-secondary">Start Date</label>
               <input type="date" value={form.start_date} onChange={e => setForm({ ...form, start_date: e.target.value })}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
             </div>
             <div>
-              <label className="text-[11px] font-mono text-on-surface-variant">End Date</label>
+              <label className="text-[11px] font-mono text-secondary">End Date</label>
               <input type="date" value={form.end_date} onChange={e => setForm({ ...form, end_date: e.target.value })}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
             </div>
           </div>
           <div className="flex gap-2">
@@ -111,7 +111,7 @@ export default function RoadmapTab({ projectId, isMember }) {
               className="bg-primary text-on-primary px-4 py-1.5 rounded-lg text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
               Create
             </button>
-            <button onClick={() => setShowCreate(false)} className="text-[13px] text-on-surface-variant hover:text-on-surface">Cancel</button>
+            <button onClick={() => setShowCreate(false)} className="text-[13px] text-secondary hover:text-ink">Cancel</button>
           </div>
         </div>
       )}
@@ -119,7 +119,7 @@ export default function RoadmapTab({ projectId, isMember }) {
       {milestones.length === 0 && !showCreate ? (
         <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
           <span className="material-symbols-outlined text-[32px] text-outline mb-2">flag</span>
-          <p className="text-[14px] text-on-surface-variant">No milestones yet. Create one to start planning.</p>
+          <p className="text-[14px] text-secondary">No milestones yet. Create one to start planning.</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -133,12 +133,12 @@ export default function RoadmapTab({ projectId, isMember }) {
                 <div className="flex items-start justify-between mb-2">
                   <div>
                     <div className="flex items-center gap-2">
-                      <h4 className="text-[14px] font-semibold text-on-surface">{m.title}</h4>
+                      <h4 className="text-[14px] font-semibold text-ink">{m.title}</h4>
                       <span className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded border ${STATUS_COLORS[m.status]}`}>
                         {m.status}
                       </span>
                     </div>
-                    {m.phase && <span className="text-[11px] font-mono text-on-surface-variant">{m.phase}</span>}
+                    {m.phase && <span className="text-[11px] font-mono text-secondary">{m.phase}</span>}
                   </div>
                   <div className="flex items-center gap-1">
                     {isMember && m.status !== 'completed' && (
@@ -149,7 +149,7 @@ export default function RoadmapTab({ projectId, isMember }) {
                     )}
                     {isMember && (
                       <button onClick={() => { if (confirm('Delete this milestone?')) deleteMilestone.mutate(m.id) }}
-                        className="p-1 text-on-surface-variant hover:text-error transition-colors">
+                        className="p-1 text-secondary hover:text-error transition-colors">
                         <span className="material-symbols-outlined text-[14px]">delete</span>
                       </button>
                     )}
@@ -157,7 +157,7 @@ export default function RoadmapTab({ projectId, isMember }) {
                 </div>
 
                 {(m.start_date || m.end_date) && (
-                  <div className="flex gap-3 text-[11px] font-mono text-on-surface-variant mb-2">
+                  <div className="flex gap-3 text-[11px] font-mono text-secondary mb-2">
                     {m.start_date && <span>Start: {m.start_date}</span>}
                     {m.end_date && <span>End: {m.end_date}</span>}
                   </div>
@@ -166,8 +166,8 @@ export default function RoadmapTab({ projectId, isMember }) {
                 {totalTasks > 0 && (
                   <div className="space-y-1">
                     <div className="flex justify-between text-[11px] font-mono">
-                      <span className="text-on-surface-variant">{doneTasks}/{totalTasks} tasks</span>
-                      <span className="text-on-surface">{Math.round(progress)}%</span>
+                      <span className="text-secondary">{doneTasks}/{totalTasks} tasks</span>
+                      <span className="text-ink">{Math.round(progress)}%</span>
                     </div>
                     <div className="w-full h-1.5 rounded-full bg-surface-container-highest overflow-hidden">
                       <div className="h-full bg-secondary rounded-full transition-all" style={{ width: `${progress}%` }} />
@@ -182,8 +182,8 @@ export default function RoadmapTab({ projectId, isMember }) {
                         <span className={`w-1.5 h-1.5 rounded-full ${
                           t.status === 'done' ? 'bg-secondary' : t.status === 'in_progress' ? 'bg-primary' : 'bg-outline'
                         }`} />
-                        <span className={`text-on-surface ${t.status === 'done' ? 'line-through opacity-60' : ''}`}>{t.title}</span>
-                        {t.profiles && <span className="text-on-surface-variant font-mono ml-auto">@{t.profiles.username}</span>}
+                        <span className={`text-ink ${t.status === 'done' ? 'line-through opacity-60' : ''}`}>{t.title}</span>
+                        {t.profiles && <span className="text-secondary font-mono ml-auto">@{t.profiles.username}</span>}
                       </div>
                     ))}
                   </div>
@@ -196,10 +196,10 @@ export default function RoadmapTab({ projectId, isMember }) {
 
       {unlinkedTasks.length > 0 && milestones.length > 0 && (
         <div className="mt-4">
-          <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">Unlinked Tasks ({unlinkedTasks.length})</span>
+          <span className="text-[11px] font-mono text-secondary uppercase tracking-wider">Unlinked Tasks ({unlinkedTasks.length})</span>
           <div className="mt-1 space-y-1">
             {unlinkedTasks.slice(0, 5).map(t => (
-              <div key={t.id} className="flex items-center gap-2 text-[12px] py-1 px-2 rounded bg-surface-container/30 text-on-surface-variant">
+              <div key={t.id} className="flex items-center gap-2 text-[12px] py-1 px-2 rounded bg-surface-container/30 text-secondary">
                 <span className={`w-1.5 h-1.5 rounded-full ${
                   t.status === 'done' ? 'bg-secondary' : t.status === 'in_progress' ? 'bg-primary' : 'bg-outline'
                 }`} />

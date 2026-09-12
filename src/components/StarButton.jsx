@@ -44,7 +44,7 @@ export default function StarButton({ projectId, size = 'md' }) {
       className={`flex items-center gap-1 rounded-lg border transition-all active:scale-[0.98] ${
         starData?.starred
           ? 'bg-tertiary/10 border-tertiary/30 text-tertiary'
-          : 'bg-surface-container border-outline-variant/40 text-on-surface-variant hover:text-tertiary hover:border-tertiary/30'
+          : 'bg-surface-container border-outline-variant/40 text-secondary hover:text-tertiary hover:border-tertiary/30'
       } ${sizeClasses}`}
     >
       <span className={`material-symbols-outlined ${size === 'sm' ? 'text-[14px]' : 'text-[16px]'}`}

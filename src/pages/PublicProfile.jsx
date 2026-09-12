@@ -37,7 +37,7 @@ export default function PublicProfile() {
 
   return (
     <div className="mx-auto max-w-[900px] space-y-6">
-      <section className="bg-white border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
+      <section className="bg-white border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
         <div className="h-32 bg-gradient-to-r from-primary/5 via-surface-container to-tertiary/5" />
         <div className="px-6 pb-6 -mt-12 relative">
           <div className="flex items-end gap-4 mb-5">
@@ -45,11 +45,11 @@ export default function PublicProfile() {
               {profile.username?.[0]?.toUpperCase()}
             </div>
             <div className="pb-1">
-              <h1 className="text-[22px] font-bold text-on-surface tracking-tight">{profile.full_name || profile.username}</h1>
+              <h1 className="text-[22px] font-bold text-ink tracking-tight">{profile.full_name || profile.username}</h1>
               <span className="text-[13px] font-mono text-primary font-medium">@{profile.username}</span>
             </div>
           </div>
-          {profile.bio && <p className="text-[14px] text-on-surface-variant mb-3">{profile.bio}</p>}
+          {profile.bio && <p className="text-[14px] text-secondary mb-3">{profile.bio}</p>}
           {profile.github_username && (
             <a href={`https://github.com/${profile.github_username}`} target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-1 text-[12px] font-mono text-muted hover:text-primary transition-colors">
@@ -61,25 +61,25 @@ export default function PublicProfile() {
       </section>
 
       {profile.skills && profile.skills.length > 0 && (
-        <section className="bg-white border border-line rounded-2xl p-6" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
-          <h2 className="text-[15px] font-bold text-on-surface mb-3">Skills</h2>
+        <section className="bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+          <h2 className="text-[15px] font-bold text-ink mb-3">Skills</h2>
           <div className="flex flex-wrap gap-1.5">
             {profile.skills.map(s => (
-              <span key={s} className="px-3 py-1 rounded-[99px] bg-tag-blue-bg text-tag-blue-text border border-tag-blue-border font-mono text-[11px] font-medium">{s}</span>
+              <span key={s} className="px-3 py-1 rounded-3xl bg-tag-blue-bg text-tag-blue-text border border-tag-blue-border font-mono text-[11px] font-medium">{s}</span>
             ))}
           </div>
         </section>
       )}
 
       {projects.length > 0 && (
-        <section className="bg-white border border-line rounded-2xl p-6" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
-          <h2 className="text-[15px] font-bold text-on-surface mb-3">Projects ({projects.length})</h2>
+        <section className="bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+          <h2 className="text-[15px] font-bold text-ink mb-3">Projects ({projects.length})</h2>
           <div className="space-y-2">
             {projects.map(p => (
               <Link key={p.id} to={`/projects/${p.id}`}
                 className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low border border-line hover:border-line-2 hover:-translate-y-0.5 transition-all">
                 <div>
-                  <span className="text-[14px] font-semibold text-on-surface">{p.title}</span>
+                  <span className="text-[14px] font-semibold text-ink">{p.title}</span>
                   <p className="text-[12px] text-muted line-clamp-1">{p.description}</p>
                 </div>
                 <span className="text-[11px] font-mono text-muted">{p.team_members?.length || 0} members</span>
@@ -90,15 +90,15 @@ export default function PublicProfile() {
       )}
 
       {contributions.length > 0 && (
-        <section className="bg-white border border-line rounded-2xl p-6" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
-          <h2 className="text-[15px] font-bold text-on-surface mb-3">Contributions ({contributions.length})</h2>
+        <section className="bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+          <h2 className="text-[15px] font-bold text-ink mb-3">Contributions ({contributions.length})</h2>
           <div className="space-y-2">
             {contributions.map(c => (
               <Link key={c.id} to={`/projects/${c.projects?.id}`}
                 className="flex items-center justify-between p-3.5 rounded-xl bg-surface-container-low border border-line hover:border-line-2 hover:-translate-y-0.5 transition-all">
                 <div className="flex items-center gap-2">
-                  <span className="text-[14px] font-semibold text-on-surface">{c.projects?.title}</span>
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-[99px] bg-surface-container-high text-muted border border-line">{c.role}</span>
+                  <span className="text-[14px] font-semibold text-ink">{c.projects?.title}</span>
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-3xl bg-surface-container-high text-muted border border-line">{c.role}</span>
                 </div>
               </Link>
             ))}

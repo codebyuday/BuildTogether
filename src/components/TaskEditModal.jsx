@@ -103,21 +103,21 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm" onClick={onClose}>
       <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-surface-container-low border border-outline-variant/40 rounded-xl shadow-2xl" onClick={e => e.stopPropagation()}>
         <div className="sticky top-0 z-10 bg-surface-container-low border-b border-outline-variant/30 px-space-lg py-3 flex items-center justify-between">
-          <h3 className="text-[16px] font-semibold text-on-surface">Edit Task</h3>
-          <button onClick={onClose} className="p-1 text-on-surface-variant hover:text-on-surface rounded hover:bg-surface-container-high transition-colors">
+          <h3 className="text-[16px] font-semibold text-ink">Edit Task</h3>
+          <button onClick={onClose} className="p-1 text-secondary hover:text-ink rounded hover:bg-surface-container-high transition-colors">
             <span className="material-symbols-outlined text-[18px]">close</span>
           </button>
         </div>
 
         <div className="p-space-lg space-y-4">
           <div>
-            <label className="text-[11px] font-mono text-on-surface-variant uppercase">Title</label>
+            <label className="text-[11px] font-mono text-secondary uppercase">Title</label>
             <input value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}
-              className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1" />
+              className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1" />
           </div>
 
           <div>
-            <label className="text-[11px] font-mono text-on-surface-variant uppercase">Description</label>
+            <label className="text-[11px] font-mono text-secondary uppercase">Description</label>
             <div className="mt-1">
               <RichTextEditor content={form.description} onChange={val => setForm({ ...form, description: val })} placeholder="Describe the task..." />
             </div>
@@ -125,9 +125,9 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] font-mono text-on-surface-variant uppercase">Status</label>
+              <label className="text-[11px] font-mono text-secondary uppercase">Status</label>
               <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
                 <option value="todo">To Do</option>
                 <option value="in_progress">In Progress</option>
                 <option value="in_review">In Review</option>
@@ -135,9 +135,9 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
               </select>
             </div>
             <div>
-              <label className="text-[11px] font-mono text-on-surface-variant uppercase">Priority</label>
+              <label className="text-[11px] font-mono text-secondary uppercase">Priority</label>
               <select value={form.priority} onChange={e => setForm({ ...form, priority: e.target.value })}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
@@ -148,25 +148,25 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="text-[11px] font-mono text-on-surface-variant uppercase">Assignee</label>
+              <label className="text-[11px] font-mono text-secondary uppercase">Assignee</label>
               <select value={form.assignee_id} onChange={e => setForm({ ...form, assignee_id: e.target.value })}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
                 <option value="">Unassigned</option>
                 {members.map(m => <option key={m.user_id} value={m.user_id}>{m.profiles?.full_name || m.profiles?.username}</option>)}
               </select>
             </div>
             <div>
-              <label className="text-[11px] font-mono text-on-surface-variant uppercase">Due Date</label>
+              <label className="text-[11px] font-mono text-secondary uppercase">Due Date</label>
               <input type="date" value={form.due_date} onChange={e => setForm({ ...form, due_date: e.target.value })}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1" />
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1" />
             </div>
           </div>
 
           {milestones.length > 0 && (
             <div>
-              <label className="text-[11px] font-mono text-on-surface-variant uppercase">Milestone</label>
+              <label className="text-[11px] font-mono text-secondary uppercase">Milestone</label>
               <select value={form.milestone_id} onChange={e => setForm({ ...form, milestone_id: e.target.value })}
-                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
+                className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1">
                 <option value="">No milestone</option>
                 {milestones.map(m => <option key={m.id} value={m.id}>{m.title}</option>)}
               </select>
@@ -174,7 +174,7 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
           )}
 
           <div>
-            <label className="text-[11px] font-mono text-on-surface-variant uppercase">Labels</label>
+            <label className="text-[11px] font-mono text-secondary uppercase">Labels</label>
             <div className="mt-1">
               <LabelPicker labels={labels} selectedLabels={selectedLabels} onToggle={handleLabelToggle} />
             </div>
@@ -188,7 +188,7 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
         </div>
 
         <div className="sticky bottom-0 bg-surface-container-low border-t border-outline-variant/30 px-space-lg py-3 flex justify-end gap-2">
-          <button onClick={onClose} className="px-4 py-2 text-[13px] text-on-surface-variant hover:text-on-surface rounded-lg transition-colors">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 text-[13px] text-secondary hover:text-ink rounded-lg transition-colors">Cancel</button>
           <button onClick={() => form.title.trim() && updateTask.mutate()} disabled={!form.title.trim() || updateTask.isPending}
             className="bg-primary text-on-primary px-4 py-2 rounded-lg text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all active:scale-[0.98]">
             {updateTask.isPending ? 'Saving...' : 'Save Changes'}

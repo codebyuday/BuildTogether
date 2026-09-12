@@ -137,7 +137,7 @@ export default function ExportDropdown({ project, tasks = [], milestones = [] })
   return (
     <div className="relative">
       <button onClick={() => setOpen(!open)}
-        className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container text-[12px] text-on-surface-variant hover:bg-surface-container-high transition-colors">
+        className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-outline-variant/40 bg-surface-container text-[12px] text-secondary hover:bg-surface-container-high transition-colors">
         <span className="material-symbols-outlined text-[14px]">download</span>
         Export
         <span className="material-symbols-outlined text-[12px]">expand_more</span>
@@ -146,16 +146,16 @@ export default function ExportDropdown({ project, tasks = [], milestones = [] })
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
           <div className="absolute right-0 top-full z-50 mt-1 w-48 bg-surface-container-low border border-outline-variant/40 rounded-lg shadow-2xl overflow-hidden">
-            <button onClick={exportMarkdown} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-on-surface hover:bg-surface-container-high transition-colors">
+            <button onClick={exportMarkdown} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-ink hover:bg-surface-container-high transition-colors">
               <span className="material-symbols-outlined text-[14px]">description</span> Markdown
             </button>
-            <button onClick={exportCSV} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-on-surface hover:bg-surface-container-high transition-colors">
+            <button onClick={exportCSV} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-ink hover:bg-surface-container-high transition-colors">
               <span className="material-symbols-outlined text-[14px]">table_chart</span> CSV
             </button>
-            <button onClick={exportJSON} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-on-surface hover:bg-surface-container-high transition-colors">
+            <button onClick={exportJSON} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-ink hover:bg-surface-container-high transition-colors">
               <span className="material-symbols-outlined text-[14px]">data_object</span> JSON
             </button>
-            <button onClick={exportPDF} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-on-surface hover:bg-surface-container-high transition-colors">
+            <button onClick={exportPDF} className="w-full flex items-center gap-2 px-3 py-2 text-[13px] text-ink hover:bg-surface-container-high transition-colors">
               <span className="material-symbols-outlined text-[14px]">picture_as_pdf</span> PDF
             </button>
           </div>

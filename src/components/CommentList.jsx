@@ -47,7 +47,7 @@ export default function CommentList({ taskId, projectId }) {
 
   return (
     <div className="space-y-3">
-      <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">Comments ({comments.length})</span>
+      <span className="text-[11px] font-mono text-secondary uppercase tracking-wider">Comments ({comments.length})</span>
 
       <div className="space-y-2 max-h-60 overflow-y-auto">
         {comments.map(c => (
@@ -56,12 +56,12 @@ export default function CommentList({ taskId, projectId }) {
               <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[9px] font-bold">
                 {c.profiles?.username?.[0]?.toUpperCase() || '?'}
               </div>
-              <span className="text-[12px] font-medium text-on-surface">{c.profiles?.full_name || c.profiles?.username}</span>
-              <span className="text-[10px] font-mono text-on-surface-variant">
+              <span className="text-[12px] font-medium text-ink">{c.profiles?.full_name || c.profiles?.username}</span>
+              <span className="text-[10px] font-mono text-secondary">
                 {formatDistanceToNow(new Date(c.created_at), { addSuffix: true })}
               </span>
             </div>
-            <p className="text-[13px] text-on-surface-variant pl-7">{c.body}</p>
+            <p className="text-[13px] text-secondary pl-7">{c.body}</p>
           </div>
         ))}
       </div>
@@ -69,7 +69,7 @@ export default function CommentList({ taskId, projectId }) {
       <div className="flex gap-2">
         <input value={body} onChange={e => setBody(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && body.trim()) { e.preventDefault(); addComment.mutate() } }}
-          className="flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-[13px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+          className="flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-[13px] text-ink placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
           placeholder="Write a comment..." />
         <button onClick={() => body.trim() && addComment.mutate()} disabled={!body.trim() || addComment.isPending}
           className="bg-primary text-on-primary px-3 py-1.5 rounded-lg text-[12px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
