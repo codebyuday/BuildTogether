@@ -73,7 +73,8 @@ export default function Landing() {
     observerRef.current = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in-view') })
     }, { threshold: 0.15 })
-    return () => observerRef.current?.disconnect()
+    revealRefs.current.forEach(el => { if (el) observerRef.current.observe(el) })
+    return () => { observerRef.current.disconnect(); observerRef.current = null }
   }, [])
 
   const addRevealRef = useCallback((el) => {
