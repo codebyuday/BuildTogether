@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import ActivityFeed from '../components/ActivityFeed'
+import NumberTicker from '../components/NumberTicker'
+import EmptyState from '../components/EmptyState'
 import { StatSkeleton, CardSkeleton } from '../components/Skeleton'
 
 const DashboardCharts = lazy(() => import('../components/DashboardCharts'))
@@ -77,15 +79,17 @@ export default function Dashboard() {
     <div className="mx-auto max-w-[1200px] space-y-6">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {isLoading ? Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />) :
-        stats.map(({ label, value, icon, color, bg }) => (
-          <div key={label} className="bg-white border border-line rounded-[20px] p-5 card-hover" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+        stats.map(({ label, value, icon, color, bg }, i) => (
+          <div key={label} className={`bg-white border border-line rounded-[20px] p-5 card-hover ${i === 0 ? 'lg:col-span-2' : ''}`} style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
             <div className="flex items-center gap-3">
               <div className={`w-10 h-10 rounded-2xl ${bg} flex items-center justify-center`}>
                 <span className={`material-symbols-outlined text-[20px] ${color}`}>{icon}</span>
               </div>
               <div>
                 <span className="text-[11px] font-bold text-muted uppercase tracking-wider block">{label}</span>
-                <span className="text-[24px] font-bold text-on-surface leading-none">{value}</span>
+                <span className="text-[24px] font-bold text-on-surface leading-none">
+                  <NumberTicker value={value} duration={1200} />
+                </span>
               </div>
             </div>
           </div>
@@ -103,10 +107,7 @@ export default function Dashboard() {
           {loadingTasks ? (
             <div className="space-y-2">{Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)}</div>
           ) : tasks.length === 0 ? (
-            <div className="rounded-2xl border border-dashed border-line bg-surface-container-low/30 p-8 text-center">
-              <span className="material-symbols-outlined text-[32px] text-muted/40 mb-2 block">task_alt</span>
-              <p className="text-[13.5px] text-muted">No open tasks assigned to you.</p>
-            </div>
+            <EmptyState icon="task_alt" title="No open tasks" description="No tasks assigned to you yet." />
           ) : (
             <div className="space-y-1.5">
               {tasks.slice(0, 8).map(t => (
@@ -175,14 +176,13 @@ export default function Dashboard() {
               </Link>
             </div>
             {projects.length === 0 ? (
-              <div className="rounded-2xl border border-dashed border-line bg-surface-container-low/30 p-10 text-center">
-                <span className="material-symbols-outlined text-[36px] text-muted/30 mb-3 block">folder_open</span>
-                <p className="text-[14px] text-muted mb-4">No projects yet.</p>
-                <Link to="/projects/new" className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2 rounded-3xl text-[13px] font-semibold hover:brightness-110 transition-all btn-shimmer">
-                  <span className="material-symbols-outlined text-[16px]">add</span>
-                  Create your first project
-                </Link>
-              </div>
+              <EmptyState
+                icon="folder_open"
+                title="No projects yet"
+                description="Create your first project to get started."
+                actionLabel="Create your first project"
+                actionTo="/projects/new"
+              />
             ) : (
               <div className="space-y-1.5">
                 {projects.slice(0, 5).map(p => (

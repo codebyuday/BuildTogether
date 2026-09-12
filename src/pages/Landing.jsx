@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import NumberTicker from '../components/NumberTicker'
+import HeroParticles from '../components/HeroParticles'
+import ShimmerButton from '../components/ShimmerButton'
 
 const features = [
   { icon: 'sync', title: 'Real-time Collaboration', desc: 'Live updates, comments, and activity feeds powered by WebSocket connections.', color: 'primary' },
@@ -89,9 +92,7 @@ export default function Landing() {
 
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-14 text-center">
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-primary/[0.06] blur-[120px]" />
-        </div>
+        <HeroParticles />
 
         <div ref={addRevealRef} className="reveal relative z-10 mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface-container-low px-4 py-1.5 text-[12px] font-mono text-muted">
           <span className="w-1.5 h-1.5 rounded-full bg-success pulse-green" />
@@ -109,9 +110,10 @@ export default function Landing() {
         </p>
 
         <div ref={addRevealRef} className="reveal reveal-delay-3 relative z-10 mt-10 flex flex-wrap items-center justify-center gap-3">
-          <Link to="/register"
-            className="rounded-3xl bg-primary text-white px-8 py-3.5 text-[15px] font-semibold hover:brightness-110 transition-all active:scale-[0.98]">
-            Start Building
+          <Link to="/register">
+            <ShimmerButton className="rounded-3xl bg-primary text-white px-8 py-3.5 text-[15px] font-semibold">
+              Start Building
+            </ShimmerButton>
           </Link>
           <Link to="/explore"
             className="rounded-3xl border border-line bg-white px-8 py-3.5 text-[15px] font-semibold text-on-surface hover:bg-surface-container-low transition-all">
@@ -131,13 +133,15 @@ export default function Landing() {
 
         <div ref={addRevealRef} className="reveal relative z-10 mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
           {[
-            { value: stats.members || '0+', label: 'Developers' },
-            { value: stats.projects || '0+', label: 'Projects' },
+            { value: stats.members || 0, label: 'Developers' },
+            { value: stats.projects || 0, label: 'Projects' },
             { value: 'Real-time', label: 'Collaboration' },
             { value: '100%', label: 'Open Source' },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
-              <div className="text-[22px] font-extrabold text-on-surface">{value}</div>
+              <div className="text-[22px] font-extrabold text-on-surface">
+                {typeof value === 'number' ? <NumberTicker value={value} /> : value}
+              </div>
               <div className="text-[12px] text-muted mt-1 font-medium">{label}</div>
             </div>
           ))}
@@ -269,8 +273,10 @@ export default function Landing() {
               Join a community of developers shipping real projects together. Free to start, no credit card needed.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link to="/register" className="inline-flex items-center gap-2 h-[50px] px-8 rounded-3xl text-[15px] font-semibold text-white bg-primary hover:brightness-110 transition-all duration-300 hover:-translate-y-px">
-                Start Building
+              <Link to="/register">
+                <ShimmerButton className="inline-flex items-center gap-2 h-[50px] px-8 rounded-3xl text-[15px] font-semibold text-white bg-primary">
+                  Start Building
+                </ShimmerButton>
               </Link>
               <Link to="/explore" className="inline-flex items-center gap-2 h-[50px] px-8 rounded-3xl text-[15px] font-semibold text-white border border-white/20 hover:bg-white/10 transition-all duration-300 hover:-translate-y-px">
                 Explore Projects
