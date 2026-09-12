@@ -68,7 +68,7 @@ export default function DashboardCharts() {
     <div className="grid gap-5 md:grid-cols-3">
       {statusData.length > 0 && (
         <div className="bg-white border border-line rounded-[20px] p-5" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
-          <h3 className="text-[13px] font-bold text-ink mb-3">Task Status</h3>
+          <h3 className="text-[13px] font-bold text-on-surface mb-3">Task Status</h3>
           <ResponsiveContainer width="100%" height={160}>
             <PieChart>
               <Pie data={statusData} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={3} dataKey="value">
@@ -90,7 +90,7 @@ export default function DashboardCharts() {
 
       {priorityData.some(d => d.count > 0) && (
         <div className="bg-white border border-line rounded-[20px] p-5" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
-          <h3 className="text-[13px] font-bold text-ink mb-3">By Priority</h3>
+          <h3 className="text-[13px] font-bold text-on-surface mb-3">By Priority</h3>
           <ResponsiveContainer width="100%" height={160}>
             <BarChart data={priorityData} barSize={20}>
               <XAxis dataKey="name" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
@@ -106,7 +106,7 @@ export default function DashboardCharts() {
 
       {recentByWeek.some(d => d.tasks > 0) && (
         <div className="bg-white border border-line rounded-[20px] p-5" style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}>
-          <h3 className="text-[13px] font-bold text-ink mb-3">Recent Activity</h3>
+          <h3 className="text-[13px] font-bold text-on-surface mb-3">Recent Activity</h3>
           <ResponsiveContainer width="100%" height={160}>
             <BarChart data={recentByWeek} barSize={24}>
               <XAxis dataKey="week" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />

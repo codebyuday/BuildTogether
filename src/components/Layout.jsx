@@ -29,11 +29,11 @@ export default function Layout() {
       <aside className={`fixed top-0 left-0 h-screen w-[240px] z-50 flex flex-col justify-between bg-white border-r border-line transition-transform duration-200 lg:z-40 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div className="p-4">
           <Link to="/dashboard" className="flex items-center gap-2.5 px-2 py-2 mb-6 rounded-2xl hover:bg-surface-container-low transition-colors">
-            <div className="w-9 h-9 rounded-2xl bg-ink flex items-center justify-center text-white text-[14px] font-extrabold">
+            <div className="w-9 h-9 rounded-2xl bg-on-surface flex items-center justify-center text-white text-[14px] font-extrabold">
               <span className="font-mono">B</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-[15px] font-extrabold text-ink tracking-tight leading-none">BuildTogether</span>
+              <span className="text-[15px] font-extrabold text-on-surface tracking-tight leading-none">BuildTogether</span>
               <span className="text-[10px] text-muted mt-0.5 tracking-widest uppercase font-semibold">Workspace</span>
             </div>
           </Link>
@@ -80,7 +80,7 @@ export default function Layout() {
               <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full bg-success border-2 border-white"></span>
             </div>
             <div className="flex flex-col min-w-0 flex-1">
-              <span className="text-[13px] font-semibold text-ink truncate">{profile?.full_name || profile?.username || 'User'}</span>
+              <span className="text-[13px] font-semibold text-on-surface truncate">{profile?.full_name || profile?.username || 'User'}</span>
               <span className="text-[11px] text-muted truncate">{profile?.bio || 'Developer'}</span>
             </div>
             <span className="material-symbols-outlined text-[16px] text-muted">logout</span>
@@ -96,7 +96,7 @@ export default function Layout() {
             </button>
             <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-low border border-line">
               <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
-              <span className="text-ink text-[13px] font-semibold">BuildTogether</span>
+              <span className="text-on-surface text-[13px] font-semibold">BuildTogether</span>
               <span className="text-muted/40 text-[13px]">/</span>
               <span className="text-muted text-[12px] font-mono">
                 {location.pathname === '/dashboard' ? 'Dashboard' :

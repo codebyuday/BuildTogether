@@ -15,7 +15,7 @@ export default function LabelPicker({ labels = [], selectedLabels = [], onToggle
           return (
             <button key={label.id} type="button" onClick={() => onToggle(label.id)}
               className={`px-2 py-0.5 rounded-full text-[11px] font-mono font-medium border transition-all flex items-center gap-1.5 ${
-                isSelected ? 'border-transparent' : 'border-outline-variant/40 text-secondary hover:border-outline'
+                isSelected ? 'border-transparent' : 'border-outline-variant/40 text-on-surface-variant hover:border-outline'
               }`}
               style={isSelected ? { backgroundColor: label.color + '20', borderColor: label.color + '60', color: label.color } : {}}>
               <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: label.color }} />
@@ -27,7 +27,7 @@ export default function LabelPicker({ labels = [], selectedLabels = [], onToggle
       {creating ? (
         <div className="flex items-center gap-2">
           <input value={newName} onChange={e => setNewName(e.target.value)} placeholder="Label name"
-            className="flex-1 bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 text-[12px] text-ink placeholder:text-outline focus:border-primary outline-none" />
+            className="flex-1 bg-surface-container-lowest border border-outline-variant rounded px-2 py-1 text-[12px] text-on-surface placeholder:text-outline focus:border-primary outline-none" />
           <div className="flex gap-1">
             {PRESET_COLORS.map(c => (
               <button key={c} type="button" onClick={() => setNewColor(c)}
@@ -37,7 +37,7 @@ export default function LabelPicker({ labels = [], selectedLabels = [], onToggle
           </div>
           <button type="button" onClick={() => { if (newName.trim()) { onToggle('create', { name: newName.trim(), color: newColor }); setNewName(''); setCreating(false) } }}
             className="text-[11px] text-primary hover:underline">Save</button>
-          <button type="button" onClick={() => setCreating(false)} className="text-[11px] text-secondary hover:underline">Cancel</button>
+          <button type="button" onClick={() => setCreating(false)} className="text-[11px] text-on-surface-variant hover:underline">Cancel</button>
         </div>
       ) : (
         <button type="button" onClick={() => setCreating(true)}

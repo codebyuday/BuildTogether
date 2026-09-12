@@ -38,7 +38,7 @@ function TaskCard({ task, isOwner, onDelete, onEdit, dragging }) {
           </button>
         )}
       </div>
-      <h4 className="text-[13.5px] text-ink group-hover:text-primary transition leading-snug font-medium">{task.title}</h4>
+      <h4 className="text-[13.5px] text-on-surface group-hover:text-primary transition leading-snug font-medium">{task.title}</h4>
       {task.description && <p className="text-[11px] text-muted line-clamp-2">{task.description.replace(/<[^>]*>/g, '')}</p>}
       <div className="flex items-center justify-between pt-1.5 border-t border-line/60">
         <div className="flex items-center gap-2">
@@ -97,7 +97,7 @@ export default function KanbanBoard({ tasks, isMember, isOwner, onEdit, onDelete
           >
             <div className="p-3 border-b border-line/60 flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="text-[14px] font-semibold text-ink">{STATUS_LABELS[col]}</span>
+                <span className="text-[14px] font-semibold text-on-surface">{STATUS_LABELS[col]}</span>
                 <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-surface-container-high text-muted border border-line">{colTasks.length}</span>
               </div>
             </div>

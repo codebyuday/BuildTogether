@@ -223,21 +223,21 @@ export default function ProjectDetail() {
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
               <span className={`text-[10px] font-mono font-semibold px-2 py-0.5 rounded ${
-                project.status === 'recruiting' ? 'bg-secondary/10 text-secondary border border-secondary/30' :
+                project.status === 'recruiting' ? 'bg-on-surface-variant/10 text-on-surface-variant border border-secondary/30' :
                 project.status === 'full' ? 'bg-tertiary/10 text-tertiary border border-tertiary/30' :
-                'bg-surface-container-high text-secondary border border-outline-variant/40'
+                'bg-surface-container-high text-on-surface-variant border border-outline-variant/40'
               }`}>{project.status}</span>
-              <span className="text-[11px] font-mono text-secondary">
+              <span className="text-[11px] font-mono text-on-surface-variant">
                 Owner: {project.profiles?.full_name || project.profiles?.username}
               </span>
             </div>
-            <h1 className="text-[24px] font-bold text-ink tracking-tight">{project.title}</h1>
-            <div className="mt-2 text-[14px] text-secondary max-w-2xl">
+            <h1 className="text-[24px] font-bold text-on-surface tracking-tight">{project.title}</h1>
+            <div className="mt-2 text-[14px] text-on-surface-variant max-w-2xl">
               <MarkdownRenderer>{project.description}</MarkdownRenderer>
             </div>
             <div className="mt-3 flex flex-wrap gap-1.5">
               {(project.tech_stack || []).map(t => (
-                <span key={t} className="px-2 py-0.5 text-[11px] font-mono rounded bg-surface-container-high border border-outline-variant/40 text-secondary">{t}</span>
+                <span key={t} className="px-2 py-0.5 text-[11px] font-mono rounded bg-surface-container-high border border-outline-variant/40 text-on-surface-variant">{t}</span>
               ))}
             </div>
           </div>
@@ -245,14 +245,14 @@ export default function ProjectDetail() {
             <StarButton projectId={id} />
             {project.repo_url && (
               <a href={project.repo_url} target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-1 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-[12px] font-mono text-secondary hover:bg-surface-container-high transition-colors">
+                className="flex items-center gap-1 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-[12px] font-mono text-on-surface-variant hover:bg-surface-container-high transition-colors">
                 <span className="material-symbols-outlined text-[14px]">open_in_new</span> Repo
               </a>
             )}
             {isMember && <ExportDropdown project={project} tasks={tasks} milestones={milestones} />}
             {isOwner && (
               <button onClick={() => setShowRepoConnect(true)}
-                className="flex items-center gap-1 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-[12px] font-mono text-secondary hover:bg-surface-container-high transition-colors">
+                className="flex items-center gap-1 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-[12px] font-mono text-on-surface-variant hover:bg-surface-container-high transition-colors">
                 <span className="material-symbols-outlined text-[14px]">link</span> Connect Repo
               </button>
             )}
@@ -270,7 +270,7 @@ export default function ProjectDetail() {
         {tabs.map(t => (
           <button key={t.key} onClick={() => setTab(t.key)}
             className={`px-4 py-2 text-[13px] font-medium transition-colors whitespace-nowrap ${
-              tab === t.key ? 'border-b-2 border-primary text-primary' : 'text-secondary hover:text-ink'
+              tab === t.key ? 'border-b-2 border-primary text-primary' : 'text-on-surface-variant hover:text-on-surface'
             }`}>{t.label}</button>
         ))}
       </div>
@@ -278,12 +278,12 @@ export default function ProjectDetail() {
       {showApply && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
           <div className="w-full max-w-md rounded-xl border border-outline-variant/40 bg-surface-container-low p-6 shadow-2xl">
-            <h3 className="mb-4 text-[16px] font-semibold text-ink">Apply to {project.title}</h3>
+            <h3 className="mb-4 text-[16px] font-semibold text-on-surface">Apply to {project.title}</h3>
             <textarea value={applyMsg} onChange={e => setApplyMsg(e.target.value)}
-              className="mb-4 w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-3 text-[14px] text-ink placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+              className="mb-4 w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-3 text-[14px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
               rows={4} placeholder="Why do you want to join? What skills do you bring?" />
             <div className="flex justify-end gap-2">
-              <button onClick={() => setShowApply(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-secondary hover:text-ink">Cancel</button>
+              <button onClick={() => setShowApply(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-on-surface-variant hover:text-on-surface">Cancel</button>
               <button onClick={() => applyMutation.mutate()} disabled={!applyMsg.trim() || applyMutation.isPending}
                 className="rounded-3xl bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
                 {applyMutation.isPending ? 'Sending...' : 'Submit'}
@@ -300,35 +300,35 @@ export default function ProjectDetail() {
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
           <div className="w-full max-w-2xl max-h-[90vh] overflow-y-auto bg-surface-container-low border border-outline-variant/40 rounded-xl shadow-2xl p-space-lg">
-            <h3 className="text-[16px] font-semibold text-ink mb-4">Edit Project</h3>
+            <h3 className="text-[16px] font-semibold text-on-surface mb-4">Edit Project</h3>
             <div className="space-y-4">
-              <div><label className="text-[11px] font-mono text-secondary uppercase">Title</label>
+              <div><label className="text-[11px] font-mono text-on-surface-variant uppercase">Title</label>
                 <input required value={editForm.title} onChange={e => setEditForm({ ...editForm, title: e.target.value })}
-                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1" /></div>
-              <div><label className="text-[11px] font-mono text-secondary uppercase">Description (Markdown)</label>
+                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1" /></div>
+              <div><label className="text-[11px] font-mono text-on-surface-variant uppercase">Description (Markdown)</label>
                 <textarea value={editForm.description} onChange={e => setEditForm({ ...editForm, description: e.target.value })} rows={6}
-                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1 font-mono" /></div>
+                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1 font-mono" /></div>
               <div className="grid grid-cols-2 gap-4">
-                <div><label className="text-[11px] font-mono text-secondary uppercase">Status</label>
+                <div><label className="text-[11px] font-mono text-on-surface-variant uppercase">Status</label>
                   <select value={editForm.status} onChange={e => setEditForm({ ...editForm, status: e.target.value })}
-                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary outline-none mt-1">
+                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary outline-none mt-1">
                     <option value="recruiting">Recruiting</option><option value="full">Full</option><option value="archived">Archived</option>
                   </select></div>
-                <div><label className="text-[11px] font-mono text-secondary uppercase">Visibility</label>
+                <div><label className="text-[11px] font-mono text-on-surface-variant uppercase">Visibility</label>
                   <select value={editForm.visibility} onChange={e => setEditForm({ ...editForm, visibility: e.target.value })}
-                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary outline-none mt-1">
+                    className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary outline-none mt-1">
                     <option value="public">Public</option><option value="private">Private</option>
                   </select></div>
               </div>
-              <div><label className="text-[11px] font-mono text-secondary uppercase">Repo URL</label>
+              <div><label className="text-[11px] font-mono text-on-surface-variant uppercase">Repo URL</label>
                 <input value={editForm.repo_url || ''} onChange={e => setEditForm({ ...editForm, repo_url: e.target.value })}
-                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary outline-none mt-1" /></div>
+                  className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary outline-none mt-1" /></div>
             </div>
             <div className="flex gap-2 mt-6">
               <button type="submit" onClick={() => editMutation.mutate()} disabled={editMutation.isPending}
                 className="bg-primary text-on-primary px-4 py-2 rounded-lg text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
                 {editMutation.isPending ? 'Saving...' : 'Save Changes'}</button>
-              <button onClick={() => setEditing(false)} className="px-4 py-2 text-[13px] text-secondary hover:text-ink">Cancel</button>
+              <button onClick={() => setEditing(false)} className="px-4 py-2 text-[13px] text-on-surface-variant hover:text-on-surface">Cancel</button>
             </div>
           </div>
         </div>
@@ -338,31 +338,31 @@ export default function ProjectDetail() {
         <div className="grid gap-space-lg lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-space-lg">
             <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg print:bg-white print:border-gray-200">
-              <h3 className="mb-3 text-[14px] font-semibold text-ink">About</h3>
+              <h3 className="mb-3 text-[14px] font-semibold text-on-surface">About</h3>
               <MarkdownRenderer>{project.description}</MarkdownRenderer>
             </div>
             {project.spec && (
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg">
-                <h3 className="mb-3 text-[14px] font-semibold text-ink">Spec</h3>
+                <h3 className="mb-3 text-[14px] font-semibold text-on-surface">Spec</h3>
                 <MarkdownRenderer>{project.spec}</MarkdownRenderer>
               </div>
             )}
           </div>
           <div className="space-y-space-lg">
             <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg">
-              <h3 className="mb-3 text-[14px] font-semibold text-ink">Details</h3>
+              <h3 className="mb-3 text-[14px] font-semibold text-on-surface">Details</h3>
               <dl className="space-y-2 text-[12px]">
-                <div className="flex justify-between"><dt className="text-secondary">Members</dt><dd className="text-ink font-mono">{members.length}</dd></div>
-                <div className="flex justify-between"><dt className="text-secondary">Tasks</dt><dd className="text-ink font-mono">{tasks.length}</dd></div>
-                <div className="flex justify-between"><dt className="text-secondary">Milestones</dt><dd className="text-ink font-mono">{milestones.length}</dd></div>
-                <div className="flex justify-between"><dt className="text-secondary">Labels</dt><dd className="text-ink font-mono">{labels.length}</dd></div>
-                <div className="flex justify-between"><dt className="text-secondary">Visibility</dt><dd className="text-ink font-mono capitalize">{project.visibility}</dd></div>
+                <div className="flex justify-between"><dt className="text-on-surface-variant">Members</dt><dd className="text-on-surface font-mono">{members.length}</dd></div>
+                <div className="flex justify-between"><dt className="text-on-surface-variant">Tasks</dt><dd className="text-on-surface font-mono">{tasks.length}</dd></div>
+                <div className="flex justify-between"><dt className="text-on-surface-variant">Milestones</dt><dd className="text-on-surface font-mono">{milestones.length}</dd></div>
+                <div className="flex justify-between"><dt className="text-on-surface-variant">Labels</dt><dd className="text-on-surface font-mono">{labels.length}</dd></div>
+                <div className="flex justify-between"><dt className="text-on-surface-variant">Visibility</dt><dd className="text-on-surface font-mono capitalize">{project.visibility}</dd></div>
               </dl>
             </div>
             {isOwner && (
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg space-y-2">
                 <button onClick={() => { setEditForm({ title: project.title, description: project.description || '', status: project.status, visibility: project.visibility, repo_url: project.repo_url || '', tech_stack: project.tech_stack || [] }); setEditing(true) }}
-                  className="flex items-center gap-2 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-[13px] text-secondary hover:bg-surface-container-high transition-colors">
+                  className="flex items-center gap-2 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-[13px] text-on-surface-variant hover:bg-surface-container-high transition-colors">
                   <span className="material-symbols-outlined text-[14px]">edit</span> Edit Project
                 </button>
                 <button onClick={() => { if (confirm('Delete this project? This cannot be undone.')) deleteProject.mutate() }}
@@ -441,9 +441,9 @@ export default function ProjectDetail() {
           {showAddTask && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
               <div className="w-full max-w-md rounded-2xl border border-line bg-white p-6 shadow-2xl">
-                <h3 className="mb-4 text-[16px] font-semibold text-ink">New Task</h3>
+                <h3 className="mb-4 text-[16px] font-semibold text-on-surface">New Task</h3>
                 <input value={newTask.title} onChange={e => setNewTask({ ...newTask, title: e.target.value })}
-                  className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-ink placeholder:text-muted/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+                  className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-muted/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                   placeholder="Task title" />
                 <div className="mb-3">
                   <Suspense fallback={null}>
@@ -451,16 +451,16 @@ export default function ProjectDetail() {
                   </Suspense>
                 </div>
                 <select value={newTask.priority} onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
-                  className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                  className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
                   <option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="urgent">Urgent</option>
                 </select>
                 <select value={newTask.assignee_id} onChange={e => setNewTask({ ...newTask, assignee_id: e.target.value })}
-                  className="mb-4 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-ink focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                  className="mb-4 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
                   <option value="">Unassigned</option>
                   {members.map(m => <option key={m.user_id} value={m.user_id}>{m.profiles?.full_name || m.profiles?.username}</option>)}
                 </select>
                 <div className="flex justify-end gap-2">
-                  <button onClick={() => setShowAddTask(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-muted hover:text-ink">Cancel</button>
+                  <button onClick={() => setShowAddTask(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-muted hover:text-on-surface">Cancel</button>
                   <button onClick={() => newTask.title.trim() && addTaskMutation.mutate()} disabled={!newTask.title.trim() || addTaskMutation.isPending}
                     className="rounded-3xl bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:brightness-110 disabled:opacity-50 transition-all">
                     {addTaskMutation.isPending ? 'Creating...' : 'Create'}
@@ -492,49 +492,49 @@ export default function ProjectDetail() {
           <div className="space-y-space-lg">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
-                <span className="text-[28px] font-bold text-ink">{pct}%</span>
-                <p className="text-[12px] text-secondary mt-1">Completion</p>
+                <span className="text-[28px] font-bold text-on-surface">{pct}%</span>
+                <p className="text-[12px] text-on-surface-variant mt-1">Completion</p>
                 <div className="mt-2 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
-                  <div className="h-full bg-secondary rounded-full transition-all" style={{ width: `${pct}%` }} />
+                  <div className="h-full bg-on-surface-variant rounded-full transition-all" style={{ width: `${pct}%` }} />
                 </div>
               </div>
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
-                <span className="text-[28px] font-bold text-ink">{total}</span>
-                <p className="text-[12px] text-secondary mt-1">Total Tasks</p>
+                <span className="text-[28px] font-bold text-on-surface">{total}</span>
+                <p className="text-[12px] text-on-surface-variant mt-1">Total Tasks</p>
               </div>
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
                 <span className="text-[28px] font-bold text-tertiary">{inProgress}</span>
-                <p className="text-[12px] text-secondary mt-1">In Progress</p>
+                <p className="text-[12px] text-on-surface-variant mt-1">In Progress</p>
               </div>
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-4 text-center">
                 <span className="text-[28px] font-bold text-error">{overdue}</span>
-                <p className="text-[12px] text-secondary mt-1">Overdue</p>
+                <p className="text-[12px] text-on-surface-variant mt-1">Overdue</p>
               </div>
             </div>
 
             <div className="grid gap-space-lg md:grid-cols-2">
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
-                <h3 className="text-[14px] font-semibold text-ink mb-3">By Status</h3>
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">By Status</h3>
                 <div className="space-y-2">
                   {[
                     { label: 'To Do', count: todo, color: 'bg-outline' },
                     { label: 'In Progress', count: inProgress, color: 'bg-primary' },
                     { label: 'In Review', count: inReview, color: 'bg-tertiary' },
-                    { label: 'Done', count: done, color: 'bg-secondary' },
+                    { label: 'Done', count: done, color: 'bg-on-surface-variant' },
                   ].map(s => (
                     <div key={s.label} className="flex items-center gap-3">
-                      <span className="text-[12px] text-secondary w-20">{s.label}</span>
+                      <span className="text-[12px] text-on-surface-variant w-20">{s.label}</span>
                       <div className="flex-1 h-4 bg-surface-container-high rounded-full overflow-hidden">
                         <div className={`h-full ${s.color} rounded-full`} style={{ width: total > 0 ? `${(s.count / total) * 100}%` : '0%' }} />
                       </div>
-                      <span className="text-[12px] font-mono text-secondary w-6 text-right">{s.count}</span>
+                      <span className="text-[12px] font-mono text-on-surface-variant w-6 text-right">{s.count}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
-                <h3 className="text-[14px] font-semibold text-ink mb-3">By Priority</h3>
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">By Priority</h3>
                 <div className="space-y-2">
                   {[
                     { label: 'Urgent', count: priorityCounts.urgent, color: 'bg-error' },
@@ -543,53 +543,53 @@ export default function ProjectDetail() {
                     { label: 'Low', count: priorityCounts.low, color: 'bg-outline' },
                   ].map(p => (
                     <div key={p.label} className="flex items-center gap-3">
-                      <span className="text-[12px] text-secondary w-14">{p.label}</span>
+                      <span className="text-[12px] text-on-surface-variant w-14">{p.label}</span>
                       <div className="flex-1 h-4 bg-surface-container-high rounded-full overflow-hidden">
                         <div className={`h-full ${p.color} rounded-full`} style={{ width: total > 0 ? `${(p.count / total) * 100}%` : '0%' }} />
                       </div>
-                      <span className="text-[12px] font-mono text-secondary w-6 text-right">{p.count}</span>
+                      <span className="text-[12px] font-mono text-on-surface-variant w-6 text-right">{p.count}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
-                <h3 className="text-[14px] font-semibold text-ink mb-3">By Assignee</h3>
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">By Assignee</h3>
                 <div className="space-y-2">
                   {Object.entries(memberTaskCount).sort((a, b) => b[1] - a[1]).map(([name, count]) => (
                     <div key={name} className="flex items-center gap-3">
-                      <span className="text-[12px] text-secondary truncate max-w-[120px]">{name}</span>
+                      <span className="text-[12px] text-on-surface-variant truncate max-w-[120px]">{name}</span>
                       <div className="flex-1 h-4 bg-surface-container-high rounded-full overflow-hidden">
                         <div className="h-full bg-primary rounded-full" style={{ width: total > 0 ? `${(count / total) * 100}%` : '0%' }} />
                       </div>
-                      <span className="text-[12px] font-mono text-secondary w-6 text-right">{count}</span>
+                      <span className="text-[12px] font-mono text-on-surface-variant w-6 text-right">{count}</span>
                     </div>
                   ))}
                   {Object.keys(memberTaskCount).length === 0 && (
-                    <p className="text-[12px] text-secondary">No tasks assigned yet.</p>
+                    <p className="text-[12px] text-on-surface-variant">No tasks assigned yet.</p>
                   )}
                 </div>
               </div>
 
               <div className="bg-surface-container-low border border-outline-variant/30 rounded-lg p-space-lg">
-                <h3 className="text-[14px] font-semibold text-ink mb-3">Milestones</h3>
+                <h3 className="text-[14px] font-semibold text-on-surface mb-3">Milestones</h3>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-[12px]">
-                    <span className="text-secondary">Completed</span>
-                    <span className="font-mono text-secondary">{completedMilestones} / {milestones.length}</span>
+                    <span className="text-on-surface-variant">Completed</span>
+                    <span className="font-mono text-on-surface-variant">{completedMilestones} / {milestones.length}</span>
                   </div>
                   {milestones.length > 0 && (
                     <div className="h-4 bg-surface-container-high rounded-full overflow-hidden">
-                      <div className="h-full bg-secondary rounded-full" style={{ width: `${(completedMilestones / milestones.length) * 100}%` }} />
+                      <div className="h-full bg-on-surface-variant rounded-full" style={{ width: `${(completedMilestones / milestones.length) * 100}%` }} />
                     </div>
                   )}
                   <div className="flex items-center justify-between text-[12px] pt-2 border-t border-outline-variant/30">
-                    <span className="text-secondary">Team size</span>
-                    <span className="font-mono text-ink">{members.length}</span>
+                    <span className="text-on-surface-variant">Team size</span>
+                    <span className="font-mono text-on-surface">{members.length}</span>
                   </div>
                   <div className="flex items-center justify-between text-[12px]">
-                    <span className="text-secondary">Labels used</span>
-                    <span className="font-mono text-ink">{labels.length}</span>
+                    <span className="text-on-surface-variant">Labels used</span>
+                    <span className="font-mono text-on-surface">{labels.length}</span>
                   </div>
                 </div>
               </div>
@@ -607,13 +607,13 @@ export default function ProjectDetail() {
                   {m.profiles?.username?.[0]?.toUpperCase() || '?'}
                 </div>
                 <div>
-                  <span className="text-[14px] font-medium text-ink">{m.profiles?.full_name || m.profiles?.username}</span>
-                  <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-secondary border border-outline-variant/40">{m.role}</span>
+                  <span className="text-[14px] font-medium text-on-surface">{m.profiles?.full_name || m.profiles?.username}</span>
+                  <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/40">{m.role}</span>
                 </div>
               </div>
               {isOwner && m.role !== 'owner' && (
                 <button onClick={() => { if (confirm(`Remove ${m.profiles?.username}?`)) removeMember.mutate(m) }}
-                  className="rounded p-1.5 text-secondary hover:bg-error-container/30 hover:text-error transition-colors">
+                  className="rounded p-1.5 text-on-surface-variant hover:bg-error-container/30 hover:text-error transition-colors">
                   <span className="material-symbols-outlined text-[16px]">person_remove</span>
                 </button>
               )}
@@ -629,7 +629,7 @@ export default function ProjectDetail() {
           ) : (
             <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
               <span className="material-symbols-outlined text-[32px] text-outline mb-2">link</span>
-              <p className="text-[14px] text-secondary mb-3">No GitHub repository connected.</p>
+              <p className="text-[14px] text-on-surface-variant mb-3">No GitHub repository connected.</p>
               {isOwner && (
                 <button onClick={() => setShowRepoConnect(true)}
                   className="bg-primary text-on-primary px-4 py-2 rounded-lg text-[13px] font-semibold hover:bg-primary-container transition-all">
@@ -648,12 +648,12 @@ export default function ProjectDetail() {
           {applications.filter(a => a.status === 'pending').map(app => (
             <div key={app.id} className="flex items-center justify-between rounded-lg border border-outline-variant/40 bg-surface-container p-4">
               <div>
-                <span className="text-[14px] font-medium text-ink">{app.profiles?.full_name || app.profiles?.username}</span>
-                <p className="mt-1 text-[12px] text-secondary">{app.message}</p>
+                <span className="text-[14px] font-medium text-on-surface">{app.profiles?.full_name || app.profiles?.username}</span>
+                <p className="mt-1 text-[12px] text-on-surface-variant">{app.message}</p>
               </div>
               <div className="flex gap-2">
                 <button onClick={() => reviewMutation.mutate({ appId: app.id, status: 'accepted', appUserId: app.user_id })}
-                  className="rounded-lg bg-secondary/10 p-2 text-secondary hover:bg-secondary/20 transition-colors">
+                  className="rounded-lg bg-on-surface-variant/10 p-2 text-on-surface-variant hover:bg-on-surface-variant/20 transition-colors">
                   <span className="material-symbols-outlined text-[16px]">check</span>
                 </button>
                 <button onClick={() => reviewMutation.mutate({ appId: app.id, status: 'rejected', appUserId: app.user_id })}
@@ -665,7 +665,7 @@ export default function ProjectDetail() {
           ))}
           {applications.filter(a => a.status === 'pending').length === 0 && (
             <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
-              <p className="text-[14px] text-secondary">No pending applications.</p>
+              <p className="text-[14px] text-on-surface-variant">No pending applications.</p>
             </div>
           )}
         </div>

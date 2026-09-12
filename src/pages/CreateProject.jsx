@@ -48,28 +48,28 @@ export default function CreateProject() {
   return (
     <div className="mx-auto max-w-2xl space-y-5">
       <div>
-        <h1 className="text-[24px] font-bold text-ink tracking-tight">Create Project</h1>
+        <h1 className="text-[24px] font-bold text-on-surface tracking-tight">Create Project</h1>
         <p className="text-[14px] text-muted mt-0.5">Publish a new project to recruit contributors.</p>
       </div>
 
       <form onSubmit={e => { e.preventDefault(); createMutation.mutate() }}
         className="space-y-5 bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
         <div>
-          <label className="mb-1.5 block text-[12px] font-bold text-secondary">Title *</label>
+          <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Title *</label>
           <input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}
-            className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-ink text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+            className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-on-surface text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
             placeholder="My Awesome Project" />
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[12px] font-bold text-secondary">Description *</label>
+          <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Description *</label>
           <textarea required value={form.description} onChange={e => setForm({ ...form, description: e.target.value })}
-            className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-ink text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+            className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-on-surface text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
             rows={4} placeholder="What does this project do? What help do you need?" />
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[12px] font-bold text-secondary">Tech Stack</label>
+          <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Tech Stack</label>
           <div className="mb-2 flex flex-wrap gap-1.5">
             {techStack.map(t => (
               <span key={t} className="flex items-center gap-1 rounded-3xl bg-tag-blue-bg text-tag-blue-text border border-tag-blue-border px-3 py-1 text-[11px] font-mono font-medium">
@@ -81,27 +81,27 @@ export default function CreateProject() {
           <div className="flex gap-2">
             <input value={techInput} onChange={e => setTechInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && addTech(e)}
-              className="flex-1 bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-ink text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+              className="flex-1 bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-on-surface text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
               placeholder="e.g. React, Node.js, MongoDB" />
             <button type="button" onClick={addTech}
-              className="bg-surface-container-high px-4 py-2 text-[12px] font-semibold text-muted hover:text-ink rounded-3xl border border-line transition-colors">Add</button>
+              className="bg-surface-container-high px-4 py-2 text-[12px] font-semibold text-muted hover:text-on-surface rounded-3xl border border-line transition-colors">Add</button>
           </div>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className="mb-1.5 block text-[12px] font-bold text-secondary">Status</label>
+            <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Status</label>
             <select value={form.status} onChange={e => setForm({ ...form, status: e.target.value })}
-              className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-ink text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all">
+              className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-on-surface text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all">
               <option value="recruiting">Recruiting</option>
               <option value="full">Full</option>
               <option value="archived">Archived</option>
             </select>
           </div>
           <div>
-            <label className="mb-1.5 block text-[12px] font-bold text-secondary">Visibility</label>
+            <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Visibility</label>
             <select value={form.visibility} onChange={e => setForm({ ...form, visibility: e.target.value })}
-              className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-ink text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all">
+              className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-on-surface text-[14px] focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all">
               <option value="public">Public</option>
               <option value="private">Private</option>
             </select>
@@ -109,9 +109,9 @@ export default function CreateProject() {
         </div>
 
         <div>
-          <label className="mb-1.5 block text-[12px] font-bold text-secondary">GitHub Repository URL (optional)</label>
+          <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">GitHub Repository URL (optional)</label>
           <input value={form.repo_url} onChange={e => setForm({ ...form, repo_url: e.target.value })}
-            className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-ink text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+            className="w-full bg-surface-container-low border border-line rounded-3xl px-4 py-2.5 text-on-surface text-[14px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
             placeholder="https://github.com/owner/repo" />
         </div>
 

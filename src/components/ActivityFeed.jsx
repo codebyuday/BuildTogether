@@ -39,14 +39,14 @@ export default function ActivityFeed({ projectId, limit = 30 }) {
     return (
       <div className="rounded-lg border border-dashed border-outline-variant/40 bg-surface-container-low/50 p-8 text-center">
         <span className="material-symbols-outlined text-[32px] text-outline mb-2">history</span>
-        <p className="text-[14px] text-secondary">No activity yet.</p>
+        <p className="text-[14px] text-on-surface-variant">No activity yet.</p>
       </div>
     )
   }
 
   return (
     <div className="space-y-0">
-      <h2 className="mb-4 text-[16px] font-semibold text-ink flex items-center gap-2">
+      <h2 className="mb-4 text-[16px] font-semibold text-on-surface flex items-center gap-2">
         <span className="material-symbols-outlined text-[18px] text-primary">history</span> Activity
       </h2>
       {activities.map((activity, i) => {
@@ -62,15 +62,15 @@ export default function ActivityFeed({ projectId, limit = 30 }) {
               <span className="material-symbols-outlined text-[12px] text-primary">{icon}</span>
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-[13px] text-ink">
+              <p className="text-[13px] text-on-surface">
                 <span className="font-medium">{actor?.full_name || actor?.username || 'Unknown'}</span>
                 {' '}{label}
-                {activity.metadata?.task_title && <span className="text-secondary"> — "{activity.metadata.task_title}"</span>}
+                {activity.metadata?.task_title && <span className="text-on-surface-variant"> — "{activity.metadata.task_title}"</span>}
                 {activity.metadata?.status_from && activity.metadata?.status_to && (
-                  <span className="text-secondary"> from {activity.metadata.status_from} to {activity.metadata.status_to}</span>
+                  <span className="text-on-surface-variant"> from {activity.metadata.status_from} to {activity.metadata.status_to}</span>
                 )}
               </p>
-              <span className="text-[11px] font-mono text-secondary">
+              <span className="text-[11px] font-mono text-on-surface-variant">
                 {formatDistanceToNow(new Date(activity.created_at), { addSuffix: true })}
               </span>
             </div>

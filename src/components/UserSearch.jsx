@@ -47,7 +47,7 @@ export default function UserSearch() {
       <div className="relative">
         <span className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-outline text-[16px]">search</span>
         <input ref={inputRef} value={query} onChange={e => { setQuery(e.target.value); setOpen(true) }} onFocus={() => setOpen(true)}
-          className="w-56 h-8 pl-8 pr-12 text-[12px] font-mono bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-ink placeholder:text-outline focus:border-primary focus:outline-none transition-colors"
+          className="w-56 h-8 pl-8 pr-12 text-[12px] font-mono bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-colors"
           placeholder="Search users..." />
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-0.5 font-mono text-[10px] text-outline bg-surface-container px-1.5 py-0.5 rounded border border-outline-variant/40 pointer-events-none">
           <span>⌘K</span>
@@ -62,8 +62,8 @@ export default function UserSearch() {
                 {u.username?.[0]?.toUpperCase()}
               </div>
               <div className="min-w-0">
-                <span className="text-[13px] text-ink block truncate">{u.full_name || u.username}</span>
-                <span className="text-[11px] font-mono text-secondary">@{u.username}</span>
+                <span className="text-[13px] text-on-surface block truncate">{u.full_name || u.username}</span>
+                <span className="text-[11px] font-mono text-on-surface-variant">@{u.username}</span>
               </div>
             </Link>
           ))}

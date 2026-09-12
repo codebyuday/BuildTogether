@@ -33,7 +33,7 @@ export default function Explore() {
     <div className="mx-auto max-w-[1200px] space-y-5">
       <div className="flex items-end justify-between">
         <div>
-          <h1 className="text-[24px] font-bold text-ink tracking-tight">Discover Projects</h1>
+          <h1 className="text-[24px] font-bold text-on-surface tracking-tight">Discover Projects</h1>
           <p className="text-[14px] text-muted mt-0.5">Find open-source projects to contribute to.</p>
         </div>
         <span className="text-[12px] font-mono text-muted">{projects.length} found</span>
@@ -46,7 +46,7 @@ export default function Explore() {
             <input
               type="text" value={search} onChange={e => setSearch(e.target.value)}
               placeholder="Search projects..."
-              className="w-full bg-surface-container-low border border-line rounded-3xl pl-10 pr-4 py-2.5 text-ink text-[13.5px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
+              className="w-full bg-surface-container-low border border-line rounded-3xl pl-10 pr-4 py-2.5 text-on-surface text-[13.5px] placeholder:text-muted/50 focus:border-primary focus:ring-2 focus:ring-primary/15 outline-none transition-all"
             />
           </div>
         </div>
@@ -57,7 +57,7 @@ export default function Explore() {
               className={`px-3 py-1 text-[11px] font-bold rounded-3xl transition-all ${
                 status === s
                   ? 'bg-primary text-white'
-                  : 'text-muted hover:text-ink hover:bg-surface-container-high'
+                  : 'text-muted hover:text-on-surface hover:bg-surface-container-high'
               }`}>
               {STATUS_LABELS[s]}
             </button>
@@ -87,7 +87,7 @@ export default function Explore() {
                       <span className="material-symbols-outlined text-[20px]">code_blocks</span>
                     </div>
                     <div>
-                      <h2 className="text-[15px] font-bold text-ink group-hover:text-primary transition-colors leading-tight">{p.title}</h2>
+                      <h2 className="text-[15px] font-bold text-on-surface group-hover:text-primary transition-colors leading-tight">{p.title}</h2>
                       <span className="text-[11px] font-mono text-muted">
                         {p.profiles?.username ? `@${p.profiles.username}` : 'unknown'}
                       </span>
@@ -106,7 +106,7 @@ export default function Explore() {
                   </span>
                 </div>
 
-                <p className="text-[13px] text-secondary mb-3 line-clamp-2 leading-relaxed">{p.description}</p>
+                <p className="text-[13px] text-on-surface-variant mb-3 line-clamp-2 leading-relaxed">{p.description}</p>
 
                 <div className="mb-3 p-2.5 rounded-xl bg-surface-container-low border border-line flex items-center justify-between">
                   <div className="flex items-center gap-1.5">

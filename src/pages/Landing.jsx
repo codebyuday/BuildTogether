@@ -72,17 +72,17 @@ export default function Landing() {
   }
 
   return (
-    <div className="min-h-screen bg-white overflow-hidden">
+    <div className="min-h-screen bg-surface overflow-hidden">
       {/* Nav */}
       <nav className="fixed top-0 z-50 flex h-[60px] w-full items-center justify-between px-6 lg:px-10 glass">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-2xl bg-ink flex items-center justify-center text-white text-[12px] font-extrabold">
+          <div className="w-8 h-8 rounded-2xl bg-on-surface flex items-center justify-center text-white text-[12px] font-extrabold">
             <span className="font-mono">B</span>
           </div>
-          <span className="text-[18px] font-extrabold text-ink tracking-tight">BuildTogether</span>
+          <span className="text-[18px] font-extrabold text-on-surface tracking-tight">BuildTogether</span>
         </div>
         <div className="flex items-center gap-3">
-          <Link to="/login" className="text-[14px] text-muted font-semibold hover:text-ink transition-colors px-4 py-2 rounded-3xl hover:bg-surface-container-low">Login</Link>
+          <Link to="/login" className="text-[14px] text-muted font-semibold hover:text-on-surface transition-colors px-4 py-2 rounded-3xl hover:bg-surface-container-low">Login</Link>
           <Link to="/register" className="rounded-3xl bg-primary text-white px-6 py-2 text-[14px] font-semibold hover:brightness-110 transition-all active:scale-[0.98]">Get Started</Link>
         </div>
       </nav>
@@ -98,12 +98,12 @@ export default function Landing() {
           Open Source &middot; Free Forever
         </div>
 
-        <h1 ref={addRevealRef} className="reveal reveal-delay-1 relative z-10 max-w-4xl text-[42px] sm:text-[56px] lg:text-[72px] font-extrabold leading-[1.05] tracking-[-0.02em] text-ink">
+        <h1 ref={addRevealRef} className="reveal reveal-delay-1 relative z-10 max-w-4xl text-[42px] sm:text-[56px] lg:text-[72px] font-extrabold leading-[1.05] tracking-[-0.02em] text-on-surface">
           Build projects<br />
           <span className="text-primary">together</span>
         </h1>
 
-        <p ref={addRevealRef} className="reveal reveal-delay-2 relative z-10 mt-5 max-w-xl text-[17px] leading-relaxed text-secondary">
+        <p ref={addRevealRef} className="reveal reveal-delay-2 relative z-10 mt-5 max-w-xl text-[17px] leading-relaxed text-on-surface-variant">
           A modern workspace where developers publish projects, recruit contributors,
           and collaborate through tasks with live notifications and real-time updates.
         </p>
@@ -114,7 +114,7 @@ export default function Landing() {
             Start Building
           </Link>
           <Link to="/explore"
-            className="rounded-3xl border border-line bg-white px-8 py-3.5 text-[15px] font-semibold text-ink hover:bg-surface-container-low transition-all">
+            className="rounded-3xl border border-line bg-white px-8 py-3.5 text-[15px] font-semibold text-on-surface hover:bg-surface-container-low transition-all">
             Explore Projects
           </Link>
         </div>
@@ -124,9 +124,9 @@ export default function Landing() {
             {[47, 12, 32, 68].map(id => (
               <img key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" className="w-8 h-8 rounded-full object-cover bg-surface-container-high" />
             ))}
-            <span className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-ink" style={{ border: '2.5px solid white', marginLeft: '-8px' }}>+5</span>
+            <span className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-on-surface" style={{ border: '2.5px solid white', marginLeft: '-8px' }}>+5</span>
           </div>
-          <span className="text-[13px] text-secondary">{stats.members || 0} developers shipping real projects</span>
+          <span className="text-[13px] text-on-surface-variant">{stats.members || 0} developers shipping real projects</span>
         </div>
 
         <div ref={addRevealRef} className="reveal relative z-10 mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
@@ -137,7 +137,7 @@ export default function Landing() {
             { value: '100%', label: 'Open Source' },
           ].map(({ value, label }) => (
             <div key={label} className="text-center">
-              <div className="text-[22px] font-extrabold text-ink">{value}</div>
+              <div className="text-[22px] font-extrabold text-on-surface">{value}</div>
               <div className="text-[12px] text-muted mt-1 font-medium">{label}</div>
             </div>
           ))}
@@ -162,16 +162,16 @@ export default function Landing() {
         <div className="mx-auto max-w-[1200px]">
           <div ref={addRevealRef} className="reveal text-center mb-16">
             <span className="inline-block px-3 py-1 rounded-full bg-surface-container text-primary text-[11px] font-bold uppercase tracking-widest mb-4">How it works</span>
-            <h2 className="text-[34px] sm:text-[40px] font-extrabold text-ink tracking-[-0.01em]">Three steps to ship</h2>
+            <h2 className="text-[34px] sm:text-[40px] font-extrabold text-on-surface tracking-[-0.01em]">Three steps to ship</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {steps.map(({ num, title, desc }, i) => (
-              <div key={num} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} step-card group relative bg-white border border-line rounded-[20px] p-8 transition-all duration-300 hover:-translate-y-1.5 cursor-default`}
+              <div key={num} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} step-card group relative bg-white border border-line rounded-2xl p-8 transition-all duration-300 hover:-translate-y-1.5 cursor-default`}
                 style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
                 <div className="step-gradient-bar" />
                 <div className="text-[56px] font-extrabold leading-none mb-4 text-gradient transition-transform duration-400 group-hover:scale-[1.04] group-hover:-translate-y-0.5">{num}</div>
-                <h3 className="text-[19px] font-bold text-ink tracking-tight mb-2">{title}</h3>
-                <p className="text-[14.5px] leading-relaxed text-secondary">{desc}</p>
+                <h3 className="text-[19px] font-bold text-on-surface tracking-tight mb-2">{title}</h3>
+                <p className="text-[14.5px] leading-relaxed text-on-surface-variant">{desc}</p>
               </div>
             ))}
           </div>
@@ -183,8 +183,8 @@ export default function Landing() {
         <div className="mx-auto max-w-[1200px]">
           <div ref={addRevealRef} className="reveal text-center mb-16">
             <span className="inline-block px-3 py-1 rounded-full bg-surface-container text-primary text-[11px] font-bold uppercase tracking-widest mb-4">Features</span>
-            <h2 className="text-[34px] sm:text-[40px] font-extrabold text-ink tracking-[-0.01em]">Everything you need</h2>
-            <p className="mt-3 text-[15px] text-secondary max-w-lg mx-auto">Built for developers, by developers. No bloat, no compromise.</p>
+            <h2 className="text-[34px] sm:text-[40px] font-extrabold text-on-surface tracking-[-0.01em]">Everything you need</h2>
+            <p className="mt-3 text-[15px] text-on-surface-variant max-w-lg mx-auto">Built for developers, by developers. No bloat, no compromise.</p>
           </div>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
             {features.map(({ icon, title, desc, color }, i) => (
@@ -193,8 +193,8 @@ export default function Landing() {
                 <div className={`mb-4 flex h-11 w-11 items-center justify-center rounded-2xl ${color === 'primary' ? 'bg-surface-container text-primary' : 'bg-surface-container text-tertiary'}`}>
                   <span className="material-symbols-outlined text-[22px]">{icon}</span>
                 </div>
-                <h3 className="mb-2 text-[15px] font-bold text-ink">{title}</h3>
-                <p className="text-[13.5px] leading-relaxed text-secondary">{desc}</p>
+                <h3 className="mb-2 text-[15px] font-bold text-on-surface">{title}</h3>
+                <p className="text-[13.5px] leading-relaxed text-on-surface-variant">{desc}</p>
               </div>
             ))}
           </div>
@@ -206,7 +206,7 @@ export default function Landing() {
         <div className="mx-auto max-w-[1200px]">
           <div ref={addRevealRef} className="reveal text-center mb-16">
             <span className="inline-block px-3 py-1 rounded-full bg-surface-container text-tertiary text-[11px] font-bold uppercase tracking-widest mb-4">Trusted by developers</span>
-            <h2 className="text-[34px] sm:text-[40px] font-extrabold text-ink tracking-[-0.01em]">What people are building</h2>
+            <h2 className="text-[34px] sm:text-[40px] font-extrabold text-on-surface tracking-[-0.01em]">What people are building</h2>
           </div>
           <div className="grid gap-6 md:grid-cols-3">
             {[
@@ -214,14 +214,14 @@ export default function Landing() {
               { quote: 'Finally a platform where I can show my proof of work and get recruited for real projects. The GitHub integration is seamless.', name: 'Arjun Mehta', role: 'Full-Stack Developer', img: 12 },
               { quote: 'We shipped our MVP in 3 weeks with a team we found here. The activity feeds kept everyone aligned without daily standups.', name: 'Sarah Chen', role: 'CTO, NovaTech', img: 32 },
             ].map(({ quote, name, role, img }, i) => (
-              <div key={name} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} group bg-white border border-line rounded-[20px] p-7 flex flex-col transition-all duration-300 hover:-translate-y-1`}
+              <div key={name} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} group bg-white border border-line rounded-2xl p-7 flex flex-col transition-all duration-300 hover:-translate-y-1`}
                 style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
                 <span className="text-primary text-[72px] leading-[0.5] h-[22px] block font-serif italic transition-transform duration-400 group-hover:scale-110 group-hover:-rotate-3 origin-left">&ldquo;</span>
-                <p className="text-[17px] leading-[1.5] text-ink flex-1 mt-4 font-medium">{quote}</p>
+                <p className="text-[17px] leading-[1.5] text-on-surface flex-1 mt-4 font-medium">{quote}</p>
                 <div className="flex items-center gap-3 pt-5 border-t border-line mt-5">
                   <img src={`https://i.pravatar.cc/72?img=${img}`} alt={name} className="w-10 h-10 rounded-full object-cover bg-surface-container-high" />
                   <div>
-                    <div className="text-[13.5px] font-bold text-ink">{name}</div>
+                    <div className="text-[13.5px] font-bold text-on-surface">{name}</div>
                     <div className="text-[12px] text-muted">{role}</div>
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export default function Landing() {
       </section>
 
       {/* FAQ — dark section */}
-      <section className="py-28 px-6 sm:px-8 bg-ink">
+      <section className="py-28 px-6 sm:px-8 bg-on-surface">
         <div className="mx-auto max-w-[880px]">
           <div ref={addRevealRef} className="reveal text-center mb-12">
             <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/60 text-[11px] font-bold uppercase tracking-widest mb-4">FAQ</span>
@@ -243,7 +243,7 @@ export default function Landing() {
               <div key={i} ref={addRevealRef} className={`reveal reveal-delay-${(i % 5) + 1} faq-item rounded-2xl px-6 py-5 transition-all duration-300 ${openFaq === i ? 'is-open bg-white/[0.06] border border-white/15' : 'border border-white/[0.08] bg-white/[0.02]'}`}>
                 <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full text-left flex items-center justify-between gap-4">
                   <span className="text-[16px] font-semibold text-white">{q}</span>
-                  <span className={`shrink-0 w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-[18px] transition-all duration-300 ${openFaq === i ? 'bg-white text-ink rotate-180' : 'text-white/50'}`}>
+                  <span className={`shrink-0 w-8 h-8 rounded-full border border-white/15 flex items-center justify-center text-[18px] transition-all duration-300 ${openFaq === i ? 'bg-white text-on-surface rotate-180' : 'text-white/50'}`}>
                     {openFaq === i ? '−' : '+'}
                   </span>
                 </button>
@@ -260,7 +260,7 @@ export default function Landing() {
 
       {/* Dark CTA — full-bleed navy */}
       <section className="py-16 px-6 sm:px-8">
-        <div className="relative max-w-[1136px] mx-auto rounded-[32px] overflow-hidden text-center px-10 sm:px-14 py-[88px] bg-ink">
+        <div className="relative max-w-[1136px] mx-auto rounded-[32px] overflow-hidden text-center px-10 sm:px-14 py-[88px] bg-on-surface">
           <div className="relative max-w-[720px] mx-auto">
             <h2 className="text-[42px] sm:text-[52px] lg:text-[56px] font-extrabold leading-[1.05] tracking-[-0.02em] text-white">
               Ready to build?
@@ -289,44 +289,44 @@ export default function Landing() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-line px-6 sm:px-8 py-14 sm:py-20 bg-white">
+      <footer className="border-t border-line px-6 sm:px-8 py-14 sm:py-20 bg-surface">
         <div className="mx-auto max-w-[1200px]">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
             <div>
               <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-8 h-8 rounded-2xl bg-ink flex items-center justify-center text-white text-[12px] font-extrabold">
+                <div className="w-8 h-8 rounded-2xl bg-on-surface flex items-center justify-center text-white text-[12px] font-extrabold">
                   <span className="font-mono">B</span>
                 </div>
-                <span className="text-[18px] font-extrabold text-ink tracking-tight">BuildTogether</span>
+                <span className="text-[18px] font-extrabold text-on-surface tracking-tight">BuildTogether</span>
               </div>
-              <p className="text-[13.5px] leading-[1.6] text-secondary mb-5">A modern workspace for developers to build projects together.</p>
+              <p className="text-[13.5px] leading-[1.6] text-on-surface-variant mb-5">A modern workspace for developers to build projects together.</p>
             </div>
             <div>
-              <h4 className="text-[16px] font-bold text-ink mb-4">Platform</h4>
+              <h4 className="text-[16px] font-bold text-on-surface mb-4">Platform</h4>
               <ul className="space-y-2.5">
-                <li><Link to="/explore" className="text-[14px] text-secondary hover:text-ink transition-colors">Discover Projects</Link></li>
-                <li><Link to="/register" className="text-[14px] text-secondary hover:text-ink transition-colors">Sign Up</Link></li>
-                <li><Link to="/login" className="text-[14px] text-secondary hover:text-ink transition-colors">Sign In</Link></li>
-                <li><Link to="/dashboard" className="text-[14px] text-secondary hover:text-ink transition-colors">Dashboard</Link></li>
+                <li><Link to="/explore" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Discover Projects</Link></li>
+                <li><Link to="/register" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Sign Up</Link></li>
+                <li><Link to="/login" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Sign In</Link></li>
+                <li><Link to="/dashboard" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Dashboard</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-[16px] font-bold text-ink mb-4">Resources</h4>
+              <h4 className="text-[16px] font-bold text-on-surface mb-4">Resources</h4>
               <ul className="space-y-2.5">
-                <li><a href="https://github.com/codebyuday/BuildTogether" target="_blank" rel="noopener" className="text-[14px] text-secondary hover:text-ink transition-colors">GitHub</a></li>
-                <li><Link to="/explore" className="text-[14px] text-secondary hover:text-ink transition-colors">Explore</Link></li>
+                <li><a href="https://github.com/codebyuday/BuildTogether" target="_blank" rel="noopener" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">GitHub</a></li>
+                <li><Link to="/explore" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Explore</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-[16px] font-bold text-ink mb-4">Support</h4>
+              <h4 className="text-[16px] font-bold text-on-surface mb-4">Support</h4>
               <ul className="space-y-2.5">
-                <li><a href="mailto:udaypratapwins0@gmail.com" className="text-[14px] text-secondary hover:text-ink transition-colors">Contact Us</a></li>
-                <li><a href="https://github.com/codebyuday/BuildTogether/issues" target="_blank" rel="noopener" className="text-[14px] text-secondary hover:text-ink transition-colors">Report an Issue</a></li>
+                <li><a href="mailto:udaypratapwins0@gmail.com" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Contact Us</a></li>
+                <li><a href="https://github.com/codebyuday/BuildTogether/issues" target="_blank" rel="noopener" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Report an Issue</a></li>
               </ul>
             </div>
           </div>
           <div className="mt-14 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-line">
-            <p className="text-[12px] text-muted">Created &amp; Administered by <a href="https://www.linkedin.com/in/udaypratap-singh-285823288/" target="_blank" rel="noopener" className="hover:text-ink transition-colors font-semibold">Uday Pratap Singh</a></p>
+            <p className="text-[12px] text-muted">Created &amp; Administered by <a href="https://www.linkedin.com/in/udaypratap-singh-285823288/" target="_blank" rel="noopener" className="hover:text-on-surface transition-colors font-semibold">Uday Pratap Singh</a></p>
             <p className="text-[12px] text-muted">&copy; {new Date().getFullYear()} BuildTogether. All rights reserved.</p>
           </div>
         </div>

@@ -66,7 +66,7 @@ export default function Dashboard() {
 
   const stats = [
     { label: 'My Projects', value: projects.length, icon: 'folder', color: 'text-primary', bg: 'bg-primary/10' },
-    { label: 'Member Of', value: memberProjects.length, icon: 'group', color: 'text-secondary', bg: 'bg-surface-container-high' },
+    { label: 'Member Of', value: memberProjects.length, icon: 'group', color: 'text-on-surface-variant', bg: 'bg-surface-container-high' },
     { label: 'Open Tasks', value: tasks.length, icon: 'task_alt', color: 'text-tertiary', bg: 'bg-tertiary/10' },
     { label: 'Applications', value: applications.filter(a => a.status === 'pending').length, icon: 'schedule', color: 'text-primary', bg: 'bg-primary/10' },
   ]
@@ -85,7 +85,7 @@ export default function Dashboard() {
               </div>
               <div>
                 <span className="text-[11px] font-bold text-muted uppercase tracking-wider block">{label}</span>
-                <span className="text-[24px] font-bold text-ink leading-none">{value}</span>
+                <span className="text-[24px] font-bold text-on-surface leading-none">{value}</span>
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function Dashboard() {
       <div className="grid gap-5 lg:grid-cols-3">
         <section className="lg:col-span-1">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-[15px] font-bold text-ink">My Tasks</h2>
+            <h2 className="text-[15px] font-bold text-on-surface">My Tasks</h2>
             <span className="text-[11px] font-mono text-muted">{tasks.length} open</span>
           </div>
           {loadingTasks ? (
@@ -121,7 +121,7 @@ export default function Dashboard() {
                       'bg-muted/40'
                     }`} />
                     <div className="min-w-0">
-                      <span className="text-[13.5px] text-ink group-hover:text-primary transition font-medium block truncate">{t.title}</span>
+                      <span className="text-[13.5px] text-on-surface group-hover:text-primary transition font-medium block truncate">{t.title}</span>
                       {t.projects && <span className="text-[11px] text-muted font-mono">{t.projects.title}</span>}
                     </div>
                   </div>
@@ -139,7 +139,7 @@ export default function Dashboard() {
         <section className="lg:col-span-2 space-y-5">
           {starredProjects.length > 0 && (
             <div>
-              <h2 className="mb-3 text-[15px] font-bold text-ink flex items-center gap-2">
+              <h2 className="mb-3 text-[15px] font-bold text-on-surface flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-tertiary">star</span> Starred
               </h2>
               <div className="space-y-1.5">
@@ -152,7 +152,7 @@ export default function Dashboard() {
                         <span className="material-symbols-outlined text-[16px]">star</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[13.5px] font-medium text-ink group-hover:text-primary transition truncate">{p.title}</h3>
+                        <h3 className="text-[13.5px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
                         <p className="text-[11px] text-muted line-clamp-1">{p.description}</p>
                       </div>
                     </div>
@@ -169,7 +169,7 @@ export default function Dashboard() {
 
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[15px] font-bold text-ink">My Projects</h2>
+              <h2 className="text-[15px] font-bold text-on-surface">My Projects</h2>
               <Link to="/explore" className="text-[12px] font-semibold text-primary hover:underline flex items-center gap-1 transition-colors">
                 Explore <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </Link>
@@ -194,7 +194,7 @@ export default function Dashboard() {
                         <span className="material-symbols-outlined text-[16px]">folder</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[13.5px] font-medium text-ink group-hover:text-primary transition truncate">{p.title}</h3>
+                        <h3 className="text-[13.5px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
                         <p className="text-[11px] text-muted line-clamp-1">{p.description}</p>
                       </div>
                     </div>
