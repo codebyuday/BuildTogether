@@ -5,6 +5,7 @@ import { useAuth } from '../hooks/useAuth'
 import toast from 'react-hot-toast'
 import LabelPicker from './LabelPicker'
 import CommentList from './CommentList'
+import RichTextEditor from './RichTextEditor'
 import { logActivity } from '../lib/activity'
 
 export default function TaskEditModal({ task, projectId, members = [], onClose }) {
@@ -117,9 +118,9 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
 
           <div>
             <label className="text-[11px] font-mono text-on-surface-variant uppercase">Description</label>
-            <textarea value={form.description} onChange={e => setForm({ ...form, description: e.target.value })} rows={4}
-              className="w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none mt-1"
-              placeholder="Describe the task (Markdown supported)" />
+            <div className="mt-1">
+              <RichTextEditor content={form.description} onChange={val => setForm({ ...form, description: val })} placeholder="Describe the task..." />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

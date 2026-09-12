@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
 import { useParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import toast from 'react-hot-toast'
-import TaskEditModal from '../components/TaskEditModal'
 import RoadmapTab from '../components/RoadmapTab'
 import ActivityFeed from '../components/ActivityFeed'
 import GitHubPanel from '../components/GitHubPanel'
@@ -12,7 +11,11 @@ import RepoConnectModal from '../components/RepoConnectModal'
 import ExportDropdown from '../components/ExportDropdown'
 import StarButton from '../components/StarButton'
 import MarkdownRenderer from '../components/MarkdownRenderer'
-import { CardSkeleton, TaskCardSkeleton } from '../components/Skeleton'
+import { CardSkeleton } from '../components/Skeleton'
+
+const KanbanBoard = lazy(() => import('../components/KanbanBoard'))
+const RichTextEditor = lazy(() => import('../components/RichTextEditor'))
+const TaskEditModalLazy = lazy(() => import('../components/TaskEditModal'))
 import { logActivity } from '../lib/activity'
 
 const STATUS_COLS = ['todo', 'in_progress', 'in_review', 'done']
@@ -29,7 +32,6 @@ export default function ProjectDetail() {
   const [newTask, setNewTask] = useState({ title: '', priority: 'medium', assignee_id: '', description: '' })
   const [editingTask, setEditingTask] = useState(null)
   const [showRepoConnect, setShowRepoConnect] = useState(false)
-  const [draggedTask, setDraggedTask] = useState(null)
   const [editing, setEditing] = useState(false)
   const [editForm, setEditForm] = useState({})
   const [filterAssignee, setFilterAssignee] = useState('all')
@@ -173,13 +175,10 @@ export default function ProjectDetail() {
     onError: (err) => toast.error(err.message),
   })
 
-  const handleDragStart = useCallback((e, task) => { setDraggedTask(task); e.dataTransfer.effectAllowed = 'move' }, [])
-  const handleDragOver = useCallback((e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move' }, [])
-  const handleDrop = useCallback((e, targetStatus) => {
-    e.preventDefault()
-    if (draggedTask && draggedTask.status !== targetStatus) updateTaskStatus.mutate({ taskId: draggedTask.id, status: targetStatus })
-    setDraggedTask(null)
-  }, [draggedTask, updateTaskStatus])
+  const handleDrop = useCallback((taskId, targetStatus) => {
+    const task = tasks.find(t => t.id === taskId)
+    if (task && task.status !== targetStatus) updateTaskStatus.mutate({ taskId, status: targetStatus })
+  }, [tasks, updateTaskStatus])
 
   if (!project) return (
     <div className="mx-auto max-w-[1200px] space-y-space-lg">
@@ -296,7 +295,7 @@ export default function ProjectDetail() {
 
       {showRepoConnect && <RepoConnectModal projectId={id} currentRepoUrl={project.repo_url} onClose={() => setShowRepoConnect(false)} />}
 
-      {editingTask && <TaskEditModal task={editingTask} projectId={id} members={members} onClose={() => setEditingTask(null)} />}
+      {editingTask && <Suspense fallback={null}><TaskEditModalLazy task={editingTask} projectId={id} members={members} onClose={() => setEditingTask(null)} /></Suspense>}
 
       {editing && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
@@ -379,18 +378,18 @@ export default function ProjectDetail() {
       {tab === 'roadmap' && <RoadmapTab projectId={id} isMember={isMember} />}
 
       {tab === 'board' && (
-        <div className="space-y-space-md">
+        <div className="space-y-4">
           {isMember && (
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2 flex-wrap">
                 <select value={filterAssignee} onChange={e => setFilterAssignee(e.target.value)}
-                  className="h-8 bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-2 text-[12px] font-mono text-on-surface-variant focus:border-primary focus:outline-none">
+                  className="h-8 bg-surface-container-lowest border border-line rounded-lg px-2 text-[12px] font-mono text-muted focus:border-primary focus:outline-none">
                   <option value="all">All Assignees</option>
                   {members.map(m => <option key={m.user_id} value={m.user_id}>{m.profiles?.full_name || m.profiles?.username}</option>)}
                   <option value="__none__">Unassigned</option>
                 </select>
                 <select value={filterPriority} onChange={e => setFilterPriority(e.target.value)}
-                  className="h-8 bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-2 text-[12px] font-mono text-on-surface-variant focus:border-primary focus:outline-none">
+                  className="h-8 bg-surface-container-lowest border border-line rounded-lg px-2 text-[12px] font-mono text-muted focus:border-primary focus:outline-none">
                   <option value="all">All Priorities</option>
                   <option value="urgent">Urgent</option>
                   <option value="high">High</option>
@@ -399,129 +398,71 @@ export default function ProjectDetail() {
                 </select>
                 {labels.length > 0 && (
                   <select value={filterLabel} onChange={e => setFilterLabel(e.target.value)}
-                    className="h-8 bg-surface-container-lowest border border-outline-variant/40 rounded-lg px-2 text-[12px] font-mono text-on-surface-variant focus:border-primary focus:outline-none">
+                    className="h-8 bg-surface-container-lowest border border-line rounded-lg px-2 text-[12px] font-mono text-muted focus:border-primary focus:outline-none">
                     <option value="all">All Labels</option>
                     {labels.map(l => <option key={l.id} value={l.id}>{l.name}</option>)}
                   </select>
                 )}
                 {(filterAssignee !== 'all' || filterPriority !== 'all' || filterLabel !== 'all') && (
                   <button onClick={() => { setFilterAssignee('all'); setFilterPriority('all'); setFilterLabel('all') }}
-                    className="h-8 flex items-center gap-1 px-2 text-[11px] font-mono text-on-surface-variant hover:text-error transition-colors">
+                    className="h-8 flex items-center gap-1 px-2 text-[11px] font-mono text-muted hover:text-error transition-colors">
                     <span className="material-symbols-outlined text-[12px]">filter_alt_off</span> Clear
                   </button>
                 )}
               </div>
               <button onClick={() => setShowAddTask(true)}
-                className="flex items-center gap-1.5 rounded-[99px] bg-primary text-white px-3 py-1.5 text-[13px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
+                className="flex items-center gap-1.5 rounded-[99px] bg-primary text-white px-3 py-1.5 text-[13px] font-semibold hover:brightness-110 transition-all active:scale-[0.98]">
                 <span className="material-symbols-outlined text-[14px]">add</span> Add Task
               </button>
             </div>
           )}
           {loadingTasks ? (
-            <div className="flex gap-space-md overflow-x-auto pb-4 items-start">
-              {STATUS_COLS.map(col => (
-                <div key={col} className="w-[320px] flex-shrink-0 bg-surface-container-low/60 border border-outline-variant/30 rounded-lg p-3">
-                  <div className="h-5 w-20 bg-surface-container-high rounded mb-3 animate-pulse" />
-                  <div className="space-y-2">{Array.from({ length: 3 }).map((_, i) => <TaskCardSkeleton key={i} />)}</div>
+            <div className="flex gap-4 overflow-x-auto pb-4 items-start">
+              {['todo', 'in_progress', 'in_review', 'done'].map(col => (
+                <div key={col} className="w-[320px] flex-shrink-0 bg-surface/50 border border-line rounded-2xl p-3">
+                  <div className="h-5 w-20 bg-surface-container-high rounded-full mb-3 animate-pulse" />
+                  <div className="space-y-2">{Array.from({ length: 3 }).map((_, i) => <div key={i} className="h-20 bg-surface-container-high rounded-xl animate-pulse" />)}</div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="flex gap-space-md overflow-x-auto pb-4 items-start">
-            {STATUS_COLS.map(col => {
-              const colTasks = filteredTasks.filter(t => t.status === col)
-              return (
-                <div key={col} className="w-[320px] flex-shrink-0 flex flex-col bg-surface-container-low/60 border border-outline-variant/30 rounded-lg max-h-full"
-                  onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, col)}>
-                  <div className="p-3 border-b border-outline-variant/30 flex items-center justify-between">
-                    <div className="flex items-center gap-2">
-                      <span className="text-[14px] font-semibold text-on-surface">{STATUS_LABELS[col]}</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/40">{colTasks.length}</span>
-                    </div>
-                  </div>
-                  <div className="p-2.5 flex flex-col gap-2.5 overflow-y-auto min-h-[100px]">
-                    {colTasks.map(task => {
-                      const taskLabels = task.labels?.map(tl => tl.labels).filter(Boolean) || []
-                      return (
-                        <div key={task.id} draggable={isMember} onDragStart={(e) => handleDragStart(e, task)}
-                          onClick={() => setEditingTask(task)}
-                          className={`bg-surface-container border border-outline-variant/40 hover:border-outline transition p-3 rounded flex flex-col gap-2 group cursor-grab shadow-sm ${
-                            draggedTask?.id === task.id ? 'opacity-50' : ''
-                          }`}>
-                          {taskLabels.length > 0 && (
-                            <div className="flex flex-wrap gap-1">
-                              {taskLabels.map(l => (
-                                <span key={l.id} className="px-1.5 py-0.5 rounded text-[9px] font-mono font-medium" style={{ backgroundColor: l.color + '20', color: l.color, border: `1px solid ${l.color}40` }}>{l.name}</span>
-                              ))}
-                            </div>
-                          )}
-                          <div className="flex items-center justify-between">
-                            <span className={`text-[10px] font-mono font-semibold px-1.5 py-0.5 rounded ${
-                              task.priority === 'urgent' || task.priority === 'high' ? 'bg-error-container/30 text-error border border-error/20' :
-                              task.priority === 'medium' ? 'bg-surface-container-high text-on-surface-variant border border-outline-variant/40' :
-                              'bg-surface-container-high text-outline border border-outline-variant/30'
-                            }`}>{task.priority?.toUpperCase()}</span>
-                            {isOwner && (
-                              <button onClick={(e) => { e.stopPropagation(); deleteTask.mutate(task.id) }}
-                                className="hidden rounded p-0.5 text-on-surface-variant hover:text-error group-hover:block transition-colors">
-                                <span className="material-symbols-outlined text-[14px]">delete</span>
-                              </button>
-                            )}
-                          </div>
-                          <h4 className="text-[14px] text-on-surface group-hover:text-primary transition leading-snug">{task.title}</h4>
-                          {task.description && (
-                            <p className="text-[11px] text-on-surface-variant line-clamp-2">{task.description}</p>
-                          )}
-                          <div className="flex items-center justify-between pt-1 border-t border-outline-variant/20">
-                            <div className="flex items-center gap-2">
-                              {task.due_date && (
-                                <span className={`text-[10px] font-mono flex items-center gap-0.5 ${
-                                  new Date(task.due_date) < new Date() ? 'text-error' : 'text-on-surface-variant'
-                                }`}>
-                                  <span className="material-symbols-outlined text-[10px]">event</span>
-                                  {task.due_date}
-                                </span>
-                              )}
-                            </div>
-                            {task.profiles && <span className="text-[11px] font-mono text-on-surface-variant">@{task.profiles.username}</span>}
-                          </div>
-                        </div>
-                      )
-                    })}
-                    <button onClick={() => setShowAddTask(true)}
-                      className="w-full py-2 border border-dashed border-outline-variant/40 hover:border-primary/60 rounded text-[11px] font-mono text-on-surface-variant hover:text-primary flex items-center justify-center gap-1 transition">
-                      <span className="material-symbols-outlined text-[12px]">add</span> + Add Task
-                    </button>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+            <Suspense fallback={null}>
+              <KanbanBoard
+                tasks={filteredTasks}
+                isMember={isMember}
+                isOwner={isOwner}
+                onEdit={task => setEditingTask(task)}
+                onDelete={taskId => deleteTask.mutate(taskId)}
+                onDrop={handleDrop}
+              />
+            </Suspense>
           )}
 
           {showAddTask && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
-              <div className="w-full max-w-md rounded-xl border border-outline-variant/40 bg-surface-container-low p-6 shadow-2xl">
+              <div className="w-full max-w-md rounded-2xl border border-line bg-white p-6 shadow-2xl">
                 <h3 className="mb-4 text-[16px] font-semibold text-on-surface">New Task</h3>
                 <input value={newTask.title} onChange={e => setNewTask({ ...newTask, title: e.target.value })}
-                  className="mb-3 w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+                  className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-muted/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none"
                   placeholder="Task title" />
-                <textarea value={newTask.description} onChange={e => setNewTask({ ...newTask, description: e.target.value })} rows={2}
-                  className="mb-3 w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
-                  placeholder="Description (optional)" />
+                <div className="mb-3">
+                  <Suspense fallback={null}>
+                    <RichTextEditor content={newTask.description} onChange={val => setNewTask({ ...newTask, description: val })} placeholder="Description (optional)" />
+                  </Suspense>
+                </div>
                 <select value={newTask.priority} onChange={e => setNewTask({ ...newTask, priority: e.target.value })}
-                  className="mb-3 w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                  className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
                   <option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="urgent">Urgent</option>
                 </select>
                 <select value={newTask.assignee_id} onChange={e => setNewTask({ ...newTask, assignee_id: e.target.value })}
-                  className="mb-4 w-full bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
+                  className="mb-4 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
                   <option value="">Unassigned</option>
                   {members.map(m => <option key={m.user_id} value={m.user_id}>{m.profiles?.full_name || m.profiles?.username}</option>)}
                 </select>
                 <div className="flex justify-end gap-2">
-                  <button onClick={() => setShowAddTask(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-on-surface-variant hover:text-on-surface">Cancel</button>
+                  <button onClick={() => setShowAddTask(false)} className="rounded-lg px-3 py-1.5 text-[13px] text-muted hover:text-on-surface">Cancel</button>
                   <button onClick={() => newTask.title.trim() && addTaskMutation.mutate()} disabled={!newTask.title.trim() || addTaskMutation.isPending}
-                    className="rounded-[99px] bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">
+                    className="rounded-[99px] bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:brightness-110 disabled:opacity-50 transition-all">
                     {addTaskMutation.isPending ? 'Creating...' : 'Create'}
                   </button>
                 </div>

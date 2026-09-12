@@ -1,9 +1,12 @@
+import { lazy, Suspense } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import ActivityFeed from '../components/ActivityFeed'
 import { StatSkeleton, CardSkeleton } from '../components/Skeleton'
+
+const DashboardCharts = lazy(() => import('../components/DashboardCharts'))
 
 export default function Dashboard() {
   const { user } = useAuth()
@@ -88,6 +91,8 @@ export default function Dashboard() {
           </div>
         ))}
       </div>
+
+      <Suspense fallback={null}><DashboardCharts /></Suspense>
 
       <div className="grid gap-5 lg:grid-cols-3">
         <section className="lg:col-span-1">
