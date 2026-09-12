@@ -29,11 +29,8 @@ export default function Layout() {
       <aside className={`fixed top-0 left-0 h-screen w-[240px] z-50 flex flex-col justify-between bg-surface-container-low border-r border-line transition-transform duration-200 lg:z-40 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
         <div className="p-4">
           <Link to="/dashboard" className="flex items-center gap-2.5 px-2 py-2 mb-6 rounded-xl hover:bg-surface-container-high/50 transition-colors">
-            <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white text-[14px] font-bold shadow-lg glow-primary">
-              <span className="font-mono">B</span>
-            </div>
+            <img src="/logo.png" alt="BuildTogether" className="h-8" />
             <div className="flex flex-col">
-              <span className="text-[15px] font-bold text-on-surface tracking-tight leading-none">BuildTogether</span>
               <span className="text-[10px] text-muted mt-0.5 tracking-widest uppercase font-medium">Workspace</span>
             </div>
           </Link>
