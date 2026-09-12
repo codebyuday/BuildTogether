@@ -287,7 +287,7 @@ export default function Landing() {
 
           <div ref={addRevealRef} className="reveal mt-10 text-center">
             <p className="text-[14px] text-white/40">Still have questions?{' '}
-              <a href="mailto:udaypratapwins0@gmail.com" className="text-white/70 underline decoration-white/20 hover:text-white transition-colors">Contact us</a>
+              <a href="mailto:buildtogether.contact@gmail.com" className="text-white/70 underline decoration-white/20 hover:text-white transition-colors">Contact us</a>
             </p>
           </div>
         </div>
@@ -357,7 +357,7 @@ export default function Landing() {
             <div>
               <h4 className="text-[16px] font-bold text-on-surface mb-4">Support</h4>
               <ul className="space-y-2.5">
-                <li><a href="mailto:udaypratapwins0@gmail.com" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Contact Us</a></li>
+                <li><a href="mailto:buildtogether.contact@gmail.com" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Contact Us</a></li>
                 <li><a href="https://github.com/codebyuday/BuildTogether/issues" target="_blank" rel="noopener" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Report an Issue</a></li>
               </ul>
             </div>
