@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
+import { supabase } from '../lib/supabase'
 
 const features = [
   { icon: 'sync', title: 'Real-time Collaboration', desc: 'Live updates, comments, and activity feeds powered by WebSocket connections.', color: 'primary' },
@@ -44,6 +45,21 @@ const faqIcons = ['code', 'groups', 'terminal', 'download', 'sync']
 export default function Landing() {
   const [openFaq, setOpenFaq] = useState(null)
   const revealRefs = useRef([])
+  const [stats, setStats] = useState({ projects: 0, members: 0 })
+
+  useEffect(() => {
+    async function fetchStats() {
+      const [projectsRes, membersRes] = await Promise.all([
+        supabase.from('projects').select('id', { count: 'exact', head: true }),
+        supabase.from('profiles').select('id', { count: 'exact', head: true }),
+      ])
+      setStats({
+        projects: projectsRes.count || 0,
+        members: membersRes.count || 0,
+      })
+    }
+    fetchStats()
+  }, [])
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -113,13 +129,13 @@ export default function Landing() {
             ))}
             <span className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-ink" style={{ border: '2.5px solid var(--color-surface)', marginLeft: '-8px' }}>+5</span>
           </div>
-          <span className="text-[13px] text-on-surface-variant">5 team members shipping real projects</span>
+          <span className="text-[13px] text-on-surface-variant">{stats.members || 0} developers shipping real projects</span>
         </div>
 
         <div ref={addRevealRef} className="reveal relative z-10 mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
           {[
-            { value: '5', label: 'Team Members' },
-            { value: '27', label: 'Features Built' },
+            { value: stats.members || '0+', label: 'Developers' },
+            { value: stats.projects || '0+', label: 'Projects' },
             { value: 'Real-time', label: 'Collaboration' },
             { value: '100%', label: 'Open Source' },
           ].map(({ value, label }) => (

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../lib/utils'
 import toast from 'react-hot-toast'
 
 export default function Profile() {
@@ -12,6 +13,18 @@ export default function Profile() {
   const [skillInput, setSkillInput] = useState('')
   const [skills, setSkills] = useState(profile?.skills || [])
   const [loading, setLoading] = useState(false)
+  const [projectCount, setProjectCount] = useState(0)
+
+  useEffect(() => {
+    async function count() {
+      const { count } = await supabase
+        .from('team_members')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+      setProjectCount(count || 0)
+    }
+    if (user) count()
+  }, [user])
 
   const completionFields = [username, fullName, bio, github, skills.length > 0]
   const completion = Math.round((completionFields.filter(Boolean).length / completionFields.length) * 100)
@@ -40,7 +53,7 @@ export default function Profile() {
       await fetchProfile(user.id)
       toast.success('Profile updated!')
     } catch (err) {
-      toast.error(err.message)
+      toast.error(friendlyError(err))
     } finally {
       setLoading(false)
     }
@@ -92,18 +105,14 @@ export default function Profile() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t border-line">
+          <div className="grid grid-cols-2 gap-3 pt-4 border-t border-line">
             <div className="p-3 rounded-xl bg-surface-container-low border border-line">
               <span className="text-[11px] text-muted block uppercase tracking-wider font-bold">Skills</span>
               <span className="text-[22px] font-bold text-on-surface mt-0.5 block">{skills.length}</span>
             </div>
             <div className="p-3 rounded-xl bg-surface-container-low border border-line">
               <span className="text-[11px] text-muted block uppercase tracking-wider font-bold">Projects</span>
-              <span className="text-[22px] font-bold text-on-surface mt-0.5 block">&mdash;</span>
-            </div>
-            <div className="p-3 rounded-xl bg-surface-container-low border border-line">
-              <span className="text-[11px] text-muted block uppercase tracking-wider font-bold">Reputation</span>
-              <span className="text-[22px] font-bold text-on-surface mt-0.5 block">&mdash;</span>
+              <span className="text-[22px] font-bold text-on-surface mt-0.5 block">{projectCount}</span>
             </div>
           </div>
         </div>

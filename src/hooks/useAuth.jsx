@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
+import { friendlyError } from '../lib/utils'
 
 const AuthContext = createContext(null)
 
@@ -32,7 +33,7 @@ export function AuthProvider({ children }) {
 
   async function signUp(email, password, username, fullName) {
     const { data, error } = await supabase.auth.signUp({ email, password })
-    if (error) throw error
+    if (error) throw new Error(friendlyError(error))
     if (data.user) {
       const { error: profileError } = await supabase.from('profiles').upsert(
         { id: data.user.id, username, full_name: fullName || username, email },
@@ -45,7 +46,7 @@ export function AuthProvider({ children }) {
 
   async function signIn(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-    if (error) throw error
+    if (error) throw new Error(friendlyError(error))
     return data
   }
 
@@ -54,7 +55,7 @@ export function AuthProvider({ children }) {
       provider: 'google',
       options: { redirectTo: `${window.location.origin}/dashboard` }
     })
-    if (error) throw error
+    if (error) throw new Error(friendlyError(error))
     return data
   }
 
@@ -68,7 +69,7 @@ export function AuthProvider({ children }) {
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/login`,
     })
-    if (error) throw error
+    if (error) throw new Error(friendlyError(error))
   }
 
   return (
