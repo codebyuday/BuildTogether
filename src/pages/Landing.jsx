@@ -86,7 +86,7 @@ export default function Landing() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-surface overflow-hidden">
+    <div className="min-h-screen bg-surface overflow-x-hidden">
       {/* Nav */}
       <nav className="fixed top-0 z-50 flex h-[60px] w-full items-center justify-between px-6 lg:px-10 glass">
         <div className="flex items-center gap-2.5">
@@ -249,13 +249,13 @@ export default function Landing() {
       {/* FAQ — dark section */}
       <section className="py-28 px-6 sm:px-8 bg-on-surface">
         <div className="mx-auto max-w-[880px]">
-          <div ref={addRevealRef} className="reveal text-center mb-10">
+          <div className="text-center mb-10">
             <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/60 text-[11px] font-bold uppercase tracking-widest mb-4">FAQ</span>
             <h2 className="text-[34px] sm:text-[40px] font-extrabold text-white tracking-[-0.01em]">Frequently asked questions</h2>
             <p className="text-[15px] text-white/50 mt-3">Everything you need to know about BuildTogether.</p>
           </div>
 
-          <div ref={addRevealRef} className="reveal flex items-center justify-center gap-2 mb-8 flex-wrap">
+          <div className="flex items-center justify-center gap-2 mb-8 flex-wrap">
             {faqCategories.map(cat => (
               <button key={cat} onClick={() => { setFaqCategory(cat); setOpenFaq(null) }}
                 className={`px-4 py-1.5 rounded-full text-[13px] font-semibold transition-all duration-200 ${faqCategory === cat ? 'bg-white text-on-surface' : 'text-white/50 hover:text-white/80 hover:bg-white/[0.06]'}`}>
@@ -267,8 +267,8 @@ export default function Landing() {
           <div className="flex flex-col gap-2.5">
             {faqItems
               .filter(item => faqCategory === 'All' || item.cat === faqCategory)
-              .map(({ q, a }, i) => (
-              <div key={q} ref={addRevealRef} className={`reveal reveal-delay-${(i % 5) + 1} faq-item rounded-2xl px-6 py-5 transition-all duration-300 ${openFaq === q ? 'is-open bg-white/[0.06] border border-white/15' : 'border border-white/[0.08] bg-white/[0.02]'}`}>
+              .map(({ q, a }) => (
+              <div key={q} className={`faq-item rounded-2xl px-6 py-5 transition-all duration-300 ${openFaq === q ? 'is-open bg-white/[0.06] border border-white/15' : 'border border-white/[0.08] bg-white/[0.02]'}`}>
                 <button onClick={() => setOpenFaq(openFaq === q ? null : q)} className="w-full text-left flex items-center justify-between gap-4">
                   <span className="text-[16px] font-semibold text-white">{q}</span>
                   <span className={`shrink-0 w-8 h-8 rounded-full border border-white/15 flex items-center justify-center transition-all duration-300 ${openFaq === q ? 'bg-white rotate-180' : 'text-white/50'}`}>
@@ -286,7 +286,7 @@ export default function Landing() {
             ))}
           </div>
 
-          <div ref={addRevealRef} className="reveal mt-10 text-center">
+          <div className="mt-10 text-center">
             <p className="text-[14px] text-white/40">Still have questions?{' '}
               <a href="mailto:buildtogether.contact@gmail.com" className="text-white/70 underline decoration-white/20 hover:text-white transition-colors">Contact us</a>
             </p>
