@@ -317,6 +317,24 @@ export default function Landing() {
         </div>
       </section>
 
+      {/* Origin Story */}
+      <section className="py-16 px-6 sm:px-8 border-t border-line">
+        <div className="mx-auto max-w-[640px] flex items-start gap-6">
+          <img src="/uday.jpg" alt="Uday Pratap Singh"
+            className="w-16 h-16 rounded-xl object-cover bg-surface-container-high shrink-0" />
+          <div>
+            <p className="text-[13px] font-semibold text-on-surface mb-1">Uday Pratap Singh</p>
+            <p className="text-[12px] text-muted mb-3">Final Year B.Tech Project</p>
+            <p className="text-[14px] leading-[1.7] text-on-surface-variant">
+              BuildTogether started as a final year project — built because collaboration
+              tools for developers felt either too complex or too barebones. The idea was
+              simple: publish a project, find the right people, and ship together. What
+              began as a semester project became something real.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t border-line px-6 sm:px-8 py-12 bg-surface">
         <div className="mx-auto max-w-[1080px]">
