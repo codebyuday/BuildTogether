@@ -4,31 +4,31 @@ import { supabase } from '../lib/supabase'
 import NumberTicker from '../components/NumberTicker'
 
 const features = [
-  { icon: 'sync', title: 'Real-time Collaboration', desc: 'Live updates, comments, and activity feeds powered by WebSocket connections.' },
+  { icon: 'sync', title: 'Real-time Collaboration', desc: 'Live updates, comments, and activity feeds. No page refresh needed.' },
   { icon: 'group_add', title: 'Team Recruitment', desc: 'Publish projects, review applications, and build high-performing teams.' },
-  { icon: 'view_kanban', title: 'Kanban Board', desc: 'Drag-and-drop task management with labels, milestones, and priority tracking.' },
-  { icon: 'terminal', title: 'GitHub Integration', desc: 'Connect repos for live commit activity, contributor stats, and language breakdown.' },
+  { icon: 'view_kanban', title: 'Kanban Board', desc: 'Drag-and-drop tasks with labels, milestones, and priority tracking.' },
+  { icon: 'terminal', title: 'GitHub Integration', desc: 'Connect repos for live commits, contributors, and language breakdown.' },
   { icon: 'analytics', title: 'Project Analytics', desc: 'Track completion rates, velocity, and team performance with built-in stats.' },
-  { icon: 'download', title: 'Export Anywhere', desc: 'Export project data to Markdown, CSV, JSON, or PDF with one click.' },
+  { icon: 'download', title: 'Export Anywhere', desc: 'Markdown, CSV, JSON, or PDF. Share progress with one click.' },
 ]
 
 const steps = [
-  { num: '01', title: 'Create a project', desc: 'Describe your vision, set requirements, and define the tech stack. Your project goes live instantly.' },
-  { num: '02', title: 'Recruit contributors', desc: 'Developers browse, apply, and you review their profiles, skills, and proof of work before accepting.' },
-  { num: '03', title: 'Ship together', desc: 'Assign tasks on a Kanban board, track progress in real-time, and launch with your team.' },
+  { num: '01', title: 'Create', desc: 'Describe your vision, set requirements, and define the tech stack.' },
+  { num: '02', title: 'Recruit', desc: 'Developers apply. You review profiles, skills, and proof of work.' },
+  { num: '03', title: 'Ship', desc: 'Assign tasks on a Kanban board, track progress, launch together.' },
 ]
 
 const faqCategories = ['All', 'Getting Started', 'Features', 'Technical']
 
 const faqItems = [
-  { q: 'Is BuildTogether free to use?', a: 'Yes. BuildTogether is free for all developers. Create unlimited projects, recruit contributors, and collaborate in real-time without any cost.', cat: 'Getting Started' },
-  { q: 'How does team recruitment work?', a: 'Publish your project with requirements and tech stack. Contributors apply with their profiles and skills. You review applications and accept the best fit for your team.', cat: 'Getting Started' },
-  { q: 'How do I get started as a contributor?', a: 'Sign up, complete your profile with skills and experience, then browse open projects in the Explore tab. Apply to projects that match your interests and wait for the project owner to review your application.', cat: 'Getting Started' },
-  { q: 'Can I connect my GitHub repository?', a: 'Yes. Connect any public or private GitHub repository to get live commit activity, contributor stats, and language breakdown directly on your project page.', cat: 'Features' },
-  { q: 'What export formats are supported?', a: 'You can export project data to Markdown, CSV, JSON, or PDF. Perfect for sharing progress with stakeholders or keeping local backups.', cat: 'Features' },
-  { q: 'How does real-time collaboration work?', a: 'All changes to tasks, comments, and activity feeds are synchronized in real-time using Supabase WebSocket connections. No page refresh needed.', cat: 'Technical' },
-  { q: 'What tech stack does BuildTogether use?', a: 'BuildTogether is built with React 19, Tailwind CSS v4, and Supabase (PostgreSQL + Auth + Realtime). The frontend is deployed on Vercel with automatic deployments from GitHub.', cat: 'Technical' },
-  { q: 'Is my data secure?', a: 'Yes. All data is stored in Supabase with Row Level Security (RLS) policies ensuring users can only access projects they own or are members of. Authentication is handled by Supabase Auth with support for email/password and Google OAuth.', cat: 'Technical' },
+  { q: 'Is BuildTogether free?', a: 'Yes. Free for all developers. Unlimited projects, unlimited collaborators, real-time collaboration. No catch.', cat: 'Getting Started' },
+  { q: 'How does recruitment work?', a: 'Publish your project with requirements. Contributors apply with their profiles. You review and accept the best fit.', cat: 'Getting Started' },
+  { q: 'How do I contribute?', a: 'Sign up, complete your profile, browse open projects in Explore, and apply. Wait for the owner to review.', cat: 'Getting Started' },
+  { q: 'Can I connect GitHub?', a: 'Yes. Any public or private repo. Get live commit activity, contributor stats, and language breakdown.', cat: 'Features' },
+  { q: 'What export formats?', a: 'Markdown, CSV, JSON, or PDF. Perfect for stakeholders or local backups.', cat: 'Features' },
+  { q: 'How does real-time work?', a: 'Supabase WebSocket connections synchronize all changes instantly. Tasks, comments, activity feeds — zero refresh.', cat: 'Technical' },
+  { q: 'Tech stack?', a: 'React 19, Tailwind CSS v4, Supabase (PostgreSQL + Auth + Realtime). Deployed on Vercel.', cat: 'Technical' },
+  { q: 'Is my data secure?', a: 'Row Level Security on every table. You only access what you own or are a member of. Supabase Auth for identity.', cat: 'Technical' },
 ]
 
 export default function Landing() {
@@ -78,7 +78,7 @@ export default function Landing() {
           </div>
           <span className="text-[18px] font-bold text-on-surface tracking-tight">BuildTogether</span>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Link to="/login" className="text-[14px] text-muted font-semibold hover:text-on-surface transition-colors px-4 py-2 rounded-lg hover:bg-surface-container-low">Login</Link>
           <Link to="/register" className="rounded-lg bg-primary text-white px-5 py-2 text-[14px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">Get Started</Link>
         </div>
@@ -86,25 +86,26 @@ export default function Landing() {
 
       {/* Hero */}
       <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pt-14 text-center">
-        <div ref={addRevealRef} className="reveal relative z-10 mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface-container-low px-4 py-1.5 text-[12px] font-mono text-muted">
-          <span className="w-1.5 h-1.5 rounded-full bg-success" />
-          Open Source &middot; Free Forever
+        <div ref={addRevealRef} className="reveal relative z-10 mb-8">
+          <div className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-container-low px-4 py-1.5 text-[12px] font-mono text-muted mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-success" />
+            Open Source &middot; Free Forever
+          </div>
         </div>
 
-        <h1 ref={addRevealRef} className="reveal reveal-delay-1 relative z-10 max-w-4xl font-heading text-[42px] sm:text-[56px] lg:text-[72px] font-light leading-[1.05] tracking-[-0.02em] text-on-surface">
-          Build projects<br />
-          <span className="text-primary">together</span>
+        <h1 ref={addRevealRef} className="reveal reveal-delay-1 relative z-10 max-w-[820px] font-heading text-[48px] sm:text-[64px] lg:text-[80px] font-light leading-[1.02] tracking-[-0.025em] text-on-surface">
+          Where developers<br />
+          <span className="text-primary">ship together</span>
         </h1>
 
-        <p ref={addRevealRef} className="reveal reveal-delay-2 relative z-10 mt-5 max-w-xl text-[17px] leading-relaxed text-on-surface-variant">
-          A modern workspace where developers publish projects, recruit contributors,
-          and collaborate through tasks with live notifications and real-time updates.
+        <p ref={addRevealRef} className="reveal reveal-delay-2 relative z-10 mt-6 max-w-[520px] text-[17px] leading-[1.7] text-on-surface-variant">
+          Publish projects. Recruit contributors. Collaborate through a real-time Kanban board with live notifications and activity feeds.
         </p>
 
         <div ref={addRevealRef} className="reveal reveal-delay-3 relative z-10 mt-10 flex flex-wrap items-center justify-center gap-3">
           <Link to="/register"
             className="rounded-lg bg-primary text-white px-8 py-3.5 text-[15px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">
-            Start Building
+            Start Building — It's Free
           </Link>
           <Link to="/explore"
             className="rounded-lg border border-line bg-white px-8 py-3.5 text-[15px] font-semibold text-on-surface hover:bg-surface-container-low transition-all">
@@ -112,47 +113,51 @@ export default function Landing() {
           </Link>
         </div>
 
-        <div ref={addRevealRef} className="reveal reveal-delay-4 relative z-10 mt-10 flex items-center gap-3">
+        <div ref={addRevealRef} className="reveal reveal-delay-4 relative z-10 mt-12 flex items-center gap-4">
           <div className="flex -space-x-2">
             {[47, 12, 32, 68].map(id => (
               <img key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" className="w-8 h-8 rounded-full object-cover bg-surface-container-high border-2 border-surface" />
             ))}
-            <span className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-on-surface border-2 border-surface">+5</span>
+            <span className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-on-surface border-2 border-surface">+{stats.members > 5 ? stats.members - 5 : 0}</span>
           </div>
-          <span className="text-[13px] text-on-surface-variant">{stats.members || 0} developers shipping real projects</span>
+          <span className="text-[13px] text-on-surface-variant"><span className="font-semibold text-on-surface">{stats.members || 0}</span> developers already shipping</span>
         </div>
+      </section>
 
-        <div ref={addRevealRef} className="reveal relative z-10 mt-16 grid grid-cols-2 gap-8 md:grid-cols-4">
+      {/* Stats bar */}
+      <section className="border-y border-line bg-surface-container-low/40">
+        <div className="mx-auto max-w-[1080px] grid grid-cols-2 md:grid-cols-4 gap-0 divide-x divide-line">
           {[
             { value: stats.members || 0, label: 'Developers' },
             { value: stats.projects || 0, label: 'Projects' },
-            { value: 'Real-time', label: 'Collaboration' },
+            { value: 'Real-time', label: 'Sync' },
             { value: '100%', label: 'Open Source' },
           ].map(({ value, label }) => (
-            <div key={label} className="text-center">
-              <div className="font-heading text-[24px] font-light text-on-surface">
+            <div key={label} className="py-8 px-6 text-center">
+              <div className="font-heading text-[28px] font-light text-on-surface">
                 {typeof value === 'number' ? <NumberTicker value={value} /> : value}
               </div>
-              <div className="text-[12px] text-muted mt-1 font-medium">{label}</div>
+              <div className="text-[11px] text-muted mt-1 font-semibold uppercase tracking-widest">{label}</div>
             </div>
           ))}
         </div>
       </section>
 
       {/* How It Works */}
-      <section className="py-28 px-6 sm:px-8 border-t border-line">
+      <section className="py-28 px-6 sm:px-8">
         <div className="mx-auto max-w-[1080px]">
-          <div ref={addRevealRef} className="reveal text-center mb-16">
+          <div ref={addRevealRef} className="reveal mb-16">
             <span className="inline-block px-3 py-1 rounded-full bg-primary/8 text-primary text-[11px] font-bold uppercase tracking-widest mb-4">How it works</span>
             <h2 className="font-heading text-[34px] sm:text-[40px] font-light text-on-surface tracking-[-0.01em]">Three steps to ship</h2>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-0 md:grid-cols-3 md:gap-8">
             {steps.map(({ num, title, desc }, i) => (
-              <div key={num} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} step-card group relative bg-surface-container-lowest border border-line rounded-xl p-8 transition-all duration-300 hover:-translate-y-1 cursor-default`}>
-                <div className="step-gradient-bar" />
-                <div className="font-heading text-[56px] font-light leading-none mb-4 text-gradient transition-transform duration-400 group-hover:scale-[1.04] group-hover:-translate-y-0.5">{num}</div>
-                <h3 className="font-heading text-[20px] font-normal text-on-surface tracking-tight mb-2">{title}</h3>
-                <p className="text-[14px] leading-relaxed text-on-surface-variant">{desc}</p>
+              <div key={num} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} relative ${i < 2 ? 'pb-10 md:pb-0 border-b md:border-b-0 border-line' : ''} ${i < 2 ? 'md:border-r md:border-line md:pr-8' : ''}`}>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="font-heading text-[48px] font-light leading-none text-primary/20">{num}</span>
+                  <h3 className="font-heading text-[22px] font-normal text-on-surface">{title}</h3>
+                </div>
+                <p className="text-[14px] leading-[1.7] text-on-surface-variant pl-[60px]">{desc}</p>
               </div>
             ))}
           </div>
@@ -162,18 +167,18 @@ export default function Landing() {
       {/* Features */}
       <section className="py-28 px-6 sm:px-8 bg-surface-container-low/40 border-t border-line">
         <div className="mx-auto max-w-[1080px]">
-          <div ref={addRevealRef} className="reveal text-center mb-16">
+          <div ref={addRevealRef} className="reveal mb-16">
             <span className="inline-block px-3 py-1 rounded-full bg-primary/8 text-primary text-[11px] font-bold uppercase tracking-widest mb-4">Features</span>
             <h2 className="font-heading text-[34px] sm:text-[40px] font-light text-on-surface tracking-[-0.01em]">Everything you need</h2>
-            <p className="mt-3 text-[15px] text-on-surface-variant max-w-lg mx-auto">Built for developers, by developers. No bloat, no compromise.</p>
+            <p className="mt-3 text-[15px] text-on-surface-variant max-w-lg">Built for developers, by developers. No bloat, no compromise.</p>
           </div>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
             {features.map(({ icon, title, desc }, i) => (
               <div key={title} ref={addRevealRef} className={`reveal reveal-delay-${(i % 3) + 1} group rounded-xl border border-line bg-surface-container-lowest p-6 card-hover`}>
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/8 text-primary">
-                  <span className="material-symbols-outlined text-[20px]">{icon}</span>
+                <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-lg bg-primary/8 text-primary">
+                  <span className="material-symbols-outlined text-[18px]">{icon}</span>
                 </div>
-                <h3 className="font-heading mb-2 text-[17px] font-normal text-on-surface">{title}</h3>
+                <h3 className="font-heading mb-1.5 text-[18px] font-normal text-on-surface">{title}</h3>
                 <p className="text-[13px] leading-relaxed text-on-surface-variant">{desc}</p>
               </div>
             ))}
@@ -184,24 +189,24 @@ export default function Landing() {
       {/* Social Proof */}
       <section className="py-28 px-6 sm:px-8 border-t border-line">
         <div className="mx-auto max-w-[1080px]">
-          <div ref={addRevealRef} className="reveal text-center mb-16">
+          <div ref={addRevealRef} className="reveal mb-16">
             <span className="inline-block px-3 py-1 rounded-full bg-tertiary/10 text-tertiary text-[11px] font-bold uppercase tracking-widest mb-4">Trusted by developers</span>
             <h2 className="font-heading text-[34px] sm:text-[40px] font-light text-on-surface tracking-[-0.01em]">What people are building</h2>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-5 md:grid-cols-3">
             {[
-              { quote: 'BuildTogether helped us recruit 4 contributors in a week. The real-time Kanban board is a game changer for our open source project.', name: 'Priya Sharma', role: 'Lead Developer', img: 47 },
-              { quote: 'Finally a platform where I can show my proof of work and get recruited for real projects. The GitHub integration is seamless.', name: 'Arjun Mehta', role: 'Full-Stack Developer', img: 12 },
-              { quote: 'We shipped our MVP in 3 weeks with a team we found here. The activity feeds kept everyone aligned without daily standups.', name: 'Sarah Chen', role: 'CTO, NovaTech', img: 32 },
+              { quote: 'BuildTogether helped us recruit 4 contributors in a week. The real-time Kanban board is a game changer.', name: 'Priya Sharma', role: 'Lead Developer', img: 47 },
+              { quote: 'Finally a platform where I can show proof of work and get recruited. The GitHub integration is seamless.', name: 'Arjun Mehta', role: 'Full-Stack Developer', img: 12 },
+              { quote: 'We shipped our MVP in 3 weeks with a team we found here. The activity feeds kept everyone aligned.', name: 'Sarah Chen', role: 'CTO, NovaTech', img: 32 },
             ].map(({ quote, name, role, img }, i) => (
-              <div key={name} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} group bg-surface-container-lowest border border-line rounded-xl p-7 flex flex-col transition-all duration-300 hover:-translate-y-1`}>
-                <span className="text-primary/30 font-heading text-[72px] leading-[0.5] h-[22px] block italic transition-transform duration-400 group-hover:scale-110 group-hover:-rotate-3 origin-left">&ldquo;</span>
-                <p className="font-heading text-[17px] leading-[1.55] text-on-surface flex-1 mt-4 font-normal">{quote}</p>
-                <div className="flex items-center gap-3 pt-5 border-t border-line mt-5">
-                  <img src={`https://i.pravatar.cc/72?img=${img}`} alt={name} className="w-10 h-10 rounded-full object-cover bg-surface-container-high" />
+              <div key={name} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} group bg-surface-container-lowest border border-line rounded-xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-0.5`}>
+                <span className="text-primary/20 font-heading text-[64px] leading-[0.5] h-[20px] block italic">&ldquo;</span>
+                <p className="font-heading text-[16px] leading-[1.6] text-on-surface flex-1 mt-3 font-normal">{quote}</p>
+                <div className="flex items-center gap-3 pt-4 border-t border-line mt-4">
+                  <img src={`https://i.pravatar.cc/72?img=${img}`} alt={name} className="w-9 h-9 rounded-full object-cover bg-surface-container-high" />
                   <div>
                     <div className="text-[13px] font-semibold text-on-surface">{name}</div>
-                    <div className="text-[12px] text-muted">{role}</div>
+                    <div className="text-[11px] text-muted">{role}</div>
                   </div>
                 </div>
               </div>
@@ -210,123 +215,110 @@ export default function Landing() {
         </div>
       </section>
 
-      {/* FAQ — dark section */}
+      {/* FAQ */}
       <section className="py-28 px-6 sm:px-8 bg-on-surface border-t border-line">
-        <div className="mx-auto max-w-[880px]">
+        <div className="mx-auto max-w-[760px]">
           <div className="text-center mb-10">
-            <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-white/60 text-[11px] font-bold uppercase tracking-widest mb-4">FAQ</span>
-            <h2 className="font-heading text-[34px] sm:text-[40px] font-light text-white tracking-[-0.01em]">Frequently asked questions</h2>
-            <p className="text-[15px] text-white/50 mt-3">Everything you need to know about BuildTogether.</p>
+            <h2 className="font-heading text-[34px] sm:text-[40px] font-light text-white tracking-[-0.01em]">Frequently asked</h2>
           </div>
 
-          <div className="flex items-center justify-center gap-2 mb-8 flex-wrap">
+          <div className="flex items-center justify-center gap-1.5 mb-8 flex-wrap">
             {faqCategories.map(cat => (
               <button key={cat} onClick={() => { setFaqCategory(cat); setOpenFaq(null) }}
-                className={`px-4 py-1.5 rounded-lg text-[13px] font-semibold transition-all duration-200 ${faqCategory === cat ? 'bg-white text-on-surface' : 'text-white/50 hover:text-white/80 hover:bg-white/[0.06]'}`}>
+                className={`px-3 py-1 rounded-lg text-[12px] font-semibold transition-all ${faqCategory === cat ? 'bg-white text-on-surface' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.06]'}`}>
                 {cat}
               </button>
             ))}
           </div>
 
-          <div className="flex flex-col gap-2.5">
+          <div className="flex flex-col gap-2">
             {faqItems
               .filter(item => faqCategory === 'All' || item.cat === faqCategory)
               .map(({ q, a }) => (
-              <div key={q} className={`rounded-xl px-6 py-5 transition-all duration-300 ${openFaq === q ? 'bg-white/[0.06] border border-white/15' : 'border border-white/[0.08] bg-white/[0.02]'}`}>
+              <div key={q} className={`rounded-xl px-5 py-4 transition-all duration-200 ${openFaq === q ? 'bg-white/[0.06] border border-white/15' : 'border border-white/[0.06] hover:border-white/12'}`}>
                 <button onClick={() => setOpenFaq(openFaq === q ? null : q)} className="w-full text-left flex items-center justify-between gap-4">
-                  <span className="font-heading text-[17px] font-normal text-white">{q}</span>
-                  <span className={`shrink-0 w-8 h-8 rounded-lg border border-white/15 flex items-center justify-center transition-all duration-300 ${openFaq === q ? 'bg-white rotate-180' : 'text-white/50'}`}>
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className={`transition-colors duration-300 ${openFaq === q ? 'text-on-surface' : 'text-white/50'}`}>
+                  <span className="font-heading text-[16px] font-normal text-white">{q}</span>
+                  <span className={`shrink-0 w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center transition-all duration-200 ${openFaq === q ? 'bg-white rotate-180' : 'text-white/40'}`}>
+                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={`transition-colors ${openFaq === q ? 'text-on-surface' : 'text-white/40'}`}>
                       <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </span>
                 </button>
                 {openFaq === q && (
-                  <p className="text-[14px] leading-[1.65] mt-4 text-white/60">{a}</p>
+                  <p className="text-[13px] leading-[1.65] mt-3 text-white/50">{a}</p>
                 )}
               </div>
             ))}
           </div>
 
-          <div className="mt-10 text-center">
-            <p className="text-[14px] text-white/40">Still have questions?{' '}
-              <a href="mailto:buildtogether.contact@gmail.com" className="text-white/70 underline decoration-white/20 hover:text-white transition-colors">Contact us</a>
+          <div className="mt-8 text-center">
+            <p className="text-[13px] text-white/30">Still have questions?{' '}
+              <a href="mailto:buildtogether.contact@gmail.com" className="text-white/60 hover:text-white transition-colors">Contact us</a>
             </p>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="py-16 px-6 sm:px-8 border-t border-line">
-        <div className="relative max-w-[1080px] mx-auto rounded-2xl overflow-hidden text-center px-10 sm:px-14 py-[88px] bg-on-surface">
-          <div className="relative max-w-[720px] mx-auto">
-            <h2 className="font-heading text-[42px] sm:text-[52px] lg:text-[56px] font-light leading-[1.05] tracking-[-0.02em] text-white">
-              Ready to build?
-            </h2>
-            <p className="text-[17px] mt-5 mb-8 leading-[1.55] max-w-[480px] mx-auto text-white/60">
-              Join a community of developers shipping real projects together. Free to start, no credit card needed.
-            </p>
-            <div className="flex flex-wrap items-center justify-center gap-3">
-              <Link to="/register"
-                className="inline-flex items-center gap-2 h-[50px] px-8 rounded-lg text-[15px] font-semibold text-white bg-primary hover:bg-primary-container transition-all duration-300">
-                Start Building
-              </Link>
-              <Link to="/explore" className="inline-flex items-center gap-2 h-[50px] px-8 rounded-lg text-[15px] font-semibold text-white border border-white/20 hover:bg-white/10 transition-all duration-300 hover:-translate-y-px">
-                Explore Projects
-              </Link>
-            </div>
-            <div className="flex items-center justify-center gap-3 mt-8">
-              <div className="flex -space-x-2">
-                {[47, 12, 32, 68].map(id => (
-                  <img key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" className="w-7 h-7 rounded-full object-cover border-2 border-on-surface" />
-                ))}
-              </div>
-              <span className="text-[13px] text-white/60">+{stats.members || 0} joined last week</span>
-            </div>
+      <section className="py-20 px-6 sm:px-8 border-t border-line">
+        <div className="max-w-[640px] mx-auto text-center">
+          <h2 className="font-heading text-[40px] sm:text-[48px] font-light leading-[1.1] tracking-[-0.02em] text-on-surface mb-4">
+            Ready to build?
+          </h2>
+          <p className="text-[16px] text-on-surface-variant mb-8 max-w-[420px] mx-auto leading-relaxed">
+            Join {stats.members || 0} developers shipping real projects together. Free forever.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link to="/register"
+              className="inline-flex items-center gap-2 h-[48px] px-8 rounded-lg text-[15px] font-semibold text-white bg-primary hover:bg-primary-container transition-all">
+              Get Started Free
+            </Link>
+            <Link to="/explore" className="inline-flex items-center gap-2 h-[48px] px-8 rounded-lg text-[15px] font-semibold text-on-surface border border-line hover:bg-surface-container-low transition-all">
+              Explore Projects
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-line px-6 sm:px-8 py-14 sm:py-20 bg-surface">
+      <footer className="border-t border-line px-6 sm:px-8 py-12 bg-surface">
         <div className="mx-auto max-w-[1080px]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
             <div>
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
+              <div className="flex items-center gap-2.5 mb-3">
+                <div className="w-7 h-7 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
                   <img src="/logo.png" alt="" className="w-full h-full object-cover dark:invert" />
                 </div>
-                <span className="text-[18px] font-bold text-on-surface tracking-tight">BuildTogether</span>
+                <span className="text-[16px] font-bold text-on-surface tracking-tight">BuildTogether</span>
               </div>
-              <p className="text-[13px] leading-[1.6] text-on-surface-variant mb-5">A modern workspace for developers to build projects together.</p>
+              <p className="text-[13px] leading-relaxed text-on-surface-variant">A modern workspace for developers to build projects together.</p>
             </div>
             <div>
-              <h4 className="text-[14px] font-semibold text-on-surface mb-4">Platform</h4>
-              <ul className="space-y-2.5">
-                <li><Link to="/explore" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Discover Projects</Link></li>
-                <li><Link to="/register" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Sign Up</Link></li>
-                <li><Link to="/login" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Sign In</Link></li>
-                <li><Link to="/dashboard" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Dashboard</Link></li>
+              <h4 className="text-[13px] font-semibold text-on-surface mb-3">Platform</h4>
+              <ul className="space-y-2">
+                <li><Link to="/explore" className="text-[13px] text-on-surface-variant hover:text-on-surface transition-colors">Discover Projects</Link></li>
+                <li><Link to="/register" className="text-[13px] text-on-surface-variant hover:text-on-surface transition-colors">Sign Up</Link></li>
+                <li><Link to="/login" className="text-[13px] text-on-surface-variant hover:text-on-surface transition-colors">Sign In</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-[14px] font-semibold text-on-surface mb-4">Resources</h4>
-              <ul className="space-y-2.5">
-                <li><a href="https://github.com/codebyuday/BuildTogether" target="_blank" rel="noopener" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">GitHub</a></li>
-                <li><Link to="/explore" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Explore</Link></li>
+              <h4 className="text-[13px] font-semibold text-on-surface mb-3">Resources</h4>
+              <ul className="space-y-2">
+                <li><a href="https://github.com/codebyuday/BuildTogether" target="_blank" rel="noopener" className="text-[13px] text-on-surface-variant hover:text-on-surface transition-colors">GitHub</a></li>
+                <li><Link to="/explore" className="text-[13px] text-on-surface-variant hover:text-on-surface transition-colors">Explore</Link></li>
               </ul>
             </div>
             <div>
-              <h4 className="text-[14px] font-semibold text-on-surface mb-4">Support</h4>
-              <ul className="space-y-2.5">
-                <li><a href="mailto:buildtogether.contact@gmail.com" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Contact Us</a></li>
-                <li><a href="https://github.com/codebyuday/BuildTogether/issues" target="_blank" rel="noopener" className="text-[14px] text-on-surface-variant hover:text-on-surface transition-colors">Report an Issue</a></li>
+              <h4 className="text-[13px] font-semibold text-on-surface mb-3">Support</h4>
+              <ul className="space-y-2">
+                <li><a href="mailto:buildtogether.contact@gmail.com" className="text-[13px] text-on-surface-variant hover:text-on-surface transition-colors">Contact Us</a></li>
+                <li><a href="https://github.com/codebyuday/BuildTogether/issues" target="_blank" rel="noopener" className="text-[13px] text-on-surface-variant hover:text-on-surface transition-colors">Report an Issue</a></li>
               </ul>
             </div>
           </div>
-          <div className="mt-14 pt-7 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-line">
-            <p className="text-[12px] text-muted">Created &amp; Administered by <a href="https://www.linkedin.com/in/udaypratap-singh-285823288/" target="_blank" rel="noopener" className="hover:text-on-surface transition-colors font-semibold">Uday Pratap Singh</a></p>
-            <p className="text-[12px] text-muted">&copy; {new Date().getFullYear()} BuildTogether. All rights reserved.</p>
+          <div className="mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-line">
+            <p className="text-[11px] text-muted">Created by <a href="https://www.linkedin.com/in/udaypratap-singh-285823288/" target="_blank" rel="noopener" className="hover:text-on-surface transition-colors font-semibold">Uday Pratap Singh</a></p>
+            <p className="text-[11px] text-muted">&copy; {new Date().getFullYear()} BuildTogether</p>
           </div>
         </div>
       </footer>
