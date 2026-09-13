@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { useAuth } from '../hooks/useAuth'
 import StarButton from '../components/StarButton'
 import { CardSkeleton } from '../components/Skeleton'
 
@@ -9,6 +10,7 @@ const STATUS_OPTIONS = ['all', 'recruiting', 'full', 'archived']
 const STATUS_LABELS = { all: 'All', recruiting: 'Recruiting', full: 'Full', archived: 'Archived' }
 
 export default function Explore() {
+  const { user } = useAuth()
   const [search, setSearch] = useState('')
   const [status, setStatus] = useState('all')
 
@@ -30,7 +32,27 @@ export default function Explore() {
   })
 
   return (
-    <div className="mx-auto max-w-[1200px] space-y-5">
+    <div className="min-h-screen bg-surface">
+      <nav className="sticky top-0 z-50 flex h-[60px] w-full items-center justify-between px-6 lg:px-10 border-b border-line bg-surface/90 backdrop-blur-md">
+        <Link to="/" className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
+            <img src="/logo.png" alt="" className="w-full h-full object-cover dark:invert" />
+          </div>
+          <span className="text-[18px] font-bold text-on-surface tracking-tight">BuildTogether</span>
+        </Link>
+        <div className="flex items-center gap-2">
+          {user ? (
+            <Link to="/dashboard" className="rounded-lg bg-primary text-white px-5 py-2 text-[14px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">Dashboard</Link>
+          ) : (
+            <>
+              <Link to="/login" className="text-[14px] text-muted font-semibold hover:text-on-surface transition-colors px-4 py-2 rounded-lg hover:bg-surface-container-low">Login</Link>
+              <Link to="/register" className="rounded-lg bg-primary text-white px-5 py-2 text-[14px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98]">Get Started</Link>
+            </>
+          )}
+        </div>
+      </nav>
+
+      <div className="mx-auto max-w-[1200px] px-6 py-8 space-y-5">
       <div className="flex items-end justify-between">
         <div>
           <h1 className="font-heading text-[26px] font-light text-on-surface tracking-tight">Discover Projects</h1>
@@ -137,6 +159,7 @@ export default function Explore() {
           ))}
         </div>
       )}
+      </div>
     </div>
   )
 }

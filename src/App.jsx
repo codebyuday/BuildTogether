@@ -41,11 +41,11 @@ export default function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/share/:token" element={<ShareTask />} />
+            <Route path="/explore" element={<Explore />} />
             <Route path="/404" element={<NotFound />} />
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>
                 <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/explore" element={<Explore />} />
                 <Route path="/projects/new" element={<CreateProject />} />
                 <Route path="/projects/:id" element={<ProjectDetail />} />
                 <Route path="/projects/:id/code" element={<CodeEditor />} />
