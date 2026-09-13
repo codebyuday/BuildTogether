@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
+import { useState, useCallback, lazy, Suspense, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../hooks/useAuth'
@@ -31,6 +31,7 @@ export default function CodeEditor() {
   const [ghToken, setGhToken] = useState(() => localStorage.getItem('gh_token') || '')
   const [showTokenModal, setShowTokenModal] = useState(false)
   const [tokenInput, setTokenInput] = useState('')
+  const pendingSaveRef = useRef(null)
 
   const { data: project } = useQuery({
     queryKey: ['project', id],
@@ -75,7 +76,7 @@ export default function CodeEditor() {
       if (error) throw error
     },
     onSuccess: () => toast.success('Saved'),
-    onError: (e) => toast.error(e.message),
+    onError: (e) => toast.error(`Save failed: ${e.message}`),
   })
 
   const deleteFileMutation = useMutation({
@@ -85,7 +86,9 @@ export default function CodeEditor() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['project-files', id] })
-      setSelectedFile(null)
+      if (deleteFileMutation.variables === selectedFile?.id) {
+        setSelectedFile(null)
+      }
       toast.success('File deleted')
     },
     onError: (e) => toast.error(e.message),
@@ -134,9 +137,20 @@ export default function CodeEditor() {
 
   const handleContentChange = useCallback((content) => {
     if (selectedFile) {
-      saveMutation.mutate({ fileId: selectedFile.id, content })
+      if (pendingSaveRef.current) clearTimeout(pendingSaveRef.current)
+      pendingSaveRef.current = setTimeout(() => {
+        saveMutation.mutate({ fileId: selectedFile.id, content })
+      }, 1500)
     }
   }, [selectedFile?.id])
+
+  const handleSelectFile = (file) => {
+    if (pendingSaveRef.current) {
+      clearTimeout(pendingSaveRef.current)
+      pendingSaveRef.current = null
+    }
+    setSelectedFile(file)
+  }
 
   return (
     <div className="mx-auto max-w-[1200px] space-y-4">
@@ -153,7 +167,7 @@ export default function CodeEditor() {
             </a>
           )}
         </div>
-          {project?.repo_url && files.length > 0 && (
+        {project?.repo_url && files.length > 0 && (
           <div className="flex items-center gap-2">
             {!ghToken && (
               <button onClick={() => setShowTokenModal(true)}
@@ -171,7 +185,7 @@ export default function CodeEditor() {
               {pushMutation.isPending ? 'Pushing...' : 'Push to GitHub'}
             </button>
           </div>
-          )}
+        )}
       </div>
 
       <div className="flex gap-4 min-h-[600px]">
@@ -206,7 +220,7 @@ export default function CodeEditor() {
             <div className="space-y-0.5">
               {files.map(file => (
                 <div key={file.id}
-                  onClick={() => setSelectedFile(file)}
+                  onClick={() => handleSelectFile(file)}
                   className={`flex items-center justify-between group rounded-lg px-2.5 py-1.5 text-[12px] cursor-pointer transition-colors ${
                     selectedFile?.id === file.id ? 'bg-primary/10 text-primary font-semibold' : 'text-on-surface-variant hover:bg-surface-container'
                   }`}>
@@ -229,7 +243,9 @@ export default function CodeEditor() {
             <Suspense fallback={<div className="flex items-center justify-center py-24"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
               <CollaborativeCodeEditor
                 roomId={`${id}-${selectedFile.id}`}
+                fileId={selectedFile.id}
                 language={selectedFile.language}
+                initialContent={selectedFile.content || ''}
                 onChange={handleContentChange}
               />
             </Suspense>

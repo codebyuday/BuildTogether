@@ -22,7 +22,7 @@ const LANG_MAP = {
   json: () => json(),
 }
 
-export default function CollaborativeCodeEditor({ roomId, language = 'javascript', onChange }) {
+export default function CollaborativeCodeEditor({ roomId, fileId, language = 'javascript', initialContent = '', onChange }) {
   const containerRef = useRef(null)
   const viewRef = useRef(null)
 
@@ -43,7 +43,13 @@ export default function CollaborativeCodeEditor({ roomId, language = 'javascript
     const ytext = ydoc.getText('code')
     const undoManager = new Y.UndoManager(ytext)
 
+    // Seed doc with file content if Yjs doc is empty (no persistence cache)
+    if (ytext.toString() === '' && initialContent) {
+      ytext.insert(0, initialContent)
+    }
+
     const langExtension = LANG_MAP[language]?.() || javascript()
+    let saveTimeout = null
 
     const state = EditorState.create({
       doc: ytext.toString(),
@@ -53,7 +59,10 @@ export default function CollaborativeCodeEditor({ roomId, language = 'javascript
         yCollab(ytext, provider.awareness, { undoManager }),
         EditorView.updateListener.of((update) => {
           if (update.docChanged && onChange) {
-            onChange(ytext.toString())
+            if (saveTimeout) clearTimeout(saveTimeout)
+            saveTimeout = setTimeout(() => {
+              onChange(ytext.toString())
+            }, 800)
           }
         }),
       ],
@@ -62,11 +71,12 @@ export default function CollaborativeCodeEditor({ roomId, language = 'javascript
     viewRef.current = new EditorView({ state, parent: containerRef.current })
 
     return () => {
+      if (saveTimeout) clearTimeout(saveTimeout)
       viewRef.current?.destroy()
       provider.destroy()
       ydoc.destroy()
     }
-  }, [roomId, language])
+  }, [roomId, fileId, language])
 
   return <div ref={containerRef} className="h-full min-h-[400px]" />
 }
