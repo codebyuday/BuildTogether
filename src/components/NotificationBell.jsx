@@ -51,15 +51,15 @@ export default function NotificationBell() {
         className="relative h-8 w-8 rounded-lg flex items-center justify-center text-muted hover:bg-surface-container-high hover:text-on-surface transition-all">
         <span className="material-symbols-outlined text-[18px]">notifications</span>
         {unreadCount > 0 && (
-          <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full ring-2 ring-surface"></span>
+          <span className="absolute top-1 right-1 w-2 h-2 bg-error rounded-full ring-2 ring-surface-container-lowest"></span>
         )}
       </button>
 
       {open && (
         <>
           <div className="fixed inset-0 z-40" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-outline-variant/25 bg-surface-container-low shadow-2xl shadow-black/30">
-            <div className="flex items-center justify-between border-b border-outline-variant/20 px-4 py-3">
+          <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-line bg-surface-container-lowest shadow-xl">
+            <div className="flex items-center justify-between border-b border-line px-4 py-3">
               <span className="text-[13px] font-semibold text-on-surface">Notifications</span>
               {unreadCount > 0 && (
                 <button onClick={() => markRead.mutate()}
@@ -76,7 +76,7 @@ export default function NotificationBell() {
                 </div>
               ) : (
                 notifications.map(n => (
-                  <div key={n.id} className={`border-b border-outline-variant/10 px-4 py-3 transition-colors ${!n.read ? 'bg-primary/[0.03]' : 'hover:bg-surface-container-high/30'}`}>
+                  <div key={n.id} className={`border-b border-line/50 px-4 py-3 transition-colors ${!n.read ? 'bg-primary/[0.03]' : 'hover:bg-surface-container-high/30'}`}>
                     <p className="text-[12px] text-on-surface/80 leading-relaxed">{n.message}</p>
                     <span className="mt-1 block text-[10px] font-mono text-muted">
                       {new Date(n.created_at).toLocaleString()}
@@ -91,4 +91,3 @@ export default function NotificationBell() {
     </div>
   )
 }
-

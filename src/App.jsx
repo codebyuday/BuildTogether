@@ -16,6 +16,7 @@ const CodeEditor = lazy(() => import('./pages/CodeEditor'))
 const CreateProject = lazy(() => import('./pages/CreateProject'))
 const Profile = lazy(() => import('./pages/Profile'))
 const PublicProfile = lazy(() => import('./pages/PublicProfile'))
+const ShareTask = lazy(() => import('./pages/ShareTask'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
 function PageLoader() {
@@ -39,6 +40,7 @@ export default function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/share/:token" element={<ShareTask />} />
             <Route path="/404" element={<NotFound />} />
             <Route element={<ProtectedRoute />}>
               <Route element={<Layout />}>

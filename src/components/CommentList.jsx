@@ -51,7 +51,7 @@ export default function CommentList({ taskId, projectId }) {
 
       <div className="space-y-2 max-h-60 overflow-y-auto">
         {comments.map(c => (
-          <div key={c.id} className="bg-surface-container-lowest border border-outline-variant/20 rounded-lg p-2.5">
+          <div key={c.id} className="bg-surface-container-low border border-line rounded-lg p-2.5">
             <div className="flex items-center gap-2 mb-1">
               <div className="w-5 h-5 rounded-full bg-primary/20 flex items-center justify-center text-primary text-[9px] font-bold">
                 {c.profiles?.username?.[0]?.toUpperCase() || '?'}
@@ -69,7 +69,7 @@ export default function CommentList({ taskId, projectId }) {
       <div className="flex gap-2">
         <input value={body} onChange={e => setBody(e.target.value)}
           onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey && body.trim()) { e.preventDefault(); addComment.mutate() } }}
-          className="flex-1 bg-surface-container-lowest border border-outline-variant rounded-lg px-3 py-1.5 text-[13px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+          className="flex-1 bg-surface-container-low border border-line rounded-lg px-3 py-1.5 text-[13px] text-on-surface placeholder:text-outline focus:border-primary focus:ring-1 focus:ring-primary outline-none"
           placeholder="Write a comment..." />
         <button onClick={() => body.trim() && addComment.mutate()} disabled={!body.trim() || addComment.isPending}
           className="bg-primary text-on-primary px-3 py-1.5 rounded-lg text-[12px] font-semibold hover:bg-primary-container disabled:opacity-50 transition-all">

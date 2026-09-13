@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useCallback } from 'react'
 
 const STATUS_COLS = ['todo', 'in_progress', 'in_review', 'done']
 const STATUS_LABELS = { todo: 'To Do', in_progress: 'In Progress', in_review: 'In Review', done: 'Done' }
@@ -10,15 +10,14 @@ function TaskCard({ task, isOwner, onDelete, onEdit, dragging }) {
       draggable
       onDragStart={e => { e.dataTransfer.setData('text/plain', task.id); e.dataTransfer.effectAllowed = 'move' }}
       onClick={() => onEdit(task)}
-      className={`bg-white border border-line hover:border-primary/40 transition-all p-3 rounded-xl flex flex-col gap-2 group cursor-grab active:cursor-grabbing shadow-sm hover:shadow-md ${
+      className={`bg-surface-container-lowest border border-line hover:border-primary/40 transition-all p-3 rounded-lg flex flex-col gap-2 group cursor-grab active:cursor-grabbing ${
         dragging ? 'opacity-40 scale-95' : ''
       }`}
-      style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.04)' }}
     >
       {taskLabels.length > 0 && (
         <div className="flex flex-wrap gap-1">
           {taskLabels.map(l => (
-            <span key={l.id} className="px-1.5 py-0.5 rounded-full text-[9px] font-mono font-medium"
+            <span key={l.id} className="px-1.5 py-0.5 rounded text-[9px] font-mono font-medium"
               style={{ backgroundColor: l.color + '15', color: l.color, border: `1px solid ${l.color}30` }}>
               {l.name}
             </span>
@@ -26,19 +25,19 @@ function TaskCard({ task, isOwner, onDelete, onEdit, dragging }) {
         </div>
       )}
       <div className="flex items-center justify-between">
-        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full ${
+        <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
           task.priority === 'urgent' || task.priority === 'high' ? 'bg-tag-orange-bg text-tag-orange-text border border-tag-orange-border' :
           task.priority === 'medium' ? 'bg-surface-container-high text-muted' :
           'bg-surface-container-high text-muted/60'
         }`}>{task.priority?.toUpperCase()}</span>
         {isOwner && (
           <button onClick={e => { e.stopPropagation(); onDelete(task.id) }}
-            className="hidden rounded-md p-0.5 text-muted hover:text-error group-hover:block transition-colors">
+            className="hidden rounded p-0.5 text-muted hover:text-error group-hover:block transition-colors">
             <span className="material-symbols-outlined text-[14px]">delete</span>
           </button>
         )}
       </div>
-      <h4 className="text-[13.5px] text-on-surface group-hover:text-primary transition leading-snug font-medium">{task.title}</h4>
+      <h4 className="text-[13px] text-on-surface group-hover:text-primary transition leading-snug font-medium">{task.title}</h4>
       {task.description && <p className="text-[11px] text-muted line-clamp-2">{task.description.replace(/<[^>]*>/g, '')}</p>}
       <div className="flex items-center justify-between pt-1.5 border-t border-line/60">
         <div className="flex items-center gap-2">
@@ -87,7 +86,7 @@ export default function KanbanBoard({ tasks, isMember, isOwner, onEdit, onDelete
         const colTasks = tasks.filter(t => t.status === col)
         return (
           <div key={col}
-            className={`w-[320px] flex-shrink-0 flex flex-col rounded-2xl border transition-colors ${
+            className={`w-[320px] flex-shrink-0 flex flex-col rounded-xl border transition-colors ${
               dragOverCol === col ? 'border-primary/40 bg-primary/5' : 'border-line bg-surface/50'
             }`}
             onDragOver={handleDragOver}
@@ -98,7 +97,7 @@ export default function KanbanBoard({ tasks, isMember, isOwner, onEdit, onDelete
             <div className="p-3 border-b border-line/60 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="text-[14px] font-semibold text-on-surface">{STATUS_LABELS[col]}</span>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-full bg-surface-container-high text-muted border border-line">{colTasks.length}</span>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-muted border border-line">{colTasks.length}</span>
               </div>
             </div>
             <div className="p-2.5 flex flex-col gap-2.5 min-h-[80px]">

@@ -67,10 +67,10 @@ export default function Dashboard() {
   })
 
   const stats = [
-    { label: 'My Projects', value: projects.length, icon: 'folder', color: 'text-primary', bg: 'bg-primary/10' },
+    { label: 'My Projects', value: projects.length, icon: 'folder', color: 'text-primary', bg: 'bg-primary/8' },
     { label: 'Member Of', value: memberProjects.length, icon: 'group', color: 'text-on-surface-variant', bg: 'bg-surface-container-high' },
     { label: 'Open Tasks', value: tasks.length, icon: 'task_alt', color: 'text-tertiary', bg: 'bg-tertiary/10' },
-    { label: 'Applications', value: applications.filter(a => a.status === 'pending').length, icon: 'schedule', color: 'text-primary', bg: 'bg-primary/10' },
+    { label: 'Applications', value: applications.filter(a => a.status === 'pending').length, icon: 'schedule', color: 'text-primary', bg: 'bg-primary/8' },
   ]
 
   const isLoading = loadingProjects || !projects
@@ -80,14 +80,14 @@ export default function Dashboard() {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {isLoading ? Array.from({ length: 4 }).map((_, i) => <StatSkeleton key={i} />) :
         stats.map(({ label, value, icon, color, bg }, i) => (
-          <div key={label} className={`bg-white border border-line rounded-[20px] p-5 card-hover ${i === 0 ? 'lg:col-span-2' : ''}`} style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+          <div key={label} className={`bg-surface-container-lowest border border-line rounded-xl p-5 card-hover ${i === 0 ? 'lg:col-span-2' : ''}`}>
             <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-2xl ${bg} flex items-center justify-center`}>
+              <div className={`w-10 h-10 rounded-lg ${bg} flex items-center justify-center`}>
                 <span className={`material-symbols-outlined text-[20px] ${color}`}>{icon}</span>
               </div>
               <div>
                 <span className="text-[11px] font-bold text-muted uppercase tracking-wider block">{label}</span>
-                <span className="text-[24px] font-bold text-on-surface leading-none">
+                <span className="font-heading text-[24px] font-light text-on-surface leading-none">
                   <NumberTicker value={value} duration={1200} />
                 </span>
               </div>
@@ -101,7 +101,7 @@ export default function Dashboard() {
       <div className="grid gap-5 lg:grid-cols-3">
         <section className="lg:col-span-1">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-[15px] font-bold text-on-surface">My Tasks</h2>
+            <h2 className="text-[15px] font-semibold text-on-surface">My Tasks</h2>
             <span className="text-[11px] font-mono text-muted">{tasks.length} open</span>
           </div>
           {loadingTasks ? (
@@ -112,8 +112,7 @@ export default function Dashboard() {
             <div className="space-y-1.5">
               {tasks.slice(0, 8).map(t => (
                 <Link key={t.id} to={`/projects/${t.project_id}`}
-                  className="flex items-center justify-between rounded-xl bg-white border border-line px-3.5 py-3 hover:border-line-2 hover:-translate-y-0.5 transition-all group"
-                  style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.03)' }}>
+                  className="flex items-center justify-between rounded-lg bg-surface-container-lowest border border-line px-3.5 py-3 hover:border-line-2 hover:-translate-y-0.5 transition-all group">
                   <div className="flex items-center gap-2.5 min-w-0">
                     <span className={`h-2 w-2 rounded-full shrink-0 ${
                       t.status === 'done' ? 'bg-success' :
@@ -122,11 +121,11 @@ export default function Dashboard() {
                       'bg-muted/40'
                     }`} />
                     <div className="min-w-0">
-                      <span className="text-[13.5px] text-on-surface group-hover:text-primary transition font-medium block truncate">{t.title}</span>
+                      <span className="text-[13px] text-on-surface group-hover:text-primary transition font-medium block truncate">{t.title}</span>
                       {t.projects && <span className="text-[11px] text-muted font-mono">{t.projects.title}</span>}
                     </div>
                   </div>
-                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-3xl shrink-0 ${
+                  <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-lg shrink-0 ${
                     t.priority === 'urgent' || t.priority === 'high' ? 'bg-tag-orange-bg text-tag-orange-text border border-tag-orange-border' :
                     t.priority === 'medium' ? 'bg-surface-container-high text-muted' :
                     'bg-surface-container-high text-muted'
@@ -140,24 +139,23 @@ export default function Dashboard() {
         <section className="lg:col-span-2 space-y-5">
           {starredProjects.length > 0 && (
             <div>
-              <h2 className="mb-3 text-[15px] font-bold text-on-surface flex items-center gap-2">
+              <h2 className="mb-3 text-[15px] font-semibold text-on-surface flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-tertiary">star</span> Starred
               </h2>
               <div className="space-y-1.5">
                 {starredProjects.slice(0, 3).map(p => (
                   <Link key={p.id} to={`/projects/${p.id}`}
-                    className="flex items-center justify-between rounded-xl bg-white border border-line px-3.5 py-3 hover:border-line-2 hover:-translate-y-0.5 transition-all group"
-                    style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.03)' }}>
+                    className="flex items-center justify-between rounded-lg bg-surface-container-lowest border border-line px-3.5 py-3 hover:border-line-2 hover:-translate-y-0.5 transition-all group">
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-8 h-8 rounded-lg bg-tertiary/10 flex items-center justify-center text-tertiary shrink-0">
                         <span className="material-symbols-outlined text-[16px]">star</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[13.5px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
+                        <h3 className="text-[13px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
                         <p className="text-[11px] text-muted line-clamp-1">{p.description}</p>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-3xl shrink-0 ${
+                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-lg shrink-0 ${
                       p.status === 'recruiting' ? 'bg-success/10 text-success border border-success/20' :
                       p.status === 'full' ? 'bg-tertiary/10 text-tertiary border border-tertiary/20' :
                       'bg-surface-container-high text-muted'
@@ -170,7 +168,7 @@ export default function Dashboard() {
 
           <div>
             <div className="flex items-center justify-between mb-3">
-              <h2 className="text-[15px] font-bold text-on-surface">My Projects</h2>
+              <h2 className="text-[15px] font-semibold text-on-surface">My Projects</h2>
               <Link to="/explore" className="text-[12px] font-semibold text-primary hover:underline flex items-center gap-1 transition-colors">
                 Explore <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
               </Link>
@@ -187,18 +185,17 @@ export default function Dashboard() {
               <div className="space-y-1.5">
                 {projects.slice(0, 5).map(p => (
                   <Link key={p.id} to={`/projects/${p.id}`}
-                    className="flex items-center justify-between rounded-xl bg-white border border-line px-3.5 py-3 hover:border-line-2 hover:-translate-y-0.5 transition-all group"
-                    style={{ boxShadow: '0 1px 2px rgba(15,15,20,0.03)' }}>
+                    className="flex items-center justify-between rounded-lg bg-surface-container-lowest border border-line px-3.5 py-3 hover:border-line-2 hover:-translate-y-0.5 transition-all group">
                     <div className="flex items-center gap-2.5 min-w-0">
                       <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary shrink-0">
                         <span className="material-symbols-outlined text-[16px]">folder</span>
                       </div>
                       <div className="min-w-0">
-                        <h3 className="text-[13.5px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
+                        <h3 className="text-[13px] font-medium text-on-surface group-hover:text-primary transition truncate">{p.title}</h3>
                         <p className="text-[11px] text-muted line-clamp-1">{p.description}</p>
                       </div>
                     </div>
-                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-3xl shrink-0 ${
+                    <span className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-lg shrink-0 ${
                       p.status === 'recruiting' ? 'bg-success/10 text-success border border-success/20' :
                       p.status === 'full' ? 'bg-tertiary/10 text-tertiary border border-tertiary/20' :
                       'bg-surface-container-high text-muted'
