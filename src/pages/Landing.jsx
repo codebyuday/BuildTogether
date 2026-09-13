@@ -216,11 +216,13 @@ export default function Landing() {
       </section>
 
       {/* FAQ */}
-      <section className="py-28 px-6 sm:px-8 bg-on-surface border-t border-line">
+      <section className="py-28 px-6 sm:px-8 border-t border-line" style={{ background: 'var(--color-inverse-surface)' }}>
         <div className="mx-auto max-w-[960px]">
           <div className="text-center mb-14">
-            <span className="inline-block px-3 py-1 rounded-full bg-white/[0.06] text-white/50 text-[11px] font-bold uppercase tracking-widest mb-4">FAQ</span>
-            <h2 className="font-heading text-[34px] sm:text-[40px] font-light text-white tracking-[-0.01em]">Frequently asked</h2>
+            <span className="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest mb-4"
+              style={{ background: 'color-mix(in srgb, var(--color-on-inverse-surface) 8%, transparent)', color: 'color-mix(in srgb, var(--color-on-inverse-surface) 50%, transparent)' }}>FAQ</span>
+            <h2 className="font-heading text-[34px] sm:text-[40px] font-light tracking-[-0.01em]"
+              style={{ color: 'var(--color-on-inverse-surface)' }}>Frequently asked</h2>
           </div>
 
           <div className="grid md:grid-cols-[180px_1fr] gap-10">
@@ -228,11 +230,13 @@ export default function Landing() {
             <div className="flex md:flex-col gap-1.5">
               {faqCategories.map(cat => (
                 <button key={cat} onClick={() => { setFaqCategory(cat); setOpenFaq(null) }}
-                  className={`text-left px-3 py-2 rounded-lg text-[13px] font-medium transition-all ${
-                    faqCategory === cat
-                      ? 'bg-white text-on-surface'
-                      : 'text-white/40 hover:text-white/70 hover:bg-white/[0.04]'
-                  }`}>
+                  className="text-left px-3 py-2 rounded-lg text-[13px] font-medium transition-all"
+                  style={{
+                    background: faqCategory === cat ? 'var(--color-on-inverse-surface)' : 'transparent',
+                    color: faqCategory === cat ? 'var(--color-inverse-surface)' : 'color-mix(in srgb, var(--color-on-inverse-surface) 40%, transparent)',
+                  }}
+                  onMouseEnter={e => { if (faqCategory !== cat) e.currentTarget.style.color = 'color-mix(in srgb, var(--color-on-inverse-surface) 70%, transparent)' }}
+                  onMouseLeave={e => { if (faqCategory !== cat) e.currentTarget.style.color = 'color-mix(in srgb, var(--color-on-inverse-surface) 40%, transparent)' }}>
                   {cat}
                 </button>
               ))}
@@ -243,23 +247,34 @@ export default function Landing() {
               {faqItems
                 .filter(item => faqCategory === 'All' || item.cat === faqCategory)
                 .map(({ q, a, cat }) => (
-                <div key={q} className={`rounded-xl transition-all duration-200 overflow-hidden ${openFaq === q ? 'bg-white/[0.06]' : 'hover:bg-white/[0.03]'}`}>
+                <div key={q}
+                  className="rounded-xl transition-all duration-200 overflow-hidden"
+                  style={{ background: openFaq === q ? 'color-mix(in srgb, var(--color-on-inverse-surface) 6%, transparent)' : 'transparent' }}
+                  onMouseEnter={e => { if (openFaq !== q) e.currentTarget.style.background = 'color-mix(in srgb, var(--color-on-inverse-surface) 3%, transparent)' }}
+                  onMouseLeave={e => { if (openFaq !== q) e.currentTarget.style.background = 'transparent' }}>
                   <button onClick={() => setOpenFaq(openFaq === q ? null : q)} className="w-full text-left flex items-center gap-4 px-5 py-4">
-                    <span className={`shrink-0 w-6 h-6 rounded-md flex items-center justify-center transition-all duration-200 ${openFaq === q ? 'bg-white text-on-surface rotate-90' : 'border border-white/10 text-white/30'}`}>
+                    <span
+                      className="shrink-0 w-6 h-6 rounded-md flex items-center justify-center transition-all duration-200"
+                      style={{
+                        background: openFaq === q ? 'var(--color-on-inverse-surface)' : 'transparent',
+                        border: openFaq === q ? 'none' : '1px solid color-mix(in srgb, var(--color-on-inverse-surface) 10%, transparent)',
+                        color: openFaq === q ? 'var(--color-inverse-surface)' : 'color-mix(in srgb, var(--color-on-inverse-surface) 30%, transparent)',
+                        transform: openFaq === q ? 'rotate(90deg)' : 'rotate(0deg)',
+                      }}>
                       <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
                         <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>
                     </span>
                     <div className="flex-1">
-                      <span className="font-heading text-[16px] font-normal text-white">{q}</span>
+                      <span className="font-heading text-[16px] font-normal" style={{ color: 'var(--color-on-inverse-surface)' }}>{q}</span>
                       {faqCategory === 'All' && (
-                        <span className="ml-2 text-[10px] font-mono text-white/20 align-middle">{cat}</span>
+                        <span className="ml-2 text-[10px] font-mono align-middle" style={{ color: 'color-mix(in srgb, var(--color-on-inverse-surface) 20%, transparent)' }}>{cat}</span>
                       )}
                     </div>
                   </button>
                   {openFaq === q && (
                     <div className="px-5 pb-4 pl-[52px]">
-                      <p className="text-[13px] leading-[1.7] text-white/50">{a}</p>
+                      <p className="text-[13px] leading-[1.7]" style={{ color: 'color-mix(in srgb, var(--color-on-inverse-surface) 50%, transparent)' }}>{a}</p>
                     </div>
                   )}
                 </div>
@@ -267,10 +282,13 @@ export default function Landing() {
             </div>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-white/[0.06] text-center">
-            <p className="text-[13px] text-white/30 mb-3">Can't find what you're looking for?</p>
+          <div className="mt-12 pt-8 text-center" style={{ borderTop: '1px solid color-mix(in srgb, var(--color-on-inverse-surface) 6%, transparent)' }}>
+            <p className="text-[13px] mb-3" style={{ color: 'color-mix(in srgb, var(--color-on-inverse-surface) 30%, transparent)' }}>Can't find what you're looking for?</p>
             <a href="mailto:buildtogether.contact@gmail.com"
-              className="inline-flex items-center gap-2 text-[13px] text-white/60 hover:text-white transition-colors font-medium">
+              className="inline-flex items-center gap-2 text-[13px] font-medium transition-colors"
+              style={{ color: 'color-mix(in srgb, var(--color-on-inverse-surface) 60%, transparent)' }}
+              onMouseEnter={e => e.currentTarget.style.color = 'var(--color-on-inverse-surface)'}
+              onMouseLeave={e => e.currentTarget.style.color = 'color-mix(in srgb, var(--color-on-inverse-surface) 60%, transparent)'}>
               <span className="material-symbols-outlined text-[16px]">mail</span>
               Contact us
             </a>
