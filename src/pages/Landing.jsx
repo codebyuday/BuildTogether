@@ -217,44 +217,63 @@ export default function Landing() {
 
       {/* FAQ */}
       <section className="py-28 px-6 sm:px-8 bg-on-surface border-t border-line">
-        <div className="mx-auto max-w-[760px]">
-          <div className="text-center mb-10">
+        <div className="mx-auto max-w-[960px]">
+          <div className="text-center mb-14">
+            <span className="inline-block px-3 py-1 rounded-full bg-white/[0.06] text-white/50 text-[11px] font-bold uppercase tracking-widest mb-4">FAQ</span>
             <h2 className="font-heading text-[34px] sm:text-[40px] font-light text-white tracking-[-0.01em]">Frequently asked</h2>
           </div>
 
-          <div className="flex items-center justify-center gap-1.5 mb-8 flex-wrap">
-            {faqCategories.map(cat => (
-              <button key={cat} onClick={() => { setFaqCategory(cat); setOpenFaq(null) }}
-                className={`px-3 py-1 rounded-lg text-[12px] font-semibold transition-all ${faqCategory === cat ? 'bg-white text-on-surface' : 'text-white/40 hover:text-white/70 hover:bg-white/[0.06]'}`}>
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex flex-col gap-2">
-            {faqItems
-              .filter(item => faqCategory === 'All' || item.cat === faqCategory)
-              .map(({ q, a }) => (
-              <div key={q} className={`rounded-xl px-5 py-4 transition-all duration-200 ${openFaq === q ? 'bg-white/[0.06] border border-white/15' : 'border border-white/[0.06] hover:border-white/12'}`}>
-                <button onClick={() => setOpenFaq(openFaq === q ? null : q)} className="w-full text-left flex items-center justify-between gap-4">
-                  <span className="font-heading text-[16px] font-normal text-white">{q}</span>
-                  <span className={`shrink-0 w-7 h-7 rounded-lg border border-white/10 flex items-center justify-center transition-all duration-200 ${openFaq === q ? 'bg-white rotate-180' : 'text-white/40'}`}>
-                    <svg width="12" height="12" viewBox="0 0 14 14" fill="none" className={`transition-colors ${openFaq === q ? 'text-on-surface' : 'text-white/40'}`}>
-                      <path d="M3.5 5.25L7 8.75L10.5 5.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </span>
+          <div className="grid md:grid-cols-[180px_1fr] gap-10">
+            {/* Category sidebar */}
+            <div className="flex md:flex-col gap-1.5">
+              {faqCategories.map(cat => (
+                <button key={cat} onClick={() => { setFaqCategory(cat); setOpenFaq(null) }}
+                  className={`text-left px-3 py-2 rounded-lg text-[13px] font-medium transition-all ${
+                    faqCategory === cat
+                      ? 'bg-white text-on-surface'
+                      : 'text-white/40 hover:text-white/70 hover:bg-white/[0.04]'
+                  }`}>
+                  {cat}
                 </button>
-                {openFaq === q && (
-                  <p className="text-[13px] leading-[1.65] mt-3 text-white/50">{a}</p>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
+
+            {/* Questions */}
+            <div className="flex flex-col gap-2">
+              {faqItems
+                .filter(item => faqCategory === 'All' || item.cat === faqCategory)
+                .map(({ q, a, cat }) => (
+                <div key={q} className={`rounded-xl transition-all duration-200 overflow-hidden ${openFaq === q ? 'bg-white/[0.06]' : 'hover:bg-white/[0.03]'}`}>
+                  <button onClick={() => setOpenFaq(openFaq === q ? null : q)} className="w-full text-left flex items-center gap-4 px-5 py-4">
+                    <span className={`shrink-0 w-6 h-6 rounded-md flex items-center justify-center transition-all duration-200 ${openFaq === q ? 'bg-white text-on-surface rotate-90' : 'border border-white/10 text-white/30'}`}>
+                      <svg width="10" height="10" viewBox="0 0 14 14" fill="none">
+                        <path d="M5.25 3.5L8.75 7L5.25 10.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                    <div className="flex-1">
+                      <span className="font-heading text-[16px] font-normal text-white">{q}</span>
+                      {faqCategory === 'All' && (
+                        <span className="ml-2 text-[10px] font-mono text-white/20 align-middle">{cat}</span>
+                      )}
+                    </div>
+                  </button>
+                  {openFaq === q && (
+                    <div className="px-5 pb-4 pl-[52px]">
+                      <p className="text-[13px] leading-[1.7] text-white/50">{a}</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="mt-8 text-center">
-            <p className="text-[13px] text-white/30">Still have questions?{' '}
-              <a href="mailto:buildtogether.contact@gmail.com" className="text-white/60 hover:text-white transition-colors">Contact us</a>
-            </p>
+          <div className="mt-12 pt-8 border-t border-white/[0.06] text-center">
+            <p className="text-[13px] text-white/30 mb-3">Can't find what you're looking for?</p>
+            <a href="mailto:buildtogether.contact@gmail.com"
+              className="inline-flex items-center gap-2 text-[13px] text-white/60 hover:text-white transition-colors font-medium">
+              <span className="material-symbols-outlined text-[16px]">mail</span>
+              Contact us
+            </a>
           </div>
         </div>
       </section>
