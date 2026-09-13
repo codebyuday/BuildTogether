@@ -28,6 +28,9 @@ export default function CodeEditor() {
   const [newFileName, setNewFileName] = useState('')
   const [commitMsg, setCommitMsg] = useState('')
   const [showNewFile, setShowNewFile] = useState(false)
+  const [ghToken, setGhToken] = useState(() => localStorage.getItem('gh_token') || '')
+  const [showTokenModal, setShowTokenModal] = useState(false)
+  const [tokenInput, setTokenInput] = useState('')
 
   const { data: project } = useQuery({
     queryKey: ['project', id],
@@ -91,6 +94,7 @@ export default function CodeEditor() {
   const pushMutation = useMutation({
     mutationFn: async () => {
       if (!project?.repo_url) throw new Error('No GitHub repo connected')
+      if (!ghToken) throw new Error('NO_TOKEN')
       const repo = parseRepoUrl(project.repo_url)
       if (!repo) throw new Error('Invalid repo URL')
 
@@ -105,8 +109,23 @@ export default function CodeEditor() {
       toast.success('Pushed to GitHub')
       setCommitMsg('')
     },
-    onError: (e) => toast.error(`Push failed: ${e.message}`),
+    onError: (e) => {
+      if (e.message === 'NO_TOKEN') {
+        setShowTokenModal(true)
+      } else {
+        toast.error(`Push failed: ${e.message}`)
+      }
+    },
   })
+
+  const saveToken = () => {
+    if (!tokenInput.trim()) return
+    localStorage.setItem('gh_token', tokenInput.trim())
+    setGhToken(tokenInput.trim())
+    setShowTokenModal(false)
+    setTokenInput('')
+    toast.success('GitHub token saved')
+  }
 
   const handleCreateFile = () => {
     if (!newFileName.trim()) return
@@ -134,8 +153,15 @@ export default function CodeEditor() {
             </a>
           )}
         </div>
-        {project?.repo_url && files.length > 0 && (
+          {project?.repo_url && files.length > 0 && (
           <div className="flex items-center gap-2">
+            {!ghToken && (
+              <button onClick={() => setShowTokenModal(true)}
+                className="flex items-center gap-1 rounded-lg border border-tertiary/30 bg-tertiary/10 text-tertiary px-2.5 py-1.5 text-[11px] font-semibold hover:bg-tertiary/20 transition-colors">
+                <span className="material-symbols-outlined text-[12px]">key</span>
+                Set GitHub Token
+              </button>
+            )}
             <input value={commitMsg} onChange={e => setCommitMsg(e.target.value)}
               placeholder="Commit message..."
               className="w-48 rounded-lg border border-line bg-white px-3 py-1.5 text-[12px] text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
@@ -145,7 +171,7 @@ export default function CodeEditor() {
               {pushMutation.isPending ? 'Pushing...' : 'Push to GitHub'}
             </button>
           </div>
-        )}
+          )}
       </div>
 
       <div className="flex gap-4 min-h-[600px]">
@@ -216,6 +242,29 @@ export default function CodeEditor() {
           )}
         </div>
       </div>
+
+      {showTokenModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
+          <div className="w-full max-w-md rounded-xl border border-outline-variant/40 bg-surface-container-low p-6 shadow-2xl">
+            <h3 className="mb-2 text-[16px] font-semibold text-on-surface">Connect GitHub</h3>
+            <p className="text-[13px] text-on-surface-variant mb-4">
+              Enter a GitHub Personal Access Token with <code className="bg-surface-container px-1 py-0.5 rounded text-[12px]">repo</code> scope to push code.
+            </p>
+            <input value={tokenInput} onChange={e => setTokenInput(e.target.value)}
+              type="password" placeholder="ghp_xxxxxxxxxxxx"
+              className="w-full rounded-lg border border-line bg-white px-3 py-2 text-[13px] text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none mb-4"
+              onKeyDown={e => e.key === 'Enter' && saveToken()} autoFocus />
+            <div className="flex justify-end gap-2">
+              <button onClick={() => { setShowTokenModal(false); setTokenInput('') }}
+                className="rounded-lg px-3 py-1.5 text-[13px] text-on-surface-variant hover:text-on-surface">Cancel</button>
+              <button onClick={saveToken} disabled={!tokenInput.trim()}
+                className="rounded-lg bg-primary text-white px-4 py-1.5 text-[13px] font-semibold hover:brightness-110 transition-all disabled:opacity-50">
+                Save Token
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
