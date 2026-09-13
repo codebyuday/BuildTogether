@@ -318,19 +318,32 @@ export default function Landing() {
       </section>
 
       {/* Origin Story */}
-      <section className="py-16 px-6 sm:px-8 border-t border-line">
-        <div className="mx-auto max-w-[640px] flex items-start gap-6">
-          <img src="/uday.jpg" alt="Uday Pratap Singh"
-            className="w-16 h-16 rounded-xl object-cover bg-surface-container-high shrink-0" />
-          <div>
-            <p className="text-[13px] font-semibold text-on-surface mb-1">Uday Pratap Singh</p>
-            <p className="text-[12px] text-muted mb-3">Final Year B.Tech Project</p>
-            <p className="text-[14px] leading-[1.7] text-on-surface-variant">
-              BuildTogether started as a final year project — built because collaboration
-              tools for developers felt either too complex or too barebones. The idea was
-              simple: publish a project, find the right people, and ship together. What
-              began as a semester project became something real.
-            </p>
+      <section className="py-24 px-6 sm:px-8 border-t border-line bg-surface-container-low/30">
+        <div className="mx-auto max-w-[720px] text-center">
+          <div className="mb-6">
+            <img src="/uday.jpg" alt="Uday Pratap Singh"
+              className="w-20 h-20 rounded-2xl object-cover bg-surface-container-high mx-auto ring-4 ring-surface ring-offset-2 ring-offset-surface-container-low" />
+          </div>
+          <span className="inline-block px-3 py-1 rounded-full bg-primary/8 text-primary text-[11px] font-bold uppercase tracking-widest mb-5">The story behind it</span>
+          <h2 className="font-heading text-[26px] sm:text-[30px] font-light text-on-surface tracking-tight leading-snug mb-5">
+            Started as a final year B.Tech project.<br className="hidden sm:block" /> Became something real.
+          </h2>
+          <p className="text-[15px] leading-[1.8] text-on-surface-variant max-w-[540px] mx-auto mb-6">
+            BuildTogether was born from a simple frustration: collaboration tools for developers
+            were either too bloated or too barebones. The goal for a semester project was to
+            build a workspace where you publish a project, find the right contributors, and ship
+            together — with real-time Kanban boards, live notifications, and GitHub integration.
+          </p>
+          <p className="text-[15px] leading-[1.8] text-on-surface-variant max-w-[540px] mx-auto mb-8">
+            What started as coursework became a platform used by real developers building real
+            projects. That's the best kind of project — one that doesn't stop at the deadline.
+          </p>
+          <div className="flex items-center justify-center gap-3">
+            <img src="/uday.jpg" alt="" className="w-8 h-8 rounded-full object-cover bg-surface-container-high" />
+            <div className="text-left">
+              <p className="text-[13px] font-semibold text-on-surface leading-none">Uday Pratap Singh</p>
+              <p className="text-[11px] text-muted mt-0.5">Creator & Developer</p>
+            </div>
           </div>
         </div>
       </section>
