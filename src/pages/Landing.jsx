@@ -339,7 +339,6 @@ export default function Landing() {
             projects. That's the best kind of project — one that doesn't stop at the deadline.
           </p>
           <div className="flex items-center justify-center gap-3">
-            <img src="/uday.jpg" alt="" className="w-8 h-8 rounded-full object-cover bg-surface-container-high" />
             <div className="text-left">
               <p className="text-[13px] font-semibold text-on-surface leading-none">Uday Pratap Singh</p>
               <p className="text-[11px] text-muted mt-0.5">Creator & Developer</p>
