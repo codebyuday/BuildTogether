@@ -56,3 +56,6 @@ create policy "Members can delete project files"
   );
 
 create index idx_project_files_project on project_files(project_id);
+
+-- Enable realtime for project_files (Yjs collaboration)
+alter publication supabase_realtime add table project_files;
