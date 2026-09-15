@@ -74,7 +74,7 @@ export default function DashboardCharts() {
               <Pie data={statusData} cx="50%" cy="50%" innerRadius={40} outerRadius={65} paddingAngle={3} dataKey="value">
                 {statusData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
               </Pie>
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E6E4DC' }} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid var(--color-outline-variant)', background: 'var(--color-surface-container-lowest)', color: 'var(--color-on-surface)' }} />
             </PieChart>
           </ResponsiveContainer>
           <div className="flex flex-wrap gap-2 mt-1">
@@ -95,7 +95,7 @@ export default function DashboardCharts() {
             <BarChart data={priorityData} barSize={20}>
               <XAxis dataKey="name" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E6E4DC' }} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid var(--color-outline-variant)', background: 'var(--color-surface-container-lowest)', color: 'var(--color-on-surface)' }} />
               <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                 {priorityData.map((_, i) => <Cell key={i} fill={COLORS[i % COLORS.length]} />)}
               </Bar>
@@ -111,7 +111,7 @@ export default function DashboardCharts() {
             <BarChart data={recentByWeek} barSize={24}>
               <XAxis dataKey="week" tick={{ fontSize: 11 }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 11 }} axisLine={false} tickLine={false} allowDecimals={false} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid #E6E4DC' }} />
+              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8, border: '1px solid var(--color-outline-variant)', background: 'var(--color-surface-container-lowest)', color: 'var(--color-on-surface)' }} />
               <Bar dataKey="tasks" fill="#3447D4" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
