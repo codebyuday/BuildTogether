@@ -37,11 +37,11 @@ export default function PublicProfile() {
 
   return (
     <div className="mx-auto max-w-[900px] space-y-6">
-      <section className="bg-white border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+      <section className="bg-surface-container-lowest border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
         <div className="h-32 bg-gradient-to-r from-primary/5 via-surface-container to-tertiary/5" />
         <div className="px-6 pb-6 -mt-12 relative">
           <div className="flex items-end gap-4 mb-5">
-            <div className="w-24 h-24 rounded-2xl bg-white border-2 border-line flex items-center justify-center text-primary text-[36px] font-bold shadow-lg">
+            <div className="w-24 h-24 rounded-2xl bg-surface-container-lowest border-2 border-line flex items-center justify-center text-primary text-[36px] font-bold shadow-lg">
               {profile.username?.[0]?.toUpperCase()}
             </div>
             <div className="pb-1">
@@ -61,7 +61,7 @@ export default function PublicProfile() {
       </section>
 
       {profile.skills && profile.skills.length > 0 && (
-        <section className="bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+        <section className="bg-surface-container-lowest border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
           <h2 className="text-[15px] font-bold text-on-surface mb-3">Skills</h2>
           <div className="flex flex-wrap gap-1.5">
             {profile.skills.map(s => (
@@ -72,7 +72,7 @@ export default function PublicProfile() {
       )}
 
       {projects.length > 0 && (
-        <section className="bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+        <section className="bg-surface-container-lowest border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
           <h2 className="text-[15px] font-bold text-on-surface mb-3">Projects ({projects.length})</h2>
           <div className="space-y-2">
             {projects.map(p => (
@@ -90,7 +90,7 @@ export default function PublicProfile() {
       )}
 
       {contributions.length > 0 && (
-        <section className="bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+        <section className="bg-surface-container-lowest border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
           <h2 className="text-[15px] font-bold text-on-surface mb-3">Contributions ({contributions.length})</h2>
           <div className="space-y-2">
             {contributions.map(c => (

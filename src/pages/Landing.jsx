@@ -108,7 +108,7 @@ export default function Landing() {
             Start Building — It's Free
           </Link>
           <Link to="/explore"
-            className="rounded-lg border border-line bg-white px-8 py-3.5 text-[15px] font-semibold text-on-surface hover:bg-surface-container-low transition-all">
+            className="rounded-lg border border-line bg-surface-container-lowest px-8 py-3.5 text-[15px] font-semibold text-on-surface hover:bg-surface-container-low transition-all">
             Explore Projects
           </Link>
         </div>

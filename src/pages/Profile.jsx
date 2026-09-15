@@ -62,7 +62,7 @@ export default function Profile() {
 
   return (
     <div className="mx-auto max-w-[1200px] space-y-5">
-      <section className="bg-white border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+      <section className="bg-surface-container-lowest border border-line rounded-2xl overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
         <div className="h-32 bg-gradient-to-r from-primary/5 via-surface-container to-tertiary/5 relative overflow-hidden">
           <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(var(--color-primary)_1px,transparent_1px)] [background-size:16px_16px]" />
         </div>
@@ -70,10 +70,10 @@ export default function Profile() {
         <div className="px-6 pb-6 -mt-12 relative">
           <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4 mb-5">
             <div className="relative">
-              <div className="w-24 h-24 rounded-2xl bg-white border-2 border-line flex items-center justify-center text-primary text-[32px] font-bold shadow-lg">
+              <div className="w-24 h-24 rounded-2xl bg-surface-container-lowest border-2 border-line flex items-center justify-center text-primary text-[32px] font-bold shadow-lg">
                 {username?.[0]?.toUpperCase() || 'U'}
               </div>
-              <span className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-white border-2 border-line flex items-center justify-center">
+              <span className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-surface-container-lowest border-2 border-line flex items-center justify-center">
                 <span className="w-3 h-3 rounded-full bg-success"></span>
               </span>
             </div>
@@ -121,7 +121,7 @@ export default function Profile() {
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
         <div className="lg:col-span-4">
-          <div className="bg-white border border-line rounded-[20px] p-5 space-y-4" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+          <div className="bg-surface-container-lowest border border-line rounded-[20px] p-5 space-y-4" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
             <div className="flex items-center justify-between">
               <h3 className="text-[14px] font-bold text-on-surface flex items-center gap-2">
                 <span className="material-symbols-outlined text-[18px] text-primary">layers</span>
@@ -156,7 +156,7 @@ export default function Profile() {
             <TechStackPanel skills={skills} projectCount={projectCount} />
           </div>
 
-          <form onSubmit={handleSave} className="bg-white border border-line rounded-[20px] p-5 space-y-4" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+          <form onSubmit={handleSave} className="bg-surface-container-lowest border border-line rounded-[20px] p-5 space-y-4" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
             <div className="flex items-center gap-2 border-b border-line pb-3">
               <span className="material-symbols-outlined text-[18px] text-primary">edit</span>
               <h3 className="text-[14px] font-bold text-on-surface">Edit Profile</h3>

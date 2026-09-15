@@ -32,7 +32,7 @@ export default function TechStackPanel({ skills, projectCount }) {
   if (!skills || skills.length === 0) return null
 
   return (
-    <div className="bg-white border border-line rounded-[20px] p-5" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+    <div className="bg-surface-container-lowest border border-line rounded-[20px] p-5" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-[14px] font-bold text-on-surface flex items-center gap-2">
           <span className="material-symbols-outlined text-[18px] text-primary">code</span>

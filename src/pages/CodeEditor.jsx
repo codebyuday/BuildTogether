@@ -178,7 +178,7 @@ export default function CodeEditor() {
             )}
             <input value={commitMsg} onChange={e => setCommitMsg(e.target.value)}
               placeholder="Commit message..."
-              className="w-48 rounded-lg border border-line bg-white px-3 py-1.5 text-[12px] text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
+              className="w-48 rounded-lg border border-line bg-surface-container-lowest px-3 py-1.5 text-[12px] text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
             <button onClick={() => pushMutation.mutate()} disabled={pushMutation.isPending}
               className="flex items-center gap-1.5 rounded-lg bg-on-surface text-white px-3 py-1.5 text-[12px] font-semibold hover:brightness-110 transition-all disabled:opacity-50">
               <span className="material-symbols-outlined text-[14px]">upload</span>
@@ -204,7 +204,7 @@ export default function CodeEditor() {
                 onKeyDown={e => e.key === 'Enter' && handleCreateFile()}
                 placeholder="filename.js"
                 autoFocus
-                className="flex-1 rounded-md border border-line bg-white px-2 py-1 text-[12px] text-on-surface placeholder:text-muted focus:border-primary outline-none" />
+                className="flex-1 rounded-md border border-line bg-surface-container-lowest px-2 py-1 text-[12px] text-on-surface placeholder:text-muted focus:border-primary outline-none" />
               <button onClick={handleCreateFile} className="text-[12px] text-primary font-semibold hover:underline">Add</button>
             </div>
           )}
@@ -238,7 +238,7 @@ export default function CodeEditor() {
           )}
         </div>
 
-        <div className="flex-1 rounded-xl border border-line bg-white overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+        <div className="flex-1 rounded-xl border border-line bg-surface-container-lowest overflow-hidden" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
           {selectedFile ? (
             <Suspense fallback={<div className="flex items-center justify-center py-24"><div className="h-6 w-6 animate-spin rounded-full border-2 border-primary border-t-transparent" /></div>}>
               <CollaborativeCodeEditor
@@ -268,7 +268,7 @@ export default function CodeEditor() {
             </p>
             <input value={tokenInput} onChange={e => setTokenInput(e.target.value)}
               type="password" placeholder="ghp_xxxxxxxxxxxx"
-              className="w-full rounded-lg border border-line bg-white px-3 py-2 text-[13px] text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none mb-4"
+              className="w-full rounded-lg border border-line bg-surface-container-lowest px-3 py-2 text-[13px] text-on-surface placeholder:text-muted focus:border-primary focus:ring-1 focus:ring-primary outline-none mb-4"
               onKeyDown={e => e.key === 'Enter' && saveToken()} autoFocus />
             <div className="flex justify-end gap-2">
               <button onClick={() => { setShowTokenModal(false); setTokenInput('') }}

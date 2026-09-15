@@ -10,7 +10,7 @@ export default function Skeleton({ className = '', lines = 1 }) {
 
 export function CardSkeleton() {
   return (
-    <div className="bg-white border border-line rounded-2xl p-4 animate-pulse">
+    <div className="bg-surface-container-lowest border border-line rounded-2xl p-4 animate-pulse">
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center gap-2.5">
           <div className="w-9 h-9 rounded-lg bg-surface-container-high/50" />
@@ -36,7 +36,7 @@ export function CardSkeleton() {
 
 export function StatSkeleton() {
   return (
-    <div className="bg-white border border-line rounded-2xl p-4 animate-pulse">
+    <div className="bg-surface-container-lowest border border-line rounded-2xl p-4 animate-pulse">
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-lg bg-surface-container-high/50" />
         <div className="space-y-1.5">

@@ -53,7 +53,7 @@ export default function CreateProject() {
       </div>
 
       <form onSubmit={e => { e.preventDefault(); createMutation.mutate() }}
-        className="space-y-5 bg-white border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
+        className="space-y-5 bg-surface-container-lowest border border-line rounded-[20px] p-6" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
         <div>
           <label className="mb-1.5 block text-[12px] font-bold text-on-surface-variant">Title *</label>
           <input required value={form.title} onChange={e => setForm({ ...form, title: e.target.value })}

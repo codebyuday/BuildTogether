@@ -167,11 +167,6 @@ const PANELS = {
   notifications: NotificationsPanel,
 }
 
-const navItems = [
-  { to: '/dashboard', label: 'Dashboard', icon: 'dashboard' },
-  { to: '/explore', label: 'Discover', icon: 'explore' },
-]
-
 export default function Layout() {
   const { profile, signOut } = useAuth()
   const { theme, toggleTheme } = useTheme()
@@ -263,8 +258,7 @@ export default function Layout() {
         </div>
       </aside>
 
-      <div className="flex flex-col flex-1 lg:pl-[48px] h-screen overflow-hidden">
-        <div className={`h-full transition-all duration-200 ${panelExpanded ? 'lg:pl-[240px]' : ''}`} />
+      <div className={`flex flex-col flex-1 h-screen overflow-hidden transition-[margin] duration-200 ${panelExpanded ? 'lg:ml-[288px]' : 'lg:ml-[48px]'}`}>
 
         <header className="sticky top-0 z-30 h-[48px] w-full border-b border-line bg-surface-container-lowest/80 backdrop-blur-md flex items-center justify-between px-4">
           <div className="flex items-center gap-3">

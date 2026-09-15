@@ -448,7 +448,7 @@ export default function ProjectDetail() {
 
           {showAddTask && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 backdrop-blur-sm">
-              <div className="w-full max-w-md rounded-2xl border border-line bg-white p-6 shadow-2xl">
+              <div className="w-full max-w-md rounded-2xl border border-line bg-surface-container-lowest p-6 shadow-2xl">
                 <h3 className="mb-4 text-[16px] font-semibold text-on-surface">New Task</h3>
                 <input value={newTask.title} onChange={e => setNewTask({ ...newTask, title: e.target.value })}
                   className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface placeholder:text-muted/50 focus:border-primary focus:ring-1 focus:ring-primary outline-none"

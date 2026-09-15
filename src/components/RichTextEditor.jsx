@@ -47,7 +47,7 @@ export default function RichTextEditor({ content, onChange, placeholder = 'Write
   })
 
   return (
-    <div className="border border-line rounded-lg overflow-hidden bg-white">
+    <div className="border border-line rounded-lg overflow-hidden bg-surface-container-lowest">
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
     </div>
