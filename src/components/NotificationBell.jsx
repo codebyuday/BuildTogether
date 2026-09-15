@@ -4,13 +4,13 @@ import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 
 let globalChannel = null
-let globalCount = 0
+let activeCount = 0
 
 export default function NotificationBell({ expanded = false }) {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
-  const idRef = useRef(++globalCount)
+  const isOwner = useRef(false)
 
   const { data: notifications = [] } = useQuery({
     queryKey: ['notifications'],
@@ -28,22 +28,28 @@ export default function NotificationBell({ expanded = false }) {
   const unreadCount = notifications.filter(n => !n.read).length
 
   useEffect(() => {
-    if (idRef.current !== 1) return
-    const channel = supabase
-      .channel('notifications-realtime')
-      .on('postgres_changes', {
-        event: 'INSERT',
-        schema: 'public',
-        table: 'notifications',
-        filter: `user_id=eq.${user.id}`,
-      }, () => {
-        queryClient.invalidateQueries({ queryKey: ['notifications'] })
-      })
-      .subscribe()
-    globalChannel = channel
+    activeCount++
+    if (activeCount === 1) {
+      const channel = supabase
+        .channel('notifications-realtime')
+        .on('postgres_changes', {
+          event: 'INSERT',
+          schema: 'public',
+          table: 'notifications',
+          filter: `user_id=eq.${user.id}`,
+        }, () => {
+          queryClient.invalidateQueries({ queryKey: ['notifications'] })
+        })
+        .subscribe()
+      globalChannel = channel
+      isOwner.current = true
+    }
     return () => {
-      supabase.removeChannel(channel)
-      globalChannel = null
+      activeCount--
+      if (activeCount === 0 && globalChannel) {
+        supabase.removeChannel(globalChannel)
+        globalChannel = null
+      }
     }
   }, [user.id, queryClient])
 

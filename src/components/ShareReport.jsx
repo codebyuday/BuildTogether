@@ -54,6 +54,8 @@ Shared from BuildTogether`
     navigator.clipboard.writeText(report).then(() => {
       toast.success('Report copied to clipboard!')
       setShow(false)
+    }).catch(() => {
+      toast.error('Failed to copy — try downloading instead')
     })
   }
 

@@ -89,7 +89,7 @@ export default function Dashboard() {
         .from('tasks')
         .select('*, projects:project_id(title)')
         .eq('assignee_id', user.id)
-        .eq('status', '!=', 'done')
+        .neq('status', 'done')
         .order('created_at', { ascending: false })
       return data || []
     },
@@ -434,7 +434,7 @@ function TeamPerformancePanel({ projectId }) {
 
       const { data: tasks } = await supabase
         .from('tasks')
-        .select('assignee_id, status, priority')
+        .select('assignee_id, status, priority, title')
         .in('assignee_id', userIds)
 
       const { data: activities } = await supabase

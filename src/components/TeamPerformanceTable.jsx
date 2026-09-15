@@ -14,7 +14,7 @@ export default function TeamPerformanceTable({ projectId }) {
       if (userIds.length === 0) return []
 
       const [tasksRes, activityRes] = await Promise.all([
-        supabase.from('tasks').select('assignee_id, status, priority').in('assignee_id', userIds),
+        supabase.from('tasks').select('assignee_id, status, priority, title').in('assignee_id', userIds),
         supabase.from('activity_logs').select('actor_id, created_at').in('actor_id', userIds).gte('created_at', new Date(Date.now() - 7 * 86400000).toISOString()),
       ])
 
