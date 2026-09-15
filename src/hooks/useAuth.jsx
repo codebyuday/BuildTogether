@@ -35,11 +35,13 @@ export function AuthProvider({ children }) {
     const { data, error } = await supabase.auth.signUp({ email, password })
     if (error) throw new Error(friendlyError(error))
     if (data.user) {
+      setUser(data.user)
       const { error: profileError } = await supabase.from('profiles').upsert(
         { id: data.user.id, username, full_name: fullName || username, email },
         { onConflict: 'id' }
       )
       if (profileError) console.error('Profile upsert error:', profileError)
+      await fetchProfile(data.user.id)
     }
     return data
   }
@@ -47,6 +49,8 @@ export function AuthProvider({ children }) {
   async function signIn(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) throw new Error(friendlyError(error))
+    setUser(data.user)
+    await fetchProfile(data.user.id)
     return data
   }
 
