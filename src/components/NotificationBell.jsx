@@ -1,12 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
+
+let globalChannel = null
+let globalCount = 0
 
 export default function NotificationBell({ expanded = false }) {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
+  const idRef = useRef(++globalCount)
 
   const { data: notifications = [] } = useQuery({
     queryKey: ['notifications'],
@@ -24,6 +28,7 @@ export default function NotificationBell({ expanded = false }) {
   const unreadCount = notifications.filter(n => !n.read).length
 
   useEffect(() => {
+    if (idRef.current !== 1) return
     const channel = supabase
       .channel('notifications-realtime')
       .on('postgres_changes', {
@@ -35,7 +40,11 @@ export default function NotificationBell({ expanded = false }) {
         queryClient.invalidateQueries({ queryKey: ['notifications'] })
       })
       .subscribe()
-    return () => { supabase.removeChannel(channel) }
+    globalChannel = channel
+    return () => {
+      supabase.removeChannel(channel)
+      globalChannel = null
+    }
   }, [user.id, queryClient])
 
   const markRead = useMutation({
