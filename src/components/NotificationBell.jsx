@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 
-export default function NotificationBell() {
+export default function NotificationBell({ expanded = false }) {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const [open, setOpen] = useState(false)
@@ -44,6 +44,47 @@ export default function NotificationBell() {
     },
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   })
+
+  if (expanded) {
+    return (
+      <div>
+        <div className="flex items-center justify-between mb-3">
+          <span className="text-[13px] font-semibold text-on-surface">Notifications</span>
+          {unreadCount > 0 && (
+            <button onClick={() => markRead.mutate()}
+              className="text-[11px] font-medium text-primary/70 hover:text-primary transition-colors">
+              Mark all read
+            </button>
+          )}
+        </div>
+        {unreadCount > 0 && (
+          <div className="flex items-center gap-1.5 mb-3 px-2 py-1.5 rounded-lg bg-primary/5 border border-primary/10">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="text-[11px] text-primary font-medium">{unreadCount} unread</span>
+          </div>
+        )}
+        <div className="space-y-1 max-h-[calc(100vh-180px)] overflow-y-auto">
+          {notifications.length === 0 ? (
+            <div className="py-8 text-center">
+              <span className="material-symbols-outlined text-[28px] text-outline/30 mb-2 block">notifications_none</span>
+              <p className="text-[12px] text-muted">No notifications yet.</p>
+            </div>
+          ) : (
+            notifications.map(n => (
+              <div key={n.id} className={`rounded-lg px-3 py-2.5 transition-colors ${
+                !n.read ? 'bg-primary/[0.05] border border-primary/10' : 'hover:bg-surface-container-high'
+              }`}>
+                <p className="text-[12px] text-on-surface/80 leading-relaxed">{n.message}</p>
+                <span className="mt-1 block text-[10px] font-mono text-muted">
+                  {new Date(n.created_at).toLocaleString()}
+                </span>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="relative">

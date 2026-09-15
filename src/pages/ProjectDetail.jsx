@@ -12,6 +12,10 @@ import ExportDropdown from '../components/ExportDropdown'
 import StarButton from '../components/StarButton'
 import MarkdownRenderer from '../components/MarkdownRenderer'
 import { CardSkeleton } from '../components/Skeleton'
+import TeamPerformanceTable from '../components/TeamPerformanceTable'
+import ShareReport from '../components/ShareReport'
+import CollaborativeCursors from '../components/CollaborativeCursors'
+import AIPanel from '../components/AIPanel'
 
 const KanbanBoard = lazy(() => import('../components/KanbanBoard'))
 const RichTextEditor = lazy(() => import('../components/RichTextEditor'))
@@ -218,6 +222,7 @@ export default function ProjectDetail() {
   })
 
   return (
+    <>
     <div className="mx-auto max-w-[1200px] space-y-space-lg print:space-y-4">
       <div className="bg-surface-container-low border border-outline-variant/30 rounded-xl p-space-lg print:bg-white print:border-gray-200">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -251,6 +256,7 @@ export default function ProjectDetail() {
               </a>
             )}
             {isMember && <ExportDropdown project={project} tasks={tasks} milestones={milestones} />}
+            {isMember && <ShareReport projectId={id} />}
             {isOwner && (
               <button onClick={() => setShowRepoConnect(true)}
                 className="flex items-center gap-1 rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-1.5 text-[12px] font-mono text-on-surface-variant hover:bg-surface-container-high transition-colors">
@@ -428,6 +434,7 @@ export default function ProjectDetail() {
             </div>
           ) : (
             <Suspense fallback={null}>
+              <CollaborativeCursors projectId={id} />
               <KanbanBoard
                 tasks={filteredTasks}
                 isMember={isMember}
@@ -664,7 +671,12 @@ export default function ProjectDetail() {
         </div>
       )}
 
-      {tab === 'activity' && <ActivityFeed projectId={id} />}
+      {tab === 'activity' && (
+        <div className="space-y-5">
+          <TeamPerformanceTable projectId={id} />
+          <ActivityFeed projectId={id} />
+        </div>
+      )}
 
       {tab === 'applications' && (
         <div className="space-y-2">
@@ -694,6 +706,8 @@ export default function ProjectDetail() {
         </div>
       )}
     </div>
+    {isMember && <AIPanel projectId={id} />}
+    </>
   )
 }
 

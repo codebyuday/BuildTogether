@@ -3,6 +3,7 @@ import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import { friendlyError } from '../lib/utils'
 import toast from 'react-hot-toast'
+import TechStackPanel from '../components/TechStackPanel'
 
 export default function Profile() {
   const { user, profile, fetchProfile } = useAuth()
@@ -150,7 +151,11 @@ export default function Profile() {
           </div>
         </div>
 
-        <div className="lg:col-span-8">
+        <div className="lg:col-span-8 space-y-5">
+          <div className="lg:hidden">
+            <TechStackPanel skills={skills} projectCount={projectCount} />
+          </div>
+
           <form onSubmit={handleSave} className="bg-white border border-line rounded-[20px] p-5 space-y-4" style={{ boxShadow: '0px 4px 32px 0px rgba(11, 54, 88, 0.08)' }}>
             <div className="flex items-center gap-2 border-b border-line pb-3">
               <span className="material-symbols-outlined text-[18px] text-primary">edit</span>
@@ -190,6 +195,10 @@ export default function Profile() {
               {loading ? 'Saving...' : 'Save Profile'}
             </button>
           </form>
+
+          <div className="hidden lg:block">
+            <TechStackPanel skills={skills} projectCount={projectCount} />
+          </div>
         </div>
       </div>
     </div>
