@@ -10,7 +10,7 @@ function getColorForUser(userId) {
   return CURSOR_COLORS[Math.abs(hash) % CURSOR_COLORS.length]
 }
 
-export default function CollaborativeCursors({ projectId }) {
+export default function CollaborativeCursors({ projectId, children }) {
   const { user } = useAuth()
   const [cursors, setCursors] = useState({})
   const channelRef = useRef(null)
@@ -73,6 +73,7 @@ export default function CollaborativeCursors({ projectId }) {
 
   return (
     <div className="relative" onMouseMove={handleMouseMove}>
+      {children}
       {Object.entries(cursors).map(([uid, cursor]) => (
         <div
           key={uid}

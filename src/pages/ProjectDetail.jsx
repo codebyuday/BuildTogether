@@ -434,15 +434,16 @@ export default function ProjectDetail() {
             </div>
           ) : (
             <Suspense fallback={null}>
-              <CollaborativeCursors projectId={id} />
-              <KanbanBoard
-                tasks={filteredTasks}
-                isMember={isMember}
-                isOwner={isOwner}
-                onEdit={task => setEditingTask(task)}
-                onDelete={taskId => deleteTask.mutate(taskId)}
-                onDrop={handleDrop}
-              />
+              <CollaborativeCursors projectId={id}>
+                <KanbanBoard
+                  tasks={filteredTasks}
+                  isMember={isMember}
+                  isOwner={isOwner}
+                  onEdit={task => setEditingTask(task)}
+                  onDelete={taskId => deleteTask.mutate(taskId)}
+                  onDrop={handleDrop}
+                />
+              </CollaborativeCursors>
             </Suspense>
           )}
 
