@@ -432,16 +432,10 @@ function TeamPerformancePanel({ projectId }) {
       const userIds = [...uniqueUsers.keys()]
       if (userIds.length === 0) return []
 
-      const { data: tasks } = await supabase
-        .from('tasks')
-        .select('assignee_id, status, priority, title')
-        .in('assignee_id', userIds)
-
-      const { data: activities } = await supabase
-        .from('activity_logs')
-        .select('actor_id')
-        .in('actor_id', userIds)
-        .gte('created_at', new Date(Date.now() - 7 * 86400000).toISOString())
+      const [{ data: tasks }, { data: activities }] = await Promise.all([
+        supabase.from('tasks').select('assignee_id, status, priority, title').in('assignee_id', userIds),
+        supabase.from('activity_logs').select('actor_id').in('actor_id', userIds).gte('created_at', new Date(Date.now() - 7 * 86400000).toISOString()),
+      ])
 
       return [...uniqueUsers.values()].map(u => {
         const userTasks = tasks?.filter(t => t.assignee_id === u.id) || []
