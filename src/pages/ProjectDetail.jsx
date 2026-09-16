@@ -120,6 +120,9 @@ export default function ProjectDetail() {
         created_by: user.id, status: 'todo', position: pos,
       }).select().single()
       if (error) throw error
+      if (newTask.assignee_id && newTask.assignee_id !== user.id) {
+        await supabase.from('notifications').insert({ user_id: newTask.assignee_id, type: 'task_assigned', message: `You were assigned to "${newTask.title}" in ${project.title}`, project_id: id, entity_id: data.id })
+      }
       await logActivity({ projectId: id, userId: user.id, action: 'task.created', entityType: 'task', entityId: data.id, metadata: { task_title: newTask.title } })
     },
     onSuccess: () => { toast.success('Task created'); setShowAddTask(false); setNewTask({ title: '', priority: 'medium', assignee_id: '', description: '' }); queryClient.invalidateQueries({ queryKey: ['tasks', id] }) },

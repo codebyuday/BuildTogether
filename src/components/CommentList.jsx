@@ -5,7 +5,7 @@ import { supabase } from '../lib/supabase'
 import { formatDistanceToNow } from 'date-fns'
 import { logActivity } from '../lib/activity'
 
-export default function CommentList({ taskId, projectId }) {
+export default function CommentList({ taskId, projectId, assigneeId }) {
   const { user } = useAuth()
   const queryClient = useQueryClient()
   const [body, setBody] = useState('')
@@ -37,12 +37,23 @@ export default function CommentList({ taskId, projectId }) {
     mutationFn: async () => {
       const { error } = await supabase.from('comments').insert({ task_id: taskId, user_id: user.id, body: body.trim() })
       if (error) throw error
+      if (assigneeId && assigneeId !== user.id) {
+        await supabase.from('notifications').insert({ user_id: assigneeId, type: 'comment', message: `New comment on a task you're assigned to`, project_id: projectId, entity_id: taskId })
+      }
       await logActivity({ projectId, userId: user.id, action: 'comment.created', entityType: 'task', entityId: taskId, metadata: {} })
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['comments', taskId] })
       setBody('')
     },
+  })
+
+  const deleteComment = useMutation({
+    mutationFn: async (commentId) => {
+      const { error } = await supabase.from('comments').delete().eq('id', commentId)
+      if (error) throw error
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['comments', taskId] }),
   })
 
   return (
@@ -60,6 +71,11 @@ export default function CommentList({ taskId, projectId }) {
               <span className="text-[10px] font-mono text-on-surface-variant">
                 {formatDistanceToNow(new Date(c.created_at), { addSuffix: true })}
               </span>
+              {c.user_id === user.id && (
+                <button onClick={() => deleteComment.mutate(c.id)} className="ml-auto text-muted hover:text-danger transition-colors">
+                  <span className="material-symbols-outlined text-[14px]">delete</span>
+                </button>
+              )}
             </div>
             <p className="text-[13px] text-on-surface-variant pl-7">{c.body}</p>
           </div>

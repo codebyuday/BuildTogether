@@ -56,12 +56,18 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
   const updateTask = useMutation({
     mutationFn: async () => {
       const oldStatus = task.status
+      const oldAssignee = task.assignee_id
+      const newAssignee = form.assignee_id || null
       const { error } = await supabase.from('tasks').update({
         title: form.title, description: form.description || null, priority: form.priority,
-        status: form.status, assignee_id: form.assignee_id || null,
+        status: form.status, assignee_id: newAssignee,
         due_date: form.due_date || null, milestone_id: form.milestone_id || null,
       }).eq('id', task.id)
       if (error) throw error
+
+      if (newAssignee && newAssignee !== oldAssignee && newAssignee !== user.id) {
+        await supabase.from('notifications').insert({ user_id: newAssignee, type: 'task_assigned', message: `You were assigned to "${form.title}"`, project_id: projectId, entity_id: task.id })
+      }
 
       await supabase.from('task_labels').delete().eq('task_id', task.id)
       if (selectedLabels.length > 0) {
@@ -180,7 +186,7 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
 
           {task?.id && (
             <div className="border-t border-line pt-4">
-              <CommentList taskId={task.id} projectId={projectId} />
+              <CommentList taskId={task.id} projectId={projectId} assigneeId={task.assignee_id} />
             </div>
           )}
         </div>

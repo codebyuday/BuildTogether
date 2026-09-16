@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { formatDistanceToNow } from 'date-fns'
+import MarkdownRenderer from '../components/MarkdownRenderer'
 
 export default function ShareTask() {
   const { token } = useParams()
@@ -89,7 +90,7 @@ export default function ShareTask() {
 
         {task.description && (
           <div className="bg-surface-container-lowest border border-line rounded-xl p-5 mb-6">
-            <div className="text-[14px] text-on-surface-variant leading-relaxed prose" dangerouslySetInnerHTML={{ __html: task.description }} />
+            <div className="text-[14px] text-on-surface-variant leading-relaxed prose"><MarkdownRenderer content={task.description} /></div>
           </div>
         )}
 
