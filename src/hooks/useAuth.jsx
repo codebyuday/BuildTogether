@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { friendlyError } from '../lib/utils'
+import { throttle } from '../lib/rateLimit'
 
 const AuthContext = createContext(null)
 
@@ -52,12 +53,16 @@ export function AuthProvider({ children }) {
     return data
   }
 
-  async function signIn(email, password) {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password })
+  const throttledSignIn = throttle(async (email, password, options = {}) => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password, options })
     if (error) throw new Error(friendlyError(error))
     setUser(data.user)
     await fetchProfile(data.user.id)
     return data
+  }, 2000)
+
+  async function signIn(email, password, options = {}) {
+    return throttledSignIn(email, password, options)
   }
 
   async function signInWithGoogle() {

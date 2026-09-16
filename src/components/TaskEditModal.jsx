@@ -186,7 +186,7 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
 
           {task?.id && (
             <div className="border-t border-line pt-4">
-              <CommentList taskId={task.id} projectId={projectId} assigneeId={task.assignee_id} />
+              <CommentList taskId={task.id} projectId={projectId} assigneeId={task.assignee_id} members={members} />
             </div>
           )}
         </div>

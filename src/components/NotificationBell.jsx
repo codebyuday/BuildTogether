@@ -60,17 +60,32 @@ export default function NotificationBell({ expanded = false }) {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
   })
 
+  const clearAll = useMutation({
+    mutationFn: async () => {
+      await supabase.from('notifications').delete().eq('user_id', user.id)
+    },
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notifications'] }),
+  })
+
   if (expanded) {
     return (
       <div>
         <div className="flex items-center justify-between mb-3">
           <span className="text-[13px] font-semibold text-on-surface">Notifications</span>
-          {unreadCount > 0 && (
-            <button onClick={() => markRead.mutate()}
-              className="text-[11px] font-medium text-primary/70 hover:text-primary transition-colors">
-              Mark all read
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {unreadCount > 0 && (
+              <button onClick={() => markRead.mutate()}
+                className="text-[11px] font-medium text-primary/70 hover:text-primary transition-colors">
+                Mark all read
+              </button>
+            )}
+            {notifications.length > 0 && (
+              <button onClick={() => clearAll.mutate()}
+                className="text-[11px] font-medium text-muted hover:text-error transition-colors">
+                Clear all
+              </button>
+            )}
+          </div>
         </div>
         {unreadCount > 0 && (
           <div className="flex items-center gap-1.5 mb-3 px-2 py-1.5 rounded-lg bg-primary/5 border border-primary/10">
@@ -117,12 +132,20 @@ export default function NotificationBell({ expanded = false }) {
           <div className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-line bg-surface-container-lowest shadow-xl">
             <div className="flex items-center justify-between border-b border-line px-4 py-3">
               <span className="text-[13px] font-semibold text-on-surface">Notifications</span>
-              {unreadCount > 0 && (
-                <button onClick={() => markRead.mutate()}
-                  className="text-[11px] font-medium text-primary/70 hover:text-primary transition-colors">
-                  Mark all read
-                </button>
-              )}
+              <div className="flex items-center gap-2">
+                {unreadCount > 0 && (
+                  <button onClick={() => markRead.mutate()}
+                    className="text-[11px] font-medium text-primary/70 hover:text-primary transition-colors">
+                    Mark all read
+                  </button>
+                )}
+                {notifications.length > 0 && (
+                  <button onClick={() => clearAll.mutate()}
+                    className="text-[11px] font-medium text-muted hover:text-error transition-colors">
+                    Clear all
+                  </button>
+                )}
+              </div>
             </div>
             <div className="max-h-80 overflow-y-auto">
               {notifications.length === 0 ? (

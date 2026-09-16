@@ -33,7 +33,7 @@ export default function ProjectDetail() {
   const [showApply, setShowApply] = useState(false)
   const [applyMsg, setApplyMsg] = useState('')
   const [showAddTask, setShowAddTask] = useState(false)
-  const [newTask, setNewTask] = useState({ title: '', priority: 'medium', assignee_id: '', description: '' })
+  const [newTask, setNewTask] = useState({ title: '', priority: 'medium', assignee_id: '', description: '', due_date: '' })
   const [editingTask, setEditingTask] = useState(null)
   const [showRepoConnect, setShowRepoConnect] = useState(false)
   const [editing, setEditing] = useState(false)
@@ -117,7 +117,7 @@ export default function ProjectDetail() {
       const { data, error } = await supabase.from('tasks').insert({
         project_id: id, title: newTask.title, description: newTask.description || null,
         priority: newTask.priority, assignee_id: newTask.assignee_id || null,
-        created_by: user.id, status: 'todo', position: pos,
+        created_by: user.id, status: 'todo', position: pos, due_date: newTask.due_date || null,
       }).select().single()
       if (error) throw error
       if (newTask.assignee_id && newTask.assignee_id !== user.id) {
@@ -125,7 +125,7 @@ export default function ProjectDetail() {
       }
       await logActivity({ projectId: id, userId: user.id, action: 'task.created', entityType: 'task', entityId: data.id, metadata: { task_title: newTask.title } })
     },
-    onSuccess: () => { toast.success('Task created'); setShowAddTask(false); setNewTask({ title: '', priority: 'medium', assignee_id: '', description: '' }); queryClient.invalidateQueries({ queryKey: ['tasks', id] }) },
+    onSuccess: () => { toast.success('Task created'); setShowAddTask(false); setNewTask({ title: '', priority: 'medium', assignee_id: '', description: '', due_date: '' }); queryClient.invalidateQueries({ queryKey: ['tasks', id] }) },
     onError: (err) => toast.error(err.message),
   })
 
@@ -160,10 +160,12 @@ export default function ProjectDetail() {
   })
 
   const editMutation = useMutation({
-    mutationFn: async () => {
+    mutationFn: async (overrides = {}) => {
+      const payload = { title: editForm.title, description: editForm.description, status: editForm.status,
+        visibility: editForm.visibility, repo_url: editForm.repo_url, tech_stack: editForm.tech_stack, ...overrides }
       const { error } = await supabase.from('projects').update({
-        title: editForm.title, description: editForm.description, status: editForm.status,
-        visibility: editForm.visibility, repo_url: editForm.repo_url, tech_stack: editForm.tech_stack,
+        title: payload.title, description: payload.description, status: payload.status,
+        visibility: payload.visibility, repo_url: payload.repo_url, tech_stack: payload.tech_stack,
       }).eq('id', id)
       if (error) throw error
       await logActivity({ projectId: id, userId: user.id, action: 'project.updated', entityType: 'project', entityId: id })
@@ -375,6 +377,17 @@ export default function ProjectDetail() {
                   className="flex items-center gap-2 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-[13px] text-on-surface-variant hover:bg-surface-container-high transition-colors">
                   <span className="material-symbols-outlined text-[14px]">edit</span> Edit Project
                 </button>
+                {project.status !== 'archived' ? (
+                  <button onClick={() => { if (confirm('Archive this project? It will be hidden from Explore.')) { editMutation.mutate({ ...editForm, status: 'archived' }) } }}
+                    className="flex items-center gap-2 w-full rounded-lg border border-outline-variant/40 bg-surface-container px-3 py-2 text-[13px] text-on-surface-variant hover:bg-surface-container-high transition-colors">
+                    <span className="material-symbols-outlined text-[14px]">archive</span> Archive Project
+                  </button>
+                ) : (
+                  <button onClick={() => { editMutation.mutate({ ...editForm, status: 'recruiting' }) }}
+                    className="flex items-center gap-2 w-full rounded-lg border border-primary/30 bg-surface-container px-3 py-2 text-[13px] text-primary hover:bg-primary/5 transition-colors">
+                    <span className="material-symbols-outlined text-[14px]">unarchive</span> Unarchive Project
+                  </button>
+                )}
                 <button onClick={() => { if (confirm('Delete this project? This cannot be undone.')) deleteProject.mutate() }}
                   className="flex items-center gap-2 w-full rounded-lg border border-error/30 bg-surface-container px-3 py-2 text-[13px] text-error hover:bg-error/10 transition-colors">
                   <span className="material-symbols-outlined text-[14px]">delete</span> Delete Project
@@ -466,6 +479,8 @@ export default function ProjectDetail() {
                   className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
                   <option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option><option value="urgent">Urgent</option>
                 </select>
+                <input type="date" value={newTask.due_date} onChange={e => setNewTask({ ...newTask, due_date: e.target.value })}
+                  className="mb-3 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none" />
                 <select value={newTask.assignee_id} onChange={e => setNewTask({ ...newTask, assignee_id: e.target.value })}
                   className="mb-4 w-full bg-surface border border-line rounded-lg px-3 py-2 text-[14px] text-on-surface focus:border-primary focus:ring-1 focus:ring-primary outline-none">
                   <option value="">Unassigned</option>
@@ -620,7 +635,20 @@ export default function ProjectDetail() {
                 </div>
                 <div>
                   <span className="text-[14px] font-medium text-on-surface">{m.profiles?.full_name || m.profiles?.username}</span>
-                  <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/40">{m.role}</span>
+                  {isOwner && m.role !== 'owner' ? (
+                    <select value={m.role} onChange={e => {
+                      supabase.from('team_members').update({ role: e.target.value }).eq('id', m.id).then(() =>
+                        queryClient.invalidateQueries({ queryKey: ['members', id] })
+                      )
+                    }}
+                      className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/40 cursor-pointer">
+                      <option value="member">Member</option>
+                      <option value="admin">Admin</option>
+                      <option value="maintainer">Maintainer</option>
+                    </select>
+                  ) : (
+                    <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant border border-outline-variant/40">{m.role}</span>
+                  )}
                 </div>
               </div>
               {isOwner && m.role !== 'owner' && (

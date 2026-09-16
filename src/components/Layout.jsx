@@ -9,6 +9,7 @@ import UserSearch from './UserSearch'
 import ShortcutsModal from './ShortcutsModal'
 import OnboardingTour from './OnboardingTour'
 import PageTransition from './PageTransition'
+import NotificationPreferences, { useSessionTimeout } from './NotificationPreferences'
 
 const ICON_ITEMS = [
   { id: 'explorer', icon: 'folder_open', label: 'Explorer', shortcut: 'E' },
@@ -152,10 +153,15 @@ function SourceControlPanel() {
   )
 }
 
-function NotificationsPanel() {
+function NotificationsPanel({ onOpenPrefs }) {
   return (
     <div className="p-3">
       <NotificationBell expanded />
+      <button onClick={onOpenPrefs}
+        className="mt-3 w-full flex items-center gap-2 px-2 py-1.5 rounded-md text-left hover:bg-surface-container-high transition-colors text-muted">
+        <span className="material-symbols-outlined text-[14px]">settings</span>
+        <span className="text-[12px]">Notification preferences</span>
+      </button>
     </div>
   )
 }
@@ -174,6 +180,8 @@ export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [activePanel, setActivePanel] = useState('explorer')
   const [panelExpanded, setPanelExpanded] = useState(true)
+  const [showNotifPrefs, setShowNotifPrefs] = useState(false)
+  const sessionWarning = useSessionTimeout()
 
   useEffect(() => { setSidebarOpen(false) }, [location.pathname])
 
@@ -254,7 +262,7 @@ export default function Layout() {
               <span className="material-symbols-outlined text-[14px]">close</span>
             </button>
           </div>
-          {panelExpanded && <PanelComponent />}
+          {panelExpanded && <PanelComponent onOpenPrefs={() => setShowNotifPrefs(true)} />}
         </div>
       </aside>
 
@@ -291,6 +299,8 @@ export default function Layout() {
       </div>
       <ShortcutsModal />
       <OnboardingTour />
+      {showNotifPrefs && <NotificationPreferences onClose={() => setShowNotifPrefs(false)} />}
+      {sessionWarning}
     </div>
   )
 }

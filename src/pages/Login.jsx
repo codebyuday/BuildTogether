@@ -7,6 +7,7 @@ export default function Login() {
   const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(true)
   const [error, setError] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
@@ -15,7 +16,7 @@ export default function Login() {
     setError('')
     setSubmitting(true)
     try {
-      await signIn(email, password)
+      await signIn(email, password, { persistSession: rememberMe })
       navigate('/dashboard')
     } catch (err) {
       setError(err.message)
@@ -74,6 +75,14 @@ export default function Login() {
               <input type="password" value={password} onChange={e => setPassword(e.target.value)} required placeholder="Enter your password"
                 className="w-full bg-surface-container-low border border-line rounded-lg px-4 py-2.5 text-[14px] text-on-surface placeholder:text-muted/60 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all" />
             </div>
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input type="checkbox" checked={rememberMe} onChange={e => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 rounded border-line text-primary focus:ring-primary/20 bg-surface-container-low" />
+                <span className="text-[12px] text-on-surface-variant">Remember me</span>
+              </label>
+              <Link to="/forgot-password" className="text-[12px] text-primary hover:underline font-medium">Forgot password?</Link>
+            </div>
             <button type="submit" disabled={submitting}
               className="w-full bg-primary text-on-primary rounded-lg py-2.5 text-[14px] font-semibold hover:bg-primary-container transition-all active:scale-[0.98] disabled:opacity-50">
               {submitting ? (
@@ -84,10 +93,6 @@ export default function Login() {
               ) : 'Sign In'}
             </button>
           </form>
-
-          <div className="mt-5 text-center">
-            <Link to="/forgot-password" className="text-[13px] text-primary hover:underline font-medium transition-colors">Forgot password?</Link>
-          </div>
         </div>
 
         <p className="text-center mt-6 text-[14px] text-on-surface-variant">
