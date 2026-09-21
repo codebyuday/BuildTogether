@@ -354,8 +354,8 @@ export default function Landing() {
             </div>
           </div>
           <div className="mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-line">
-            <p className="text-[11px] text-muted">Created by <a href="https://www.linkedin.com/in/udaypratap-singh-285823288/" target="_blank" rel="noopener" className="hover:text-on-surface transition-colors font-semibold">Uday Pratap Singh</a></p>
-            <div className="flex items-center gap-4">
+            <div className="flex flex-col items-center sm:items-start gap-3">
+              <p className="text-[11px] text-muted">Created by <a href="https://www.linkedin.com/in/udaypratap-singh-285823288/" target="_blank" rel="noopener" className="hover:text-on-surface transition-colors font-semibold">Uday Pratap Singh</a></p>
               <div className="flex items-center gap-2">
                 <a href="https://www.instagram.com/theudaypsr/" target="_blank" rel="noopener" aria-label="Instagram"
                   className="w-8 h-8 rounded-lg bg-surface-container-high border border-line flex items-center justify-center text-muted hover:text-on-surface hover:bg-surface-container transition-all">
@@ -376,8 +376,8 @@ export default function Landing() {
                   </svg>
                 </a>
               </div>
-              <p className="text-[11px] text-muted">&copy; {new Date().getFullYear()} BuildTogether</p>
             </div>
+            <p className="text-[11px] text-muted">&copy; {new Date().getFullYear()} BuildTogether</p>
           </div>
         </div>
       </footer>
