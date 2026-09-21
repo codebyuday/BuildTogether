@@ -1,13 +1,13 @@
 import { useState, useEffect } from 'react'
 
 const shortcuts = [
-  { keys: ['⌘', 'K'], label: 'Search users' },
-  { keys: ['⌘', 'Enter'], label: 'Submit form' },
+  { keys: ['⌃', 'K'], label: 'Search users' },
+  { keys: ['⌃', 'Enter'], label: 'Submit form' },
   { keys: ['Esc'], label: 'Close modal / panel' },
   { keys: ['?'], label: 'Show shortcuts' },
   { keys: ['S'], label: 'Sort tasks' },
   { keys: ['Shift', 'I'], label: 'Assign to self' },
-  { keys: ['⌘', 'B'], label: 'Toggle sidebar' },
+  { keys: ['⌃', 'B'], label: 'Toggle sidebar' },
 ]
 
 export default function ShortcutsModal() {

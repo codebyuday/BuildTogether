@@ -50,7 +50,7 @@ export default function UserSearch() {
           className="w-56 h-8 pl-8 pr-12 text-[12px] font-mono bg-surface-container-lowest border border-outline-variant/40 rounded-lg text-on-surface placeholder:text-outline focus:border-primary focus:outline-none transition-colors"
           placeholder="Search users..." />
         <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-0.5 font-mono text-[10px] text-outline bg-surface-container px-1.5 py-0.5 rounded border border-outline-variant/40 pointer-events-none">
-          <span>⌘K</span>
+          <span>⌃K</span>
         </div>
       </div>
       {open && users.length > 0 && (
