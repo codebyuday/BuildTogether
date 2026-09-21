@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+﻿import { useState, useEffect } from 'react'
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
 import { useTheme } from '../hooks/useTheme'
@@ -187,7 +187,7 @@ export default function Layout() {
 
   useEffect(() => {
     function handleKey(e) {
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.closest('.cm-editor')) return
       const item = ICON_ITEMS.find(i => i.shortcut.toLowerCase() === e.key.toLowerCase())
       if (item) {
         e.preventDefault()
@@ -304,3 +304,4 @@ export default function Layout() {
     </div>
   )
 }
+
