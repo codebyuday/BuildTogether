@@ -1,7 +1,6 @@
 import { useState, useCallback, lazy, Suspense, useRef } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useAuth } from '../hooks/useAuth'
 import { supabase } from '../lib/supabase'
 import { parseRepoUrl, pushToGitHub } from '../lib/github'
 import toast from 'react-hot-toast'
@@ -22,7 +21,6 @@ function getLanguage(filename) {
 
 export default function CodeEditor() {
   const { id } = useParams()
-  const { user } = useAuth()
   const queryClient = useQueryClient()
   const [selectedFile, setSelectedFile] = useState(null)
   const [newFileName, setNewFileName] = useState('')
@@ -142,7 +140,7 @@ export default function CodeEditor() {
         saveMutation.mutate({ fileId: selectedFile.id, content })
       }, 1500)
     }
-  }, [selectedFile?.id])
+  }, [selectedFile, saveMutation])
 
   const handleSelectFile = (file) => {
     if (pendingSaveRef.current) {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 import StarButton from '../components/StarButton'
 import { CardSkeleton } from '../components/Skeleton'
 
@@ -36,7 +36,7 @@ export default function Explore() {
       <nav className="sticky top-0 z-50 flex h-[60px] w-full items-center justify-between px-6 lg:px-10 border-b border-line bg-surface/90 backdrop-blur-md">
         <Link to="/" className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
-            <img src="/logo.png" alt="" className="w-full h-full object-cover dark:invert" />
+            <img src="/logo.jpg" alt="" className="w-full h-full object-cover dark:invert" />
           </div>
           <span className="text-[18px] font-bold text-on-surface tracking-tight">BuildTogether</span>
         </Link>

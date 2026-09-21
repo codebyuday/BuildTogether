@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, lazy, Suspense } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 import { supabase } from '../lib/supabase'
 import toast from 'react-hot-toast'
 import RoadmapTab from '../components/RoadmapTab'
@@ -21,9 +21,6 @@ const KanbanBoard = lazy(() => import('../components/KanbanBoard'))
 const RichTextEditor = lazy(() => import('../components/RichTextEditor'))
 const TaskEditModalLazy = lazy(() => import('../components/TaskEditModal'))
 import { logActivity } from '../lib/activity'
-
-const STATUS_COLS = ['todo', 'in_progress', 'in_review', 'done']
-const STATUS_LABELS = { todo: 'To Do', in_progress: 'In Progress', in_review: 'In Review', done: 'Done' }
 
 export default function ProjectDetail() {
   const { id } = useParams()

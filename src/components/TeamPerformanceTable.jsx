@@ -63,7 +63,7 @@ export default function TeamPerformanceTable({ projectId }) {
             </tr>
           </thead>
           <tbody>
-            {members.map((m, i) => (
+            {members.map((m) => (
               <tr key={m.id} className="border-b border-line last:border-0 hover:bg-surface-container-low/50 transition-colors">
                 <td className="px-4 py-3">
                   <div className="flex items-center gap-2.5">

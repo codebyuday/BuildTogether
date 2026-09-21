@@ -74,7 +74,7 @@ export default function Landing() {
       <nav className="fixed top-0 z-50 flex h-[60px] w-full items-center justify-between px-6 lg:px-10 border-b border-line bg-surface/90 backdrop-blur-md">
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
-            <img src="/logo.png" alt="" className="w-full h-full object-cover dark:invert" />
+            <img src="/logo.jpg" alt="" className="w-full h-full object-cover dark:invert" />
           </div>
           <span className="text-[18px] font-bold text-on-surface tracking-tight">BuildTogether</span>
         </div>
@@ -310,7 +310,7 @@ export default function Landing() {
             <div>
               <div className="flex items-center gap-2.5 mb-3">
                 <div className="w-7 h-7 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
-                  <img src="/logo.png" alt="" className="w-full h-full object-cover dark:invert" />
+                  <img src="/logo.jpg" alt="" className="w-full h-full object-cover dark:invert" />
                 </div>
                 <span className="text-[16px] font-bold text-on-surface tracking-tight">BuildTogether</span>
               </div>

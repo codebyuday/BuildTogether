@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 import { supabase } from '../lib/supabase'
 import { friendlyError } from '../lib/utils'
 import toast from 'react-hot-toast'

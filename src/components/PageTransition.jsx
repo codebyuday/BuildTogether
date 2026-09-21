@@ -5,6 +5,7 @@ export default function PageTransition({ children }) {
   const location = useLocation()
   const [visible, setVisible] = useState(false)
 
+  /* eslint-disable react/set-state-in-effect */
   useEffect(() => {
     setVisible(false)
     const raf = requestAnimationFrame(() => {

@@ -1,5 +1,3 @@
-const PROFICIENCY_LEVELS = ['Beginner', 'Intermediate', 'Advanced', 'Expert']
-
 const SKILL_COLORS = {
   javascript: { bg: 'bg-tag-orange-bg', text: 'text-tag-orange-text', border: 'border-tag-orange-border' },
   typescript: { bg: 'bg-tag-blue-bg', text: 'text-tag-blue-text', border: 'border-tag-blue-border' },

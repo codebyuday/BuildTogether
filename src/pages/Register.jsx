@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 
 export default function Register() {
   const { signUp, signInWithGoogle, loading } = useAuth()
@@ -25,7 +25,7 @@ export default function Register() {
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2.5 mb-6">
             <div className="w-10 h-10 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
-              <img src="/logo.png" alt="" className="w-full h-full object-cover dark:invert" />
+              <img src="/logo.jpg" alt="" className="w-full h-full object-cover dark:invert" />
             </div>
             <span className="text-[20px] font-bold text-on-surface tracking-tight">BuildTogether</span>
           </Link>

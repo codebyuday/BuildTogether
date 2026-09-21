@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 
 const CURSOR_COLORS = ['#E85A2C', '#3447D4', '#00AA45', '#D4A134', '#8B45A6', '#D4346E', '#34B8D4', '#6B8E23']
 

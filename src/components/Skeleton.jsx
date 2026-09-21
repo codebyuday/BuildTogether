@@ -1,8 +1,10 @@
+const SKELETON_WIDTHS = [72, 85, 91, 78, 96, 83, 74, 88, 93, 70]
+
 export default function Skeleton({ className = '', lines = 1 }) {
   return (
     <div className={`animate-pulse space-y-2 ${className}`}>
       {Array.from({ length: lines }).map((_, i) => (
-        <div key={i} className="h-3.5 bg-surface-container-high/60 rounded-md w-full" style={{ width: `${70 + Math.random() * 30}%` }} />
+        <div key={i} className="h-3.5 bg-surface-container-high/60 rounded-md w-full" style={{ width: `${SKELETON_WIDTHS[i % SKELETON_WIDTHS.length]}%` }} />
       ))}
     </div>
   )

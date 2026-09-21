@@ -1,7 +1,7 @@
 ﻿import { useState, useEffect } from 'react'
 import { Outlet, Link, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
-import { useTheme } from '../hooks/useTheme'
+import { useAuth } from '../hooks/useAuthHook'
+import { useTheme } from '../hooks/useThemeHook'
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import NotificationBell from './NotificationBell'
@@ -9,7 +9,8 @@ import UserSearch from './UserSearch'
 import ShortcutsModal from './ShortcutsModal'
 import OnboardingTour from './OnboardingTour'
 import PageTransition from './PageTransition'
-import NotificationPreferences, { useSessionTimeout } from './NotificationPreferences'
+import NotificationPreferences from './NotificationPreferences'
+import { useSessionTimeout } from '../hooks/useSessionTimeout'
 
 const ICON_ITEMS = [
   { id: 'explorer', icon: 'folder_open', label: 'Explorer', shortcut: 'E' },
@@ -183,6 +184,7 @@ export default function Layout() {
   const [showNotifPrefs, setShowNotifPrefs] = useState(false)
   const sessionWarning = useSessionTimeout()
 
+  // eslint-disable-next-line react/set-state-in-effect
   useEffect(() => { setSidebarOpen(false) }, [location.pathname])
 
   useEffect(() => {

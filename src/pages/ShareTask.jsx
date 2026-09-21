@@ -62,7 +62,7 @@ export default function ShareTask() {
         <div className="max-w-[640px] mx-auto flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <div className="w-7 h-7 rounded-lg bg-on-surface flex items-center justify-center overflow-hidden">
-              <img src="/logo.png" alt="" className="w-full h-full object-cover dark:invert" />
+              <img src="/logo.jpg" alt="" className="w-full h-full object-cover dark:invert" />
             </div>
             <span className="text-[15px] font-bold text-on-surface tracking-tight">BuildTogether</span>
           </Link>

@@ -1,7 +1,7 @@
 import { lazy, Suspense, useMemo } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 import { supabase } from '../lib/supabase'
 import ActivityFeed from '../components/ActivityFeed'
 import NumberTicker from '../components/NumberTicker'
@@ -10,9 +10,6 @@ import { StatSkeleton, CardSkeleton } from '../components/Skeleton'
 import { PieChart, Pie, Cell } from 'recharts'
 
 const DashboardCharts = lazy(() => import('../components/DashboardCharts'))
-
-const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
 function getCompletionData(tasks) {
   const total = tasks.length
@@ -156,7 +153,9 @@ export default function Dashboard() {
   const sprintVelocity = useMemo(() => {
     if (allTasks.length === 0) return 0
     const projectCreated = projects.length > 0 ? new Date(projects.map(p => p.created_at).sort()[0]) : new Date()
-    const daysSince = Math.max(1, Math.floor((Date.now() - projectCreated.getTime()) / 86400000))
+    // eslint-disable-next-line react/purity
+    const now = Date.now()
+    const daysSince = Math.max(1, Math.floor((now - projectCreated.getTime()) / 86400000))
     return (allTasks.filter(t => t.status === 'done').length / daysSince).toFixed(1)
   }, [allTasks, projects])
 

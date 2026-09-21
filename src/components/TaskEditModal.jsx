@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 import toast from 'react-hot-toast'
 import LabelPicker from './LabelPicker'
 import CommentList from './CommentList'
@@ -20,7 +20,7 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
     due_date: task?.due_date || '',
     milestone_id: task?.milestone_id || '',
   })
-  const [selectedLabels, setSelectedLabels] = useState([])
+  const [selectedLabels, setSelectedLabels] = useState(taskLabels)
 
   const { data: labels = [] } = useQuery({
     queryKey: ['labels', projectId],
@@ -48,10 +48,6 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
     },
     enabled: !!projectId,
   })
-
-  useEffect(() => {
-    if (taskLabels.length > 0) setSelectedLabels(taskLabels)
-  }, [taskLabels])
 
   const updateTask = useMutation({
     mutationFn: async () => {

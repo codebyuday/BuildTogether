@@ -25,6 +25,11 @@ const LANG_MAP = {
 export default function CollaborativeCodeEditor({ roomId, fileId, language = 'javascript', initialContent = '', onChange }) {
   const containerRef = useRef(null)
   const viewRef = useRef(null)
+  const onChangeRef = useRef(onChange)
+  const initialContentRef = useRef(initialContent)
+
+  useEffect(() => { onChangeRef.current = onChange }, [onChange])
+  useEffect(() => { initialContentRef.current = initialContent }, [initialContent])
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -43,9 +48,8 @@ export default function CollaborativeCodeEditor({ roomId, fileId, language = 'ja
     const ytext = ydoc.getText('code')
     const undoManager = new Y.UndoManager(ytext)
 
-    // Seed doc with file content if Yjs doc is empty (no persistence cache)
-    if (ytext.toString() === '' && initialContent) {
-      ytext.insert(0, initialContent)
+    if (ytext.toString() === '' && initialContentRef.current) {
+      ytext.insert(0, initialContentRef.current)
     }
 
     const langExtension = LANG_MAP[language]?.() || javascript()
@@ -58,10 +62,10 @@ export default function CollaborativeCodeEditor({ roomId, fileId, language = 'ja
         langExtension,
         yCollab(ytext, provider.awareness, { undoManager }),
         EditorView.updateListener.of((update) => {
-          if (update.docChanged && onChange) {
+          if (update.docChanged && onChangeRef.current) {
             if (saveTimeout) clearTimeout(saveTimeout)
             saveTimeout = setTimeout(() => {
-              onChange(ytext.toString())
+              onChangeRef.current(ytext.toString())
             }, 800)
           }
         }),

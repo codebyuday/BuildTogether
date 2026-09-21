@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 import { supabase } from '../lib/supabase'
 import { formatDistanceToNow } from 'date-fns'
 import { logActivity } from '../lib/activity'
@@ -128,7 +128,6 @@ export default function CommentList({ taskId, projectId, assigneeId, members = [
   const topLevel = comments.filter(c => !c.parent_id)
   const replies = comments.filter(c => c.parent_id)
   const getReplies = (parentId) => replies.filter(r => r.parent_id === parentId)
-  const getReactionCount = (commentId, emoji) => reactions.filter(r => r.comment_id === commentId && r.emoji === emoji).length
   const hasReacted = (commentId, emoji) => reactions.some(r => r.comment_id === commentId && r.emoji === emoji && r.user_id === user.id)
 
   function renderComment(c, depth = 0) {

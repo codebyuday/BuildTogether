@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
-import { useAuth } from '../hooks/useAuth'
+import { useAuth } from '../hooks/useAuthHook'
 import { formatDistanceToNow } from 'date-fns'
 import { ACTIVITY_ICONS, ACTIVITY_LABELS } from '../lib/activity'
 import { useState, useEffect } from 'react'
