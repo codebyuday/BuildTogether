@@ -195,9 +195,9 @@ export default function Landing() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {[
-              { quote: 'BuildTogether helped us recruit 4 contributors in a week. The real-time Kanban board is a game changer.', name: 'Priya Sharma', role: 'Lead Developer', img: 47 },
-              { quote: 'Finally a platform where I can show proof of work and get recruited. The GitHub integration is seamless.', name: 'Arjun Mehta', role: 'Full-Stack Developer', img: 12 },
-              { quote: 'We shipped our MVP in 3 weeks with a team we found here. The activity feeds kept everyone aligned.', name: 'Sarah Chen', role: 'CTO, NovaTech', img: 32 },
+              { quote: 'BuildTogether helped us recruit 4 contributors in a week. The real-time Kanban board is a game changer.', name: 'Rudra Dhoble', role: 'Lead Developer', img: 47 },
+              { quote: 'Finally a platform where I can show proof of work and get recruited. The GitHub integration is seamless.', name: 'Ronit', role: 'Full-Stack Developer', img: 12 },
+              { quote: 'We shipped our MVP in 3 weeks with a team we found here. The activity feeds kept everyone aligned.', name: 'Pratik', role: 'Student', img: 32 },
             ].map(({ quote, name, role, img }, i) => (
               <div key={name} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} group bg-surface-container-lowest border border-line rounded-xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-0.5`}>
                 <span className="text-primary/20 font-heading text-[64px] leading-[0.5] h-[20px] block italic">&ldquo;</span>
