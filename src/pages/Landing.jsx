@@ -115,8 +115,8 @@ export default function Landing() {
 
         <div ref={addRevealRef} className="reveal reveal-delay-4 relative z-10 mt-12 flex items-center gap-4">
           <div className="flex -space-x-2">
-            {[47, 12, 32, 68].map(id => (
-              <img key={id} src={`https://i.pravatar.cc/64?img=${id}`} alt="" className="w-8 h-8 rounded-full object-cover bg-surface-container-high border-2 border-surface" />
+            {['R', 'R', 'P', 'S'].map((letter, i) => (
+              <span key={i} className={`w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white border-2 border-surface ${['bg-primary', 'bg-tertiary', 'bg-primary/70', 'bg-tertiary/70'][i]}`}>{letter}</span>
             ))}
             <span className="w-8 h-8 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-on-surface border-2 border-surface">+{stats.members > 5 ? stats.members - 5 : 0}</span>
           </div>
@@ -195,15 +195,17 @@ export default function Landing() {
           </div>
           <div className="grid gap-5 md:grid-cols-3">
             {[
-              { quote: 'BuildTogether helped us recruit 4 contributors in a week. The real-time Kanban board is a game changer.', name: 'Rudra Dhoble', role: 'Lead Developer', img: 47 },
-              { quote: 'Finally a platform where I can show proof of work and get recruited. The GitHub integration is seamless.', name: 'Ronit', role: 'Full-Stack Developer', img: 12 },
-              { quote: 'We shipped our MVP in 3 weeks with a team we found here. The activity feeds kept everyone aligned.', name: 'Pratik', role: 'Student', img: 32 },
-            ].map(({ quote, name, role, img }, i) => (
+              { quote: 'BuildTogether helped us recruit 4 contributors in a week. The real-time Kanban board is a game changer.', name: 'Rudra Dhoble', role: 'Lead Developer' },
+              { quote: 'Finally a platform where I can show proof of work and get recruited. The GitHub integration is seamless.', name: 'Ronit', role: 'Full-Stack Developer' },
+              { quote: 'We shipped our MVP in 3 weeks with a team we found here. The activity feeds kept everyone aligned.', name: 'Pratik', role: 'Student' },
+            ].map(({ quote, name, role }, i) => (
               <div key={name} ref={addRevealRef} className={`reveal reveal-delay-${i + 1} group bg-surface-container-lowest border border-line rounded-xl p-6 flex flex-col transition-all duration-300 hover:-translate-y-0.5`}>
                 <span className="text-primary/20 font-heading text-[64px] leading-[0.5] h-[20px] block italic">&ldquo;</span>
                 <p className="font-heading text-[16px] leading-[1.6] text-on-surface flex-1 mt-3 font-normal">{quote}</p>
                 <div className="flex items-center gap-3 pt-4 border-t border-line mt-4">
-                  <img src={`https://i.pravatar.cc/72?img=${img}`} alt={name} className="w-9 h-9 rounded-full object-cover bg-surface-container-high" />
+                  <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center text-primary text-[12px] font-bold shrink-0">
+                    {name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                  </div>
                   <div>
                     <div className="text-[13px] font-semibold text-on-surface">{name}</div>
                     <div className="text-[11px] text-muted">{role}</div>
