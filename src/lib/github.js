@@ -47,7 +47,7 @@ export async function fetchLanguages(owner, repo) {
 
 export function parseRepoUrl(url) {
   if (!url) return null
-  const match = url.match(/github\.com\/([^/]+)\/([^/]+)/)
+  const match = url.match(/github\.com[/:]([^/:]+)\/([^/?#]+)/)
   if (!match) return null
   return { owner: match[1], repo: match[2].replace(/\.git$/, '') }
 }
