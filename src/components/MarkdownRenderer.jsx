@@ -4,9 +4,9 @@ import remarkGfm from 'remark-gfm'
 export default function MarkdownRenderer({ children, className = '' }) {
   if (!children) return null
   return (
+    <div className={`prose prose-invert prose-sm max-w-none ${className}`}>
     <Markdown
       remarkPlugins={[remarkGfm]}
-      className={`prose prose-invert prose-sm max-w-none ${className}`}
       components={{
         h1: ({ children }) => <h1 className="text-[20px] font-bold text-on-surface mb-2 mt-4">{children}</h1>,
         h2: ({ children }) => <h2 className="text-[16px] font-semibold text-on-surface mb-2 mt-3">{children}</h2>,
@@ -32,5 +32,6 @@ export default function MarkdownRenderer({ children, className = '' }) {
     >
       {children}
     </Markdown>
+    </div>
   )
 }

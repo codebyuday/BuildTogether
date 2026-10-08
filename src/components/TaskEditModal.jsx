@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../hooks/useAuthHook'
@@ -20,7 +20,6 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
     due_date: task?.due_date || '',
     milestone_id: task?.milestone_id || '',
   })
-  const [selectedLabels, setSelectedLabels] = useState(taskLabels)
 
   const { data: labels = [] } = useQuery({
     queryKey: ['labels', projectId],
@@ -31,7 +30,7 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
     enabled: !!projectId,
   })
 
-  const { data: taskLabels = [] } = useQuery({
+  const { data: taskLabels = [], isSuccess: taskLabelsLoaded } = useQuery({
     queryKey: ['task-labels', task?.id],
     queryFn: async () => {
       const { data } = await supabase.from('task_labels').select('label_id').eq('task_id', task?.id)
@@ -39,6 +38,15 @@ export default function TaskEditModal({ task, projectId, members = [], onClose }
     },
     enabled: !!task?.id,
   })
+
+  const [selectedLabels, setSelectedLabels] = useState(taskLabels)
+  const labelsHydrated = useRef(false)
+  useEffect(() => {
+    if (taskLabelsLoaded && !labelsHydrated.current) {
+      labelsHydrated.current = true
+      setSelectedLabels(taskLabels)
+    }
+  }, [taskLabelsLoaded, taskLabels])
 
   const { data: milestones = [] } = useQuery({
     queryKey: ['milestones', projectId],
