@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://build-together-snowy.vercel.app">Live Demo</a> ·
+  <a href="https://buildtogether-jade.vercel.app">Live Demo</a> ·
   <a href="#-getting-started">Getting Started</a> ·
   <a href="#-features">Features</a>
 </p>
