@@ -127,3 +127,9 @@ Fifteen tables, all with Row Level Security enabled:
 `profiles`, `projects`, `team_members`, `applications`, `milestones`, `tasks`, `comments`, `labels`, `task_labels`, `stars`, `notifications`, `activity_logs`, `repo_connections`, `project_files`, `comment_reactions`
 
 Realtime is enabled for `tasks`, `notifications`, `applications`, `comments`, and `project_files`.
+
+## License
+
+Copyright © 2026 [codebyuday](https://github.com/codebyuday). All rights reserved.
+
+This repository is proprietary. No part of the Software may be used, copied, modified, or distributed without prior written permission from the author. To request permission, contact the author via GitHub. See [LICENSE](./LICENSE) for the full terms.
